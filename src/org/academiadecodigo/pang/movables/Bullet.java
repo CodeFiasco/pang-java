@@ -7,11 +7,16 @@ import java.util.List;
 /**
  * Created by codecadet on 13/10/2017.
  */
-public class Bullet {
+public class Bullet implements Movable{
 
     List<Position> positions;
 
     public boolean checkBulletHit(Position compare) {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void move() {
+
     }
 }

@@ -7,7 +7,7 @@ import org.academiadecodigo.pang.position.Position;
 /**
  * Created by codecadet on 13/10/2017.
  */
-public class Player {
+public class Player implements Movable {
 
     Position pos;
     Game g;
@@ -23,5 +23,10 @@ public class Player {
 
     public boolean checkBulletHit(Position ball) {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void move() {
+        
     }
 }
