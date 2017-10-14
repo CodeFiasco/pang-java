@@ -1,5 +1,7 @@
 package org.academiadecodigo.pang;
 
+import org.academiadecodigo.pang.position.Position;
+
 /**
  * Created by codecadet on 13/10/2017.
  */
@@ -9,5 +11,6 @@ public class Main {
 
         Game g = new Game();
         g.init();
+
     }
 }
