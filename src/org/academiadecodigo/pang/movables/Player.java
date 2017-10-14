@@ -27,6 +27,6 @@ public class Player implements Movable {
 
     @Override
     public void move() {
-        
+
     }
 }
