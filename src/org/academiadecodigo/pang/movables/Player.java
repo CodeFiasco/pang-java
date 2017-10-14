@@ -9,12 +9,23 @@ import org.academiadecodigo.pang.position.Position;
  */
 public class Player implements Movable {
 
-    Position pos;
-    Game g;
-    Direction dir;
-    Bullet bullet;
+    private Game g;
+    private Direction dir;
+    private Bullet bullet;
+    private Position pos;
+    private int width = 40;
+    private int height = 80;
+
+
+    public Player(Game g) {
+        this.g = g;
+        pos = new Position((g.getPADDING() + (g.getWidth() / 2 - width / 2)), (g.getPADDING() + (g.getHeight() - height)), width, height);
+    }
+
 
     public void shoot() {
+        bullet = new Bullet(pos);
+        bullet.move();
     }
 
     public boolean checkIsDead(Position ball) {
