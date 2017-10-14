@@ -37,7 +37,7 @@ public class Player implements Movable {
     }
 
     public boolean checkBulletHit(Position ball) {
-        throw new UnsupportedOperationException();
+        return bullet.checkBulletHit(ball);
     }
 
     public void setDirection(Direction dir) {

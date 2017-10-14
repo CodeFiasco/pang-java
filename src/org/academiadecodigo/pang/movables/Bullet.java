@@ -12,19 +12,24 @@ public class Bullet implements Movable {
 
     private int width = 10;
     private int height = 10;
-    private Position lastAddedPosition;
 
     private LinkedList<Position> positions;
 
     public Bullet(Position position) {
         positions = new LinkedList<>();
         positions.add(position);
-        lastAddedPosition = position;
     }
 
 
-    public boolean checkBulletHit(Position compare) {
-        throw new UnsupportedOperationException();
+    public boolean checkBulletHit(Position splittable) {
+
+        for (Position pos : positions) {
+            if (pos.overlaps(splittable)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public boolean hitsTop() {
@@ -33,12 +38,11 @@ public class Bullet implements Movable {
 
     @Override
     public void move() {
-        if (positions.getLast().getY() == 0) {
+        if (hitsTop()) {
             return;
         }
 
-        Position pos = new Position(lastAddedPosition.getX(), lastAddedPosition.getY() - height, width, height);
+        Position pos = new Position(positions.getLast().getX(), positions.getLast().getY() - height, width, height);
         positions.add(pos);
-        lastAddedPosition = pos;
     }
 }
