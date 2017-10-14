@@ -9,6 +9,11 @@ public abstract class SplittableFactory {
 
     public static LinkedList<Splittable> getSplittableList() {
 
-        return new LinkedList<Splittable>();
+        LinkedList<Splittable> splittables = new LinkedList<>();
+
+        Ball ball = new Ball();
+        splittables.add(ball);
+
+        return splittables;
     }
 }
