@@ -39,6 +39,10 @@ public class Game {
 
     public void init() throws InterruptedException {
 
+        player = new Player(this);
+
+        player.shoot();
+
         splittables = SplittableFactory.getSplittableList(this);
 
         while (true) {
@@ -50,6 +54,8 @@ public class Game {
     }
 
     private void moveObjects() {
+
+        player.move();
 
         for (Splittable s : splittables) {
             s.move();

@@ -25,7 +25,6 @@ public class Player implements Movable {
 
     public void shoot() {
         bullet = new Bullet(pos);
-        bullet.move();
     }
 
     public boolean checkIsDead(Position ball) {
@@ -39,5 +38,15 @@ public class Player implements Movable {
     @Override
     public void move() {
 
+        if (bullet == null) {
+            return;
+        }
+
+        if (bullet.hitsTop()) {
+            bullet = null;
+            return;
+        }
+
+        bullet.move();
     }
 }
