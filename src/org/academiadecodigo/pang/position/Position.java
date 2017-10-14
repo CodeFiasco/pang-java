@@ -10,7 +10,6 @@ public class Position {
     int width;
     int height;
 
-    @Override
     public boolean equals(Position compare) {
         throw new UnsupportedOperationException();
     }

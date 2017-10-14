@@ -2,9 +2,9 @@ package org.academiadecodigo.pang;
 
 import org.academiadecodigo.pang.keyboardListener.KeyboardListener;
 import org.academiadecodigo.pang.movables.Player;
-import org.academiadecodigo.pang.movables.splitables.Ball;
+import org.academiadecodigo.pang.movables.splitables.Splittable;
 
-import java.util.List;
+import java.util.LinkedList;
 
 /**
  * Created by codecadet on 13/10/2017.
@@ -12,7 +12,7 @@ import java.util.List;
 public class Game {
 
     private Player player;
-    private List<Ball> balls;
+    private LinkedList<Splittable> balls;
     private KeyboardListener kb;
 
     public void init() {
