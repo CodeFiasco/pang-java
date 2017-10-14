@@ -14,7 +14,6 @@ public class Ball implements Splittable {
     private Position pos;
     private Game g;
     private Direction direction;
-    private Rectangle representation;
 
 
     public Ball(Game g) {
@@ -27,9 +26,6 @@ public class Ball implements Splittable {
 
         this.g = g;
 
-        representation = new Rectangle(x, y, width, height);
-        representation.setColor(Color.BLUE);
-        representation.fill();
     }
 
 
@@ -62,8 +58,7 @@ public class Ball implements Splittable {
         }
 
         private void moveRight(){
-            pos.setX(pos.getX() + 1);
-            representation.translate(1, 0);
+            pos.translate(1,0);
         }
 
         private void moveDown(){
@@ -71,8 +66,7 @@ public class Ball implements Splittable {
         }
 
         private void moveLeft(){
-            pos.setX(pos.getX() - 1);
-            representation.translate(-1, 0);
+            pos.translate(-1, 0);
         }
 
         private boolean checkBoundaries(){
