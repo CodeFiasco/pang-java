@@ -18,7 +18,7 @@ public class Player implements Movable {
     }
 
     public boolean checkIsDead(Position ball) {
-        return pos.equals(ball);
+        return pos.overlaps(ball);
     }
 
     public boolean checkBulletHit(Position ball) {

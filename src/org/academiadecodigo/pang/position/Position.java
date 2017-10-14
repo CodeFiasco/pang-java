@@ -23,12 +23,58 @@ public class Position {
 
     public void translate(int dx,int dy){
         rectangle.translate(dx, dy);
-
     }
 
-    public boolean equals(Position compare) {
-        throw new UnsupportedOperationException();
+    public boolean overlaps(Position compare) {
+
+        // X axis check
+        boolean topLeftCorner = getX() >= compare.getX() && getX() <= compare.getWidth() + compare.getX();
+        // Y axis check
+        topLeftCorner = topLeftCorner && getY() >= compare.getY() && getY() <= compare.getHeight() + compare.getY();
+
+        // X axis check
+        boolean topRightCorner = getX() + width >= compare.getX() && getX() + width <= compare.getX() + compare.getWidth();
+        // Y axis check
+        topRightCorner = topRightCorner && getY() >= compare.getY() && getY() <= compare.getHeight() + compare.getY();
+
+        // X axis check
+        boolean bottomLeftCorner = getX() >= compare.getX() && getX() <= compare.getX() + compare.getWidth();
+        // Y axis check
+        bottomLeftCorner = bottomLeftCorner && getY() + height >= compare.getY() && getY() + height <= compare.getY() + compare.getHeight();
+
+        // X axis check
+        boolean bottomRightCorner = getX() + width >= compare.getX() && getX() + width <= compare.getX() + compare.getWidth();
+        // Y axis check
+        bottomRightCorner = bottomRightCorner && getY() + height >= compare.getY() && getY() + height <= compare.getY() + compare.getHeight();
+
+        return topLeftCorner || topRightCorner || bottomLeftCorner || bottomRightCorner || compare.overlaps(this, true);
     }
+
+    private boolean overlaps(Position compare, boolean finish) {
+
+        // X axis check
+        boolean topLeftCorner = getX() >= compare.getX() && getX() <= compare.getWidth() + compare.getX();
+        // Y axis check
+        topLeftCorner = topLeftCorner && getY() >= compare.getY() && getY() <= compare.getHeight() + compare.getY();
+
+        // X axis check
+        boolean topRightCorner = getX() + width >= compare.getX() && getX() + width <= compare.getX() + compare.getWidth();
+        // Y axis check
+        topRightCorner = topRightCorner && getY() >= compare.getY() && getY() <= compare.getHeight() + compare.getY();
+
+        // X axis check
+        boolean bottomLeftCorner = getX() >= compare.getX() && getX() <= compare.getX() + compare.getWidth();
+        // Y axis check
+        bottomLeftCorner = bottomLeftCorner && getY() + height >= compare.getY() && getY() + height <= compare.getY() + compare.getHeight();
+
+        // X axis check
+        boolean bottomRightCorner = getX() + width >= compare.getX() && getX() + width <= compare.getX() + compare.getWidth();
+        // Y axis check
+        bottomRightCorner = bottomRightCorner && getY() + height >= compare.getY() && getY() + height <= compare.getY() + compare.getHeight();
+
+        return topLeftCorner || topRightCorner || bottomLeftCorner || bottomRightCorner;
+    }
+
 
     public int getX() {
         return rectangle.getX();
@@ -47,3 +93,18 @@ public class Position {
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
