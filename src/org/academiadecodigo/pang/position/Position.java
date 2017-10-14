@@ -1,20 +1,28 @@
 package org.academiadecodigo.pang.position;
 
+import org.academiadecodigo.simplegraphics.graphics.Color;
+import org.academiadecodigo.simplegraphics.graphics.Rectangle;
+
 /**
  * Created by codecadet on 13/10/2017.
  */
 public class Position {
 
-    private int x;
-    private int y;
     private int width;
     private int height;
+    private Rectangle rectangle;
 
     public Position(int x, int y, int width, int height) {
-        this.x = x;
-        this.y = y;
         this.width = width;
         this.height = height;
+
+        rectangle = new Rectangle(x, y, width, height);
+        rectangle.setColor(Color.BLUE);
+        rectangle.fill();
+    }
+
+    public void translate(int dx,int dy){
+        rectangle.translate(dx, dy);
 
     }
 
@@ -23,19 +31,11 @@ public class Position {
     }
 
     public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
+        return rectangle.getX();
     }
 
     public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
+        return rectangle.getY();
     }
 
     public int getWidth() {
