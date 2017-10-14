@@ -15,6 +15,9 @@ public class Game {
     private LinkedList<Splittable> balls;
     private KeyboardListener kb;
 
+    private final int width = 900;
+    private final int height = 500;
+
     public void init() {
 
     }
@@ -25,5 +28,13 @@ public class Game {
 
     private boolean checkCollisions() {
         return false;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 }
