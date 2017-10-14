@@ -1,5 +1,7 @@
 package org.academiadecodigo.pang.movables.splitables;
 
+import org.academiadecodigo.pang.Game;
+
 import java.util.LinkedList;
 
 /**
@@ -7,11 +9,11 @@ import java.util.LinkedList;
  */
 public abstract class SplittableFactory {
 
-    public static LinkedList<Splittable> getSplittableList() {
+    public static LinkedList<Splittable> getSplittableList(Game g) {
 
         LinkedList<Splittable> splittables = new LinkedList<>();
 
-        Ball ball = new Ball();
+        Ball ball = new Ball(g);
         splittables.add(ball);
 
         return splittables;

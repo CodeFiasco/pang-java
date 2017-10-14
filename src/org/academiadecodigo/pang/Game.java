@@ -22,13 +22,13 @@ public class Game {
 
     private int width = 900;
     private int height = 500;
-    private int delay = 100;
+    private int delay = 5;
 
     public Game() {
         background = new Rectangle(PADDING, PADDING, width, height);
         background.fill();
 
-        splittables = SplittableFactory.getSplittableList();
+        splittables = SplittableFactory.getSplittableList(this);
     }
 
     public Game(int width, int height) {
@@ -38,7 +38,7 @@ public class Game {
         background = new Rectangle(PADDING, PADDING, this.width, this.height);
         background.fill();
 
-        splittables = SplittableFactory.getSplittableList();
+        splittables = SplittableFactory.getSplittableList(this);
     }
 
     public void init() throws InterruptedException {
@@ -68,5 +68,9 @@ public class Game {
 
     public int getHeight() {
         return height;
+    }
+
+    public int getPADDING() {
+        return PADDING;
     }
 }

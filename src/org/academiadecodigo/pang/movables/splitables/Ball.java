@@ -3,6 +3,8 @@ package org.academiadecodigo.pang.movables.splitables;
 import org.academiadecodigo.pang.Game;
 import org.academiadecodigo.pang.directions.Direction;
 import org.academiadecodigo.pang.position.Position;
+import org.academiadecodigo.simplegraphics.graphics.Color;
+import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 
 /**
  * Created by codecadet on 13/10/2017.
@@ -12,16 +14,32 @@ public class Ball implements Splittable {
     private Position pos;
     private Game g;
     private Direction direction;
+    private Rectangle representation;
 
 
-    public Ball() {
-        pos = new Position( int x, int y, int width, int height);
+    public Ball(Game g) {
+        int x = 20;
+        int y = 20;
+        int width = 20;
+        int height = 20;
+        pos = new Position(x, y, width, height);
         direction = Direction.RIGHT;
+
+        this.g = g;
+
+        representation = new Rectangle(x, y, width, height);
+        representation.setColor(Color.BLUE);
+        representation.fill();
     }
 
 
     @Override
     public void move() {
+
+        if (checkBoundaries()) {
+            direction = direction.getOpposite();
+        }
+
         switch (direction) {
 
             case UP:
@@ -45,6 +63,7 @@ public class Ball implements Splittable {
 
         private void moveRight(){
             pos.setX(pos.getX() + 1);
+            representation.translate(1, 0);
         }
 
         private void moveDown(){
@@ -53,16 +72,12 @@ public class Ball implements Splittable {
 
         private void moveLeft(){
             pos.setX(pos.getX() - 1);
+            representation.translate(-1, 0);
         }
 
-        private void checkBoundaries(){
-            if(direction == Direction.RIGHT && pos.getX() + pos.getWidth() >= g.getWidth()){
-                direction = direction.getOpposite();
-            }
-            if (direction == Direction.LEFT && pos.getX() <= 0){
-                direction = direction.getOpposite();
-            }
-
+        private boolean checkBoundaries(){
+            return (direction == Direction.RIGHT && pos.getX() + pos.getWidth() >= g.getWidth() + g.getPADDING()) ||
+                    (direction == Direction.LEFT && pos.getX() <= g.getPADDING());
         }
 
 
