@@ -24,6 +24,11 @@ public class Player implements Movable {
 
 
     public void shoot() {
+
+        if (bullet != null) {
+            return;
+        }
+
         bullet = new Bullet(pos);
     }
 
@@ -33,6 +38,10 @@ public class Player implements Movable {
 
     public boolean checkBulletHit(Position ball) {
         throw new UnsupportedOperationException();
+    }
+
+    public void setDirection(Direction dir) {
+        this.dir = dir;
     }
 
     @Override

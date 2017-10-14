@@ -22,7 +22,7 @@ public class Game {
 
     private int width = 900;
     private int height = 500;
-    private int delay = 5;
+    private int delay = 10;
 
     public Game() {
         background = new Rectangle(PADDING, PADDING, width, height);
@@ -40,8 +40,7 @@ public class Game {
     public void init() throws InterruptedException {
 
         player = new Player(this);
-
-        player.shoot();
+        kb = new KeyboardListener(player);
 
         splittables = SplittableFactory.getSplittableList(this);
 
