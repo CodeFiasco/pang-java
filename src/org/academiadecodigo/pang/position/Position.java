@@ -25,6 +25,10 @@ public class Position {
         rectangle.translate(dx, dy);
     }
 
+    public void delete() {
+        rectangle.delete();
+    }
+
     public boolean overlaps(Position compare) {
 
         // X axis check

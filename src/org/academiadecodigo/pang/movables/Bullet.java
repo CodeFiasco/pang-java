@@ -25,6 +25,7 @@ public class Bullet implements Movable {
 
         for (Position pos : positions) {
             if (pos.overlaps(splittable)) {
+                delete();
                 return true;
             }
         }
@@ -36,6 +37,12 @@ public class Bullet implements Movable {
         return positions.getLast().getY() <= 10;
     }
 
+    public void delete() {
+
+        for (Position pos : positions) {
+            pos.delete();
+        }
+    }
     @Override
     public void move() {
         if (hitsTop()) {

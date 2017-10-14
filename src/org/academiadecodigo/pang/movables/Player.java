@@ -29,7 +29,8 @@ public class Player implements Movable {
             return;
         }
 
-        bullet = new Bullet(pos);
+        Position bulletPosition = new Position(pos.getX(), pos.getY(), 10, 10);
+        bullet = new Bullet(bulletPosition);
     }
 
     public boolean checkIsDead(Position ball) {
@@ -37,7 +38,17 @@ public class Player implements Movable {
     }
 
     public boolean checkBulletHit(Position ball) {
-        return bullet.checkBulletHit(ball);
+
+        if(bullet == null) {
+            return false;
+        }
+
+        if (bullet.checkBulletHit(ball)) {
+            bullet = null;
+            return true;
+        }
+
+        return false;
     }
 
     public void setDirection(Direction dir) {
@@ -52,6 +63,7 @@ public class Player implements Movable {
         }
 
         if (bullet.hitsTop()) {
+            bullet.delete();
             bullet = null;
             return;
         }

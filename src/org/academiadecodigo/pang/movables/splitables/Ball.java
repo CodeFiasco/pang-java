@@ -79,4 +79,9 @@ public class Ball implements Splittable {
     public Splittable[] split() {
         return new Splittable[0];
     }
+
+    @Override
+    public Position getPos() {
+            return pos;
+    }
 }

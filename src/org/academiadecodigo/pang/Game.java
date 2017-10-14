@@ -58,6 +58,10 @@ public class Game {
 
         for (Splittable s : splittables) {
             s.move();
+
+            if (player.checkBulletHit(s.getPos())) {
+                s.getPos().delete();
+            }
         }
     }
 
