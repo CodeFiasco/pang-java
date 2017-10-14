@@ -3,6 +3,7 @@ package org.academiadecodigo.pang;
 import org.academiadecodigo.pang.keyboardListener.KeyboardListener;
 import org.academiadecodigo.pang.movables.Player;
 import org.academiadecodigo.pang.movables.splitables.Splittable;
+import org.academiadecodigo.pang.movables.splitables.SplittableFactory;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 
 import java.util.LinkedList;
@@ -13,7 +14,7 @@ import java.util.LinkedList;
 public class Game {
 
     private Player player;
-    private LinkedList<Splittable> balls;
+    private LinkedList<Splittable> splittables;
     private KeyboardListener kb;
 
     private Rectangle background;
@@ -21,10 +22,13 @@ public class Game {
 
     private int width = 900;
     private int height = 500;
+    private int delay = 100;
 
     public Game() {
         background = new Rectangle(PADDING, PADDING, width, height);
         background.fill();
+
+        splittables = SplittableFactory.getSplittableList();
     }
 
     public Game(int width, int height) {
@@ -33,14 +37,25 @@ public class Game {
 
         background = new Rectangle(PADDING, PADDING, this.width, this.height);
         background.fill();
+
+        splittables = SplittableFactory.getSplittableList();
     }
 
-    public void init() {
+    public void init() throws InterruptedException {
+
+        while (true) {
+            moveObjects();
+
+            Thread.sleep(delay);
+        }
 
     }
 
     private void moveObjects() {
 
+        for (Splittable s : splittables) {
+            s.move();
+        }
     }
 
     private boolean checkCollisions() {
