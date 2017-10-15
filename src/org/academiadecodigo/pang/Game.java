@@ -5,6 +5,7 @@ import org.academiadecodigo.pang.movables.Player;
 import org.academiadecodigo.pang.movables.splitables.Splittable;
 import org.academiadecodigo.pang.movables.splitables.SplittableFactory;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
+import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 
 import java.util.LinkedList;
 
@@ -40,7 +41,7 @@ public class Game {
     public void init() throws InterruptedException {
 
         player = new Player(this);
-        kb = new KeyboardListener(player);
+        kb = new KeyboardListener(player, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_SPACE);
 
         splittables = SplittableFactory.getSplittableList(this);
 

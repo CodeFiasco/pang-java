@@ -15,68 +15,66 @@ public class KeyboardListener implements KeyboardHandler {
     private Player player;
     private Keyboard keyboard;
 
-    public KeyboardListener(Player player) {
+    private int rightKey;
+    private int leftKey;
+    private int shootKey;
+
+    public KeyboardListener(Player player, int rightKey, int leftKey, int shootKey) {
         this.player = player;
 
         keyboard = new Keyboard(this);
 
         KeyboardEvent rightArrow = new KeyboardEvent();
-        rightArrow.setKey(KeyboardEvent.KEY_RIGHT);
+        rightArrow.setKey(rightKey);
         rightArrow.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         keyboard.addEventListener(rightArrow);
 
         rightArrow = new KeyboardEvent();
-        rightArrow.setKey(KeyboardEvent.KEY_RIGHT);
+        rightArrow.setKey(rightKey);
         rightArrow.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
         keyboard.addEventListener(rightArrow);
 
         KeyboardEvent leftArrow = new KeyboardEvent();
-        leftArrow.setKey(KeyboardEvent.KEY_LEFT);
+        leftArrow.setKey(leftKey);
         leftArrow.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         keyboard.addEventListener(leftArrow);
 
         leftArrow = new KeyboardEvent();
-        leftArrow.setKey(KeyboardEvent.KEY_LEFT);
+        leftArrow.setKey(leftKey);
         leftArrow.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
         keyboard.addEventListener(leftArrow);
 
         KeyboardEvent space = new KeyboardEvent();
-        space.setKey(KeyboardEvent.KEY_SPACE);
+        space.setKey(shootKey);
         space.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         keyboard.addEventListener(space);
+
+        this.rightKey = rightKey;
+        this.leftKey = leftKey;
+        this.shootKey = shootKey;
     }
 
     @Override
     public void keyPressed(KeyboardEvent e) {
 
-        switch (e.getKey()){
-
-            case KeyboardEvent.KEY_RIGHT:
-                player.setDirection(Direction.RIGHT);
-                break;
-
-            case KeyboardEvent.KEY_LEFT:
-                player.setDirection(Direction.LEFT);
-                break;
-
-            case KeyboardEvent.KEY_SPACE:
-                player.shoot();
-                break;
+        if (e.getKey() == rightKey) {
+            player.setDirection(Direction.RIGHT);
+            return;
         }
+
+        if (e.getKey() == leftKey) {
+            player.setDirection(Direction.LEFT);
+            return;
+        }
+
+        player.shoot();
     }
 
     @Override
     public void keyReleased(KeyboardEvent e) {
 
-        switch (e.getKey()) {
-
-            case KeyboardEvent.KEY_RIGHT:
-                player.setDirection(null);
-                break;
-
-            case KeyboardEvent.KEY_LEFT:
-                player.setDirection(null);
-                break;
+        if (e.getKey() != shootKey) {
+            player.setDirection(null);
         }
     }
 }
