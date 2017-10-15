@@ -12,7 +12,8 @@ public class Ball implements Splittable {
 
     private Position pos;
     private Game g;
-    private Direction direction;
+    private Direction horizontalDirection;
+    private Direction verticalDirection;
     private int size;
 
 
@@ -20,7 +21,8 @@ public class Ball implements Splittable {
         this.size = size;
 
         pos = new Position(x, y, size, size);
-        direction = dir;
+        horizontalDirection = dir;
+        verticalDirection = Direction.UP;
 
         this.g = g;
     }
@@ -29,29 +31,37 @@ public class Ball implements Splittable {
     @Override
     public void move() {
 
-        if (checkBoundaries()) {
-            direction = direction.getOpposite();
+        if (checkHorizontalBoundaries()) {
+            horizontalDirection = horizontalDirection.getOpposite();
         }
 
-        switch (direction) {
+        if (checkVerticalBoundaries()) {
+            verticalDirection = verticalDirection.getOpposite();
+        }
 
-            case UP:
-                moveUp();
-                break;
+        switch (horizontalDirection) {
+
             case RIGHT:
                 moveRight();
-                break;
-            case DOWN:
-                moveDown();
                 break;
             case LEFT:
                 moveLeft();
                 break;
         }
+
+        switch (verticalDirection){
+
+            case UP:
+                moveUp();
+                break;
+            case DOWN:
+                moveDown();
+                break;
+        }
     }
 
     private void moveUp() {
-
+        pos.translate(0, -1);
     }
 
     private void moveRight() {
@@ -59,18 +69,22 @@ public class Ball implements Splittable {
     }
 
     private void moveDown() {
-
+        pos.translate(0,1);
     }
 
     private void moveLeft() {
         pos.translate(-1, 0);
     }
 
-    private boolean checkBoundaries() {
-        return (direction == Direction.RIGHT && pos.getX() + pos.getWidth() >= g.getWidth() + g.getPADDING()) ||
-                (direction == Direction.LEFT && pos.getX() <= g.getPADDING());
+    private boolean checkHorizontalBoundaries() {
+        return (horizontalDirection == Direction.RIGHT && pos.getX() + pos.getWidth() >= g.getWidth() + g.getPADDING()) ||
+                (horizontalDirection == Direction.LEFT && pos.getX() <= g.getPADDING());
     }
 
+    private boolean checkVerticalBoundaries() {
+        return (verticalDirection == Direction.UP && pos.getY() <= GameConstants.PADDING + 20) ||
+                (verticalDirection == Direction.DOWN && pos.getY() + size >= g.getHeight() + GameConstants.PADDING);
+    }
 
     @Override
     public Splittable[] split() {
