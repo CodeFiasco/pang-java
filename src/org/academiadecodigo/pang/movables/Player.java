@@ -1,6 +1,7 @@
 package org.academiadecodigo.pang.movables;
 
 import org.academiadecodigo.pang.Game;
+import org.academiadecodigo.pang.GameConstants;
 import org.academiadecodigo.pang.directions.Direction;
 import org.academiadecodigo.pang.position.Position;
 
@@ -13,8 +14,9 @@ public class Player implements Movable {
     private Direction dir;
     private Bullet bullet;
     private Position pos;
-    private int width = 40;
-    private int height = 80;
+    private int width = GameConstants.PLAYER_WIDTH;
+    private int height = GameConstants.PLAYER_HEIGHT;
+    private int speed = GameConstants.PLAYER_SPEED;
 
 
     public Player(Game g) {
@@ -39,7 +41,7 @@ public class Player implements Movable {
 
     public boolean checkBulletHit(Position ball) {
 
-        if(bullet == null) {
+        if (bullet == null) {
             return false;
         }
 
@@ -58,6 +60,18 @@ public class Player implements Movable {
     @Override
     public void move() {
 
+        if (dir != null) {
+
+            switch (dir) {
+                case RIGHT:
+                    moveRight();
+                    break;
+
+                case LEFT:
+                    moveLeft();
+            }
+        }
+
         if (bullet == null) {
             return;
         }
@@ -69,5 +83,18 @@ public class Player implements Movable {
         }
 
         bullet.move();
+
+    }
+
+    private void moveRight() {
+        if (pos.getX() + width < g.getWidth() + GameConstants.PADDING) {
+            pos.translate(speed, 0);
+        }
+    }
+
+    private void moveLeft() {
+        if (pos.getX() > GameConstants.PADDING) {
+            pos.translate(-speed, 0);
+        }
     }
 }
