@@ -7,6 +7,7 @@ import org.academiadecodigo.pang.movables.splitables.SplittableFactory;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 
 /**
@@ -55,14 +56,43 @@ public class Game {
 
     private void moveObjects() {
 
+        Splittable[] remove = new Splittable[50];
+        int removeIndex = 0;
+
+        Splittable[] add = new Splittable[50];
+        int addIndex = 0;
+
         player.move();
 
-        for (Splittable s : splittables) {
-            s.move();
+        for (Splittable splittable : splittables) {
+            splittable.move();
 
-            if (player.checkBulletHit(s.getPos())) {
-                s.getPos().delete();
+            if (player.checkBulletHit(splittable.getPos())) {
+
+                Splittable[] newBalls = splittable.split();
+
+                for (Splittable n : newBalls) {
+                    System.out.println(n);
+                    add[addIndex] = n;
+                    addIndex++;
+                }
+
+                remove[removeIndex] = splittable;
+                removeIndex++;
             }
+        }
+
+        for (int i = 0; i < removeIndex; i++) {
+            System.out.println("Removing:");
+            System.out.println(remove[i].getPos());
+            remove[i].getPos().delete();
+            splittables.remove(remove[i]);
+        }
+
+        for (int i = 0; i < addIndex; i++) {
+            System.out.println("\nAdding:");
+            System.out.println(add[i].getPos());
+            splittables.add(add[i]);
         }
     }
 

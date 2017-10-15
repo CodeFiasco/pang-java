@@ -1,10 +1,9 @@
 package org.academiadecodigo.pang.movables.splitables;
 
 import org.academiadecodigo.pang.Game;
+import org.academiadecodigo.pang.GameConstants;
 import org.academiadecodigo.pang.directions.Direction;
 import org.academiadecodigo.pang.position.Position;
-import org.academiadecodigo.simplegraphics.graphics.Color;
-import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 
 /**
  * Created by codecadet on 13/10/2017.
@@ -14,18 +13,16 @@ public class Ball implements Splittable {
     private Position pos;
     private Game g;
     private Direction direction;
+    private int size;
 
 
-    public Ball(Game g) {
-        int x = 20;
-        int y = 20;
-        int width = 20;
-        int height = 20;
-        pos = new Position(x, y, width, height);
-        direction = Direction.RIGHT;
+    public Ball(Game g, int x, int y, int size, Direction dir) {
+        this.size = size;
+
+        pos = new Position(x, y, size, size);
+        direction = dir;
 
         this.g = g;
-
     }
 
 
@@ -53,35 +50,53 @@ public class Ball implements Splittable {
         }
     }
 
-        private void moveUp(){
+    private void moveUp() {
 
-        }
+    }
 
-        private void moveRight(){
-            pos.translate(1,0);
-        }
+    private void moveRight() {
+        pos.translate(1, 0);
+    }
 
-        private void moveDown(){
+    private void moveDown() {
 
-        }
+    }
 
-        private void moveLeft(){
-            pos.translate(-1, 0);
-        }
+    private void moveLeft() {
+        pos.translate(-1, 0);
+    }
 
-        private boolean checkBoundaries(){
-            return (direction == Direction.RIGHT && pos.getX() + pos.getWidth() >= g.getWidth() + g.getPADDING()) ||
-                    (direction == Direction.LEFT && pos.getX() <= g.getPADDING());
-        }
+    private boolean checkBoundaries() {
+        return (direction == Direction.RIGHT && pos.getX() + pos.getWidth() >= g.getWidth() + g.getPADDING()) ||
+                (direction == Direction.LEFT && pos.getX() <= g.getPADDING());
+    }
 
 
     @Override
     public Splittable[] split() {
-        return new Splittable[0];
+
+
+        if (size <= GameConstants.BALL_MIN_SIZE) {
+            pos.delete();
+            return new Splittable[]{};
+        }
+
+        Ball ball1 = new Ball(g, pos.getX(), pos.getY() + 25, size / 2, Direction.RIGHT);
+        Ball ball2 = new Ball(g, pos.getX(), pos.getY() + 25, size / 2, Direction.LEFT);
+
+        pos.delete();
+
+        return new Splittable[]{ball1, ball2};
     }
 
     @Override
     public Position getPos() {
-            return pos;
+        return pos;
+    }
+
+    public String toString() {
+        return "x = " + pos.getX() +
+                "y = " + pos.getY() +
+                "size = " + size;
     }
 }

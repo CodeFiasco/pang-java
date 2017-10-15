@@ -51,6 +51,14 @@ public class Position {
         // Y axis check
         bottomRightCorner = bottomRightCorner && getY() + height >= compare.getY() && getY() + height <= compare.getY() + compare.getHeight();
 
+        if (topLeftCorner || topRightCorner || bottomLeftCorner || bottomRightCorner || compare.overlaps(this, true)) {
+            System.out.println("Bola pequena:");
+            System.out.println(this);
+
+            System.out.println("Bola grande");
+            System.out.println(compare);
+        }
+
         return topLeftCorner || topRightCorner || bottomLeftCorner || bottomRightCorner || compare.overlaps(this, true);
     }
 
@@ -96,6 +104,13 @@ public class Position {
         return height;
     }
 
+    @Override
+    public String toString() {
+        return "x = " + getX() +
+                " y = " + getY() +
+                " width = " + getWidth() +
+                " height = " + getHeight();
+    }
 }
 
 

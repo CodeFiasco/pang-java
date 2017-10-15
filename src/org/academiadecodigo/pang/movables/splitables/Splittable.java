@@ -9,6 +9,5 @@ import org.academiadecodigo.pang.position.Position;
 public interface Splittable extends Movable {
 
     Splittable[] split();
-
     Position getPos();
 }
