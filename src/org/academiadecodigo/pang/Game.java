@@ -72,7 +72,6 @@ public class Game {
                 Splittable[] newBalls = splittable.split();
 
                 for (Splittable n : newBalls) {
-                    System.out.println(n);
                     add[addIndex] = n;
                     addIndex++;
                 }
@@ -83,15 +82,11 @@ public class Game {
         }
 
         for (int i = 0; i < removeIndex; i++) {
-            System.out.println("Removing:");
-            System.out.println(remove[i].getPos());
             remove[i].getPos().delete();
             splittables.remove(remove[i]);
         }
 
         for (int i = 0; i < addIndex; i++) {
-            System.out.println("\nAdding:");
-            System.out.println(add[i].getPos());
             splittables.add(add[i]);
         }
     }

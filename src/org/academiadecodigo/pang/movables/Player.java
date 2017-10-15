@@ -31,7 +31,7 @@ public class Player implements Movable {
             return;
         }
 
-        Position bulletPosition = new Position(pos.getX(), pos.getY(), 10, 10);
+        Position bulletPosition = new Position(pos.getX() + width / 2 - GameConstants.BULLET_WIDTH / 2, g.getHeight() - GameConstants.BULLET_GROWTH_SPEED + GameConstants.PADDING, GameConstants.BULLET_WIDTH, GameConstants.BULLET_GROWTH_SPEED);
         bullet = new Bullet(bulletPosition);
     }
 
