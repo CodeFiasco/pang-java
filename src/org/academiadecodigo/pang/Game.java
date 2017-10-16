@@ -7,8 +7,8 @@ import org.academiadecodigo.pang.movables.splitables.SplittableFactory;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 
-import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.List;
+import java.util.ListIterator;
 
 /**
  * Created by codecadet on 13/10/2017.
@@ -16,7 +16,7 @@ import java.util.LinkedList;
 public class Game {
 
     private Player player;
-    private LinkedList<Splittable> splittables;
+    private List<Splittable> splittables;
     private KeyboardListener kb;
 
     private Rectangle background;
@@ -56,38 +56,25 @@ public class Game {
 
     private void moveObjects() {
 
-        Splittable[] remove = new Splittable[50];
-        int removeIndex = 0;
-
-        Splittable[] add = new Splittable[50];
-        int addIndex = 0;
-
         player.move();
 
-        for (Splittable splittable : splittables) {
+        ListIterator<Splittable> iterator = splittables.listIterator();
+
+        while (iterator.hasNext()) {
+            Splittable splittable = iterator.next();
+
             splittable.move();
 
             if (player.checkBulletHit(splittable.getPos())) {
 
+                iterator.remove();
+
                 Splittable[] newBalls = splittable.split();
 
                 for (Splittable n : newBalls) {
-                    add[addIndex] = n;
-                    addIndex++;
+                    iterator.add(n);
                 }
-
-                remove[removeIndex] = splittable;
-                removeIndex++;
             }
-        }
-
-        for (int i = 0; i < removeIndex; i++) {
-            remove[i].getPos().delete();
-            splittables.remove(remove[i]);
-        }
-
-        for (int i = 0; i < addIndex; i++) {
-            splittables.add(add[i]);
         }
     }
 
