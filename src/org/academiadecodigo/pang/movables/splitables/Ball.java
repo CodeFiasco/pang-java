@@ -15,6 +15,7 @@ public class Ball implements Splittable {
     private Direction horizontalDirection;
     private Direction verticalDirection;
     private int size;
+    private int speed;
 
 
     public Ball(Game g, int x, int y, int size, Direction dir) {
@@ -37,6 +38,15 @@ public class Ball implements Splittable {
 
         if (checkVerticalBoundaries()) {
             verticalDirection = verticalDirection.getOpposite();
+
+            if (verticalDirection == Direction.UP) {
+                int currentPosY = pos.getY();
+                int maxY = g.getHeight() + g.getPADDING() - size;
+
+                pos.translate(0, maxY - currentPosY);
+                return;
+            }
+
         }
 
         switch (horizontalDirection) {
@@ -49,7 +59,7 @@ public class Ball implements Splittable {
                 break;
         }
 
-        switch (verticalDirection){
+        switch (verticalDirection) {
 
             case UP:
                 moveUp();
@@ -61,19 +71,43 @@ public class Ball implements Splittable {
     }
 
     private void moveUp() {
-        pos.translate(0, -1);
+
+        int pxHeight = g.getHeight() - GameConstants.BALL_MAX_HEIGHT;
+        int speedInterval = pxHeight / 10;
+        int speed = -1;
+
+        for (int i = 10, j = 1; i > 0; i--, j++) {
+
+            if (pos.getY() > g.getHeight() - (speedInterval * j) - GameConstants.PADDING) {
+                speed = speed * i;
+                break;
+            }
+        }
+
+        pos.translate(0, speed);
     }
 
     private void moveRight() {
-        pos.translate(1, 0);
+        pos.translate(2, 0);
     }
 
     private void moveDown() {
-        pos.translate(0,1);
+        int pxHeight = g.getHeight() - GameConstants.BALL_MAX_HEIGHT;
+        int speedInterval = pxHeight / 10;
+        int speed = 1;
+
+        for (int i = 10, j = 1; i > 0; i--, j++) {
+
+            if (pos.getY() > g.getHeight() - (speedInterval * j) - GameConstants.PADDING) {
+                this.speed = speed * i;
+                break;
+            }
+        }
+        pos.translate(0, this.speed);
     }
 
     private void moveLeft() {
-        pos.translate(-1, 0);
+        pos.translate(-2, 0);
     }
 
     private boolean checkHorizontalBoundaries() {
@@ -82,8 +116,8 @@ public class Ball implements Splittable {
     }
 
     private boolean checkVerticalBoundaries() {
-        return (verticalDirection == Direction.UP && pos.getY() <= GameConstants.PADDING + 20) ||
-                (verticalDirection == Direction.DOWN && pos.getY() + size >= g.getHeight() + GameConstants.PADDING);
+        return (verticalDirection == Direction.UP && pos.getY() <= GameConstants.PADDING + GameConstants.BALL_MAX_HEIGHT) ||
+                (verticalDirection == Direction.DOWN && pos.getY() + size + speed >= g.getHeight() + GameConstants.PADDING);
     }
 
     @Override
