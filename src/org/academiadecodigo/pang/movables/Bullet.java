@@ -24,7 +24,7 @@ public class Bullet implements Movable {
     public boolean checkBulletHit(Position splittable) {
 
         for (Position pos : positions) {
-            if (pos.overlaps(splittable)) {
+            if (pos.overlaps(splittable) || splittable.overlaps(pos)) {
                 delete();
                 return true;
             }
