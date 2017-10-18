@@ -22,8 +22,8 @@ public class Game {
     private Rectangle background;
     private final int PADDING = 10;
 
-    private int width = 900;
-    private int height = 500;
+    private int width = GameConstants.DEFAULT_GAME_WIDTH;
+    private int height = GameConstants.DEFAULT_GAME_HEIGHT;
     private int delay = 10;
 
     public Game() {
