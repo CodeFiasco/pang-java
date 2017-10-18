@@ -18,6 +18,7 @@ public class Game {
     private Player player;
     private boolean playerDead = false;
     private List<Splittable> splittables;
+    private int level = 0;
 
     private Rectangle background;
     private final int PADDING = GameConstants.PADDING;
@@ -44,7 +45,7 @@ public class Game {
         player = new Player(this);
         new KeyboardListener(player, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_SPACE);
 
-        splittables = SplittableFactory.getSplittableList(this);
+        splittables = SplittableFactory.getSplittableList(this, level);
 
         while (true) {
             moveObjects();
@@ -55,8 +56,15 @@ public class Game {
                     s.getPos().delete();
                 }
 
-                splittables = SplittableFactory.getSplittableList(this);
+                splittables = SplittableFactory.getSplittableList(this, level);
                 playerDead = false;
+            }
+
+            if (splittables.size() == 0) {
+
+                level++;
+
+                splittables = SplittableFactory.getSplittableList(this, level);
             }
 
             Thread.sleep(delay);

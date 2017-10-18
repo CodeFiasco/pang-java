@@ -6,8 +6,8 @@ package org.academiadecodigo.pang;
 public abstract class GameConstants {
 
     // Game
-    public static final int DEFAULT_GAME_WIDTH = 900;
-    public static final int DEFAULT_GAME_HEIGHT = 640;
+    public static final int DEFAULT_GAME_WIDTH = 1280;
+    public static final int DEFAULT_GAME_HEIGHT = 800;
     public static final int PADDING = 10;
     public static final int DELAY = 10;
 

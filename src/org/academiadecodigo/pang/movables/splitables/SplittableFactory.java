@@ -10,12 +10,25 @@ import java.util.LinkedList;
  */
 public abstract class SplittableFactory {
 
-    public static LinkedList<Splittable> getSplittableList(Game g) {
+    public static LinkedList<Splittable> getSplittableList(Game g, int level) {
 
         LinkedList<Splittable> splittables = new LinkedList<>();
 
-        Ball ball = new Ball(g, 40, 40, 100, Direction.RIGHT);
-        splittables.add(ball);
+        switch (level) {
+            case 0:
+                Ball ball = new Ball(g, 40, 40, 100, Direction.RIGHT);
+                splittables.add(ball);
+                break;
+
+            case 1:
+                Ball b = new Ball(g, 40, 40, 100, Direction.RIGHT);
+                splittables.add(b);
+
+                b = new Ball(g, g.getWidth() - 40 - 100, 40, 100, Direction.LEFT);
+                splittables.add(b);
+                break;
+        }
+
 
         return splittables;
     }
