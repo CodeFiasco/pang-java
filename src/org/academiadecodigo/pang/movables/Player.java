@@ -22,7 +22,7 @@ public class Player implements Movable {
 
     public Player(Game g) {
         this.g = g;
-        pos = new Position((g.getPADDING() + (g.getWidth() / 2 - width / 2)), (g.getPADDING() + (g.getHeight() - height)), width, height);
+        pos = new Position((g.getPADDING() + (g.getWidth() / 2 - width / 2)), (g.getPADDING() + (g.getHeight() - height)), width, height, "player.png");
     }
 
 
@@ -32,7 +32,7 @@ public class Player implements Movable {
             return;
         }
 
-        Position bulletPosition = new Position(pos.getX() + width / 2 - GameConstants.BULLET_WIDTH / 2, g.getHeight() - GameConstants.BULLET_GROWTH_SPEED + GameConstants.PADDING, GameConstants.BULLET_WIDTH, GameConstants.BULLET_GROWTH_SPEED);
+        Position bulletPosition = new Position(pos.getX() + width / 2 - GameConstants.BULLET_WIDTH / 2, g.getHeight() - GameConstants.BULLET_GROWTH_SPEED + GameConstants.PADDING, GameConstants.BULLET_WIDTH, GameConstants.BULLET_GROWTH_SPEED, "rope.png");
         bullet = new Bullet(bulletPosition);
     }
 

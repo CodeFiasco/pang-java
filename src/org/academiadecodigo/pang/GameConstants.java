@@ -17,8 +17,8 @@ public abstract class GameConstants {
     public static final int BALL_SPEED_CHANGE_LEVELS = 15;
 
     // Player
-    public static final int PLAYER_WIDTH = 40;
-    public static final int PLAYER_HEIGHT = 80;
+    public static final int PLAYER_WIDTH = 96;
+    public static final int PLAYER_HEIGHT = 96;
     public static final int PLAYER_SPEED = 10;
 
     // Bullet

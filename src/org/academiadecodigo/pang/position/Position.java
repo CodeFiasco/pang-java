@@ -1,7 +1,7 @@
 package org.academiadecodigo.pang.position;
 
-import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
+import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 /**
  * Created by codecadet on 13/10/2017.
@@ -10,23 +10,22 @@ public class Position {
 
     private int width;
     private int height;
-    private Rectangle rectangle;
+    private Picture representation;
 
-    public Position(int x, int y, int width, int height) {
+    public Position(int x, int y, int width, int height, String image) {
         this.width = width;
         this.height = height;
 
-        rectangle = new Rectangle(x, y, width, height);
-        rectangle.setColor(Color.BLUE);
-        rectangle.fill();
+        representation = new Picture(x, y, image);
+        representation.draw();
     }
 
     public void translate(int dx,int dy){
-        rectangle.translate(dx, dy);
+        representation.translate(dx, dy);
     }
 
     public void delete() {
-        rectangle.delete();
+        representation.delete();
     }
 
     public boolean overlaps(Position compare) {
@@ -55,11 +54,11 @@ public class Position {
     }
 
     public int getX() {
-        return rectangle.getX();
+        return representation.getX();
     }
 
     public int getY() {
-        return rectangle.getY();
+        return representation.getY();
     }
 
     public int getWidth() {
