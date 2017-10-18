@@ -41,7 +41,7 @@ public class Game {
     public void init() throws InterruptedException {
 
         player = new Player(this);
-        KeyboardListener kb = new KeyboardListener(player, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_SPACE);
+        new KeyboardListener(player, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_SPACE);
 
         splittables = SplittableFactory.getSplittableList(this);
 

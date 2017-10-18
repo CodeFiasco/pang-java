@@ -14,6 +14,7 @@ public abstract class GameConstants {
     // Balls
     public static final int BALL_MIN_SIZE = 25;
     public static final int BALL_MAX_HEIGHT = 20;
+    public static final int BALL_SPEED_CHANGE_LEVELS = 15;
 
     // Player
     public static final int PLAYER_WIDTH = 40;

@@ -73,10 +73,10 @@ public class Ball implements Splittable {
     private void moveUp() {
 
         int pxHeight = g.getHeight() - GameConstants.BALL_MAX_HEIGHT;
-        int speedInterval = pxHeight / 10;
+        int speedInterval = pxHeight / GameConstants.BALL_SPEED_CHANGE_LEVELS;
         int speed = -1;
 
-        for (int i = 10, j = 1; i > 0; i--, j++) {
+        for (int i = GameConstants.BALL_SPEED_CHANGE_LEVELS, j = 1; i > 0; i--, j++) {
 
             if (pos.getY() > g.getHeight() - (speedInterval * j) - GameConstants.PADDING) {
                 speed = speed * i;
@@ -93,10 +93,10 @@ public class Ball implements Splittable {
 
     private void moveDown() {
         int pxHeight = g.getHeight() - GameConstants.BALL_MAX_HEIGHT;
-        int speedInterval = pxHeight / 10;
+        int speedInterval = pxHeight / GameConstants.BALL_SPEED_CHANGE_LEVELS;
         int speed = 1;
 
-        for (int i = 10, j = 1; i > 0; i--, j++) {
+        for (int i = GameConstants.BALL_SPEED_CHANGE_LEVELS, j = 1; i > 0; i--, j++) {
 
             if (pos.getY() > g.getHeight() - (speedInterval * j) - GameConstants.PADDING) {
                 this.speed = speed * i;
