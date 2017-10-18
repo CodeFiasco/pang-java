@@ -3,6 +3,7 @@ package org.academiadecodigo.pang.movables;
 import org.academiadecodigo.pang.Game;
 import org.academiadecodigo.pang.GameConstants;
 import org.academiadecodigo.pang.directions.Direction;
+import org.academiadecodigo.pang.movables.splitables.Splittable;
 import org.academiadecodigo.pang.position.Position;
 
 /**
@@ -35,8 +36,8 @@ public class Player implements Movable {
         bullet = new Bullet(bulletPosition);
     }
 
-    public boolean checkIsDead(Position ball) {
-        return pos.overlaps(ball);
+    public boolean checkIsDead(Splittable ball) {
+        return pos.overlaps(ball.getPos());
     }
 
     public boolean checkBulletHit(Position ball) {

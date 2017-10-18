@@ -16,6 +16,7 @@ import java.util.ListIterator;
 public class Game {
 
     private Player player;
+    private boolean playerDead = false;
     private List<Splittable> splittables;
 
     private Rectangle background;
@@ -48,6 +49,16 @@ public class Game {
         while (true) {
             moveObjects();
 
+            if (playerDead) {
+
+                for (Splittable s : splittables) {
+                    s.getPos().delete();
+                }
+
+                splittables = SplittableFactory.getSplittableList(this);
+                playerDead = false;
+            }
+
             Thread.sleep(delay);
         }
 
@@ -63,6 +74,11 @@ public class Game {
         while (iterator.hasNext()) {
             Splittable splittable = iterator.next();
             splittable.move();
+
+            // Check if bullet hit player
+            if (player.checkIsDead(splittable)) {
+                playerDead = true;
+            }
 
             // Check if bullet hits splittable
             if (player.checkBulletHit(splittable.getPos())) {
