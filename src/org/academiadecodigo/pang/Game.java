@@ -20,11 +20,11 @@ public class Game {
     private KeyboardListener kb;
 
     private Rectangle background;
-    private final int PADDING = 10;
+    private final int PADDING = GameConstants.PADDING;
 
     private int width = GameConstants.DEFAULT_GAME_WIDTH;
     private int height = GameConstants.DEFAULT_GAME_HEIGHT;
-    private int delay = 10;
+    private int delay = GameConstants.DELAY;
 
     public Game() {
         background = new Rectangle(PADDING, PADDING, width, height);
