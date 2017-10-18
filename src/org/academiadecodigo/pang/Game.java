@@ -17,7 +17,6 @@ public class Game {
 
     private Player player;
     private List<Splittable> splittables;
-    private KeyboardListener kb;
 
     private Rectangle background;
     private final int PADDING = GameConstants.PADDING;
@@ -42,7 +41,7 @@ public class Game {
     public void init() throws InterruptedException {
 
         player = new Player(this);
-        kb = new KeyboardListener(player, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_SPACE);
+        KeyboardListener kb = new KeyboardListener(player, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_SPACE);
 
         splittables = SplittableFactory.getSplittableList(this);
 
@@ -60,15 +59,18 @@ public class Game {
 
         ListIterator<Splittable> iterator = splittables.listIterator();
 
+        // Loop through splittable list
         while (iterator.hasNext()) {
             Splittable splittable = iterator.next();
-
             splittable.move();
 
+            // Check if bullet hits splittable
             if (player.checkBulletHit(splittable.getPos())) {
 
+                // Remove splittable from list
                 iterator.remove();
 
+                // Get resulting splittables and add them to the list
                 Splittable[] newBalls = splittable.split();
 
                 for (Splittable n : newBalls) {
