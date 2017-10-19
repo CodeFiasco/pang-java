@@ -5,6 +5,7 @@ import org.academiadecodigo.pang.GameConstants;
 import org.academiadecodigo.pang.directions.Direction;
 import org.academiadecodigo.pang.movables.splitables.Splittable;
 import org.academiadecodigo.pang.position.Position;
+import org.academiadecodigo.pang.position.YCoordinates;
 
 /**
  * Created by codecadet on 13/10/2017.
@@ -27,15 +28,7 @@ public class Ball implements Splittable {
         horizontalDirection = dir;
         verticalDirection = Direction.UP;
 
-        if (size == 25) {
-
-            ballBehaviour = new SmallBallBehaviour(y, size);
-        }
-
-        if (size == 100) {
-
-            ballBehaviour = new LargeBallBehaviour(y, size);
-        }
+        ballBehaviour = new BallBehaviour(y, size);
 
         this.g = g;
     }
@@ -113,7 +106,17 @@ public class Ball implements Splittable {
     }
 
     private boolean checkVerticalBoundaries() {
-        return (verticalDirection == Direction.UP && pos.getY() <= Game.getHeight() - (GameConstants.PLAYER_HEIGHT + GameConstants.BALL_MIN_SIZE + 50)) ||
+
+        int jumps = 1;
+
+        if (size == 50) {
+            jumps = 2;
+        }
+        if (size == 100) {
+            jumps = 3;
+        }
+
+        return (verticalDirection == Direction.UP && pos.getY() <= YCoordinates.converter((GameConstants.PLAYER_HEIGHT + GameConstants.BALL_MIN_SIZE + 55) * jumps)) ||
                 (verticalDirection == Direction.DOWN && pos.getY() + size + speed >= g.getHeight() + GameConstants.PADDING);
     }
 

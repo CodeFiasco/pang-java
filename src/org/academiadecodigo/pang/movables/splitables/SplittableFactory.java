@@ -18,7 +18,7 @@ public abstract class SplittableFactory {
 
         switch (level) {
             case 0:
-                ball = new Ball(g, 40, 40, 25, Direction.RIGHT);
+                ball = new Ball(g, 40, 40, 100, Direction.RIGHT);
                 splittables.add(ball);
                 break;
 
