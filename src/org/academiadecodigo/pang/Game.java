@@ -24,7 +24,7 @@ public class Game {
     private final int PADDING = GameConstants.PADDING;
 
     private int width = GameConstants.DEFAULT_GAME_WIDTH;
-    private int height = GameConstants.DEFAULT_GAME_HEIGHT;
+    private static int height = GameConstants.DEFAULT_GAME_HEIGHT;
     private int delay = GameConstants.DELAY;
 
     public Game() {
@@ -112,7 +112,7 @@ public class Game {
         return width;
     }
 
-    public int getHeight() {
+    public static int getHeight() {
         return height;
     }
 
