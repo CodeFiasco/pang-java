@@ -98,4 +98,8 @@ public class Player implements Movable {
             pos.translate(-speed, 0);
         }
     }
+
+    public Position getPos() {
+        return pos;
+    }
 }

@@ -4,7 +4,9 @@ import org.academiadecodigo.pang.keyboardListener.KeyboardListener;
 import org.academiadecodigo.pang.movables.Player;
 import org.academiadecodigo.pang.movables.splitables.Splittable;
 import org.academiadecodigo.pang.movables.splitables.SplittableFactory;
+import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
+import org.academiadecodigo.simplegraphics.graphics.Text;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 
 import java.util.List;
@@ -71,14 +73,22 @@ public class Game {
                 splittable.getPos().delete();
                 iterator.remove();
             }
+            generateMessage("You died!!", Color.RED, 3000);
             playerDead = false;
+            level = 0;
+
+        } else {    //new level
+            generateMessage("Level Complete!!!", Color.YELLOW, 2000);
+            level++;
         }
 
-        if (splittables.size() == 0) {
+        //Start game messages
+        generateMessage("Get Ready...", Color.GREEN, 2000);
+        generateMessage("3", Color.GREEN, 1000);
+        generateMessage("2", Color.GREEN, 1000);
+        generateMessage("1", Color.GREEN, 1000);
+        generateMessage("GOOOOOOO!!!", Color.GREEN, 1000);
 
-        }
-
-        Thread.sleep(levelDelay);
         splittables = SplittableFactory.getSplittableList(this, level);
 
 
@@ -114,6 +124,19 @@ public class Game {
                 }
             }
         }
+    }
+
+    private void generateMessage(String message, Color color, int sleepTime) throws InterruptedException {
+
+        int grownFactor = 5;
+
+        Text text = new Text(GameConstants.DEFAULT_GAME_WIDTH / 2, GameConstants.DEFAULT_GAME_HEIGHT / 2, message);
+        text.setColor(color);
+        text.translate(-(text.getWidth() / 2), -(text.getHeight() / 2));
+        text.grow(text.getWidth() * grownFactor, text.getHeight() * grownFactor);
+        text.draw();
+        Thread.sleep(sleepTime);
+        text.delete();
     }
 
     private boolean checkCollisions() {
