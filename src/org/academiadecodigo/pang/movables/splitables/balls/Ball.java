@@ -23,11 +23,19 @@ public class Ball implements Splittable {
     public Ball(Game g, int x, int y, int size, Direction dir) {
         this.size = size;
 
-        pos = new Position(x, y, size, size, "red-ball-" + size +".png");
+        pos = new Position(x, y, size, size, "red-ball-" + size + ".png");
         horizontalDirection = dir;
         verticalDirection = Direction.UP;
 
-        ballBehaviour = new SmallBallBehaviour(y, size);
+        if (size == 25) {
+
+            ballBehaviour = new SmallBallBehaviour(y, size);
+        }
+
+        if (size == 100) {
+
+            ballBehaviour = new LargeBallBehaviour(y, size);
+        }
 
         this.g = g;
     }
@@ -54,7 +62,6 @@ public class Ball implements Splittable {
             }
 
         }
-
 
 
         switch (verticalDirection) {
