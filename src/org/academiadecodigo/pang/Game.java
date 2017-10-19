@@ -26,6 +26,7 @@ public class Game {
     private int width = GameConstants.DEFAULT_GAME_WIDTH;
     private int height = GameConstants.DEFAULT_GAME_HEIGHT;
     private int delay = GameConstants.DELAY;
+    private int levelDelay = GameConstants.LEVEL_DELAY;
 
     public Game() {
         background = new Rectangle(PADDING, PADDING, width, height);
@@ -47,28 +48,39 @@ public class Game {
 
         splittables = SplittableFactory.getSplittableList(this, level);
 
+
         while (true) {
             moveObjects();
 
-            if (playerDead) {
-
-                for (Splittable s : splittables) {
-                    s.getPos().delete();
-                }
-
-                splittables = SplittableFactory.getSplittableList(this, level);
-                playerDead = false;
-            }
-
-            if (splittables.size() == 0) {
-
-                level++;
-
-                splittables = SplittableFactory.getSplittableList(this, level);
+            if (playerDead || splittables.size() == 0) {
+                newLevel();
             }
 
             Thread.sleep(delay);
         }
+
+    }
+
+    private void newLevel() throws InterruptedException {
+
+        ListIterator<Splittable> iterator = splittables.listIterator();
+
+        if (playerDead) {
+            while (iterator.hasNext()) {
+                Splittable splittable = iterator.next();
+                splittable.getPos().delete();
+                iterator.remove();
+            }
+            playerDead = false;
+        }
+
+        if (splittables.size() == 0) {
+
+        }
+
+        Thread.sleep(levelDelay);
+        splittables = SplittableFactory.getSplittableList(this, level);
+
 
     }
 

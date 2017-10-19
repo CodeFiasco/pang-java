@@ -10,6 +10,7 @@ public abstract class GameConstants {
     public static final int DEFAULT_GAME_HEIGHT = 800;
     public static final int PADDING = 10;
     public static final int DELAY = 10;
+    public static final int LEVEL_DELAY = 2000;
 
     // Balls
     public static final int BALL_MIN_SIZE = 25;
