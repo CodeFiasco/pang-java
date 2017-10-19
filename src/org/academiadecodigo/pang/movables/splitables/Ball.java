@@ -49,15 +49,6 @@ public class Ball implements Splittable {
 
         }
 
-        switch (horizontalDirection) {
-
-            case RIGHT:
-                moveRight();
-                break;
-            case LEFT:
-                moveLeft();
-                break;
-        }
 
         switch (verticalDirection) {
 
@@ -66,6 +57,22 @@ public class Ball implements Splittable {
                 break;
             case DOWN:
                 moveDown();
+                break;
+        }
+
+        if (horizontalDirection == null) {
+            return;
+        }
+
+        switch (horizontalDirection) {
+
+            case RIGHT:
+                moveRight();
+                break;
+            case LEFT:
+                moveLeft();
+                break;
+            default:
                 break;
         }
     }

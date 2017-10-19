@@ -13,20 +13,42 @@ public abstract class SplittableFactory {
     public static LinkedList<Splittable> getSplittableList(Game g, int level) {
 
         LinkedList<Splittable> splittables = new LinkedList<>();
+        Splittable[] objects;
+        Ball ball;
 
         switch (level) {
             case 0:
-                Ball ball = new Ball(g, 40, 40, 100, Direction.RIGHT);
-                splittables.add(ball);
+                ball = new Ball(g, 40, 40, 100, Direction.RIGHT);
+                objects = new Splittable[]{ball};
                 break;
 
             case 1:
-                Ball b = new Ball(g, 40, 40, 100, Direction.RIGHT);
-                splittables.add(b);
+                objects = new Splittable[2];
 
-                b = new Ball(g, g.getWidth() - 40 - 100, 40, 100, Direction.LEFT);
-                splittables.add(b);
+                ball = new Ball(g, 40, 40, 100, Direction.RIGHT);
+                objects[0] = ball;
+
+                ball = new Ball(g, g.getWidth() - 40 - 100, 40, 100, Direction.LEFT);
+                objects[1] = ball;
                 break;
+
+            default:
+            case 2:
+                objects = new Splittable[3];
+
+                ball = new Ball(g, 40, 40, 100, Direction.RIGHT);
+                objects[0] = ball;
+
+                ball = new Ball(g, g.getWidth() - 40 - 100, 40, 100, Direction.LEFT);
+                objects[1] = ball;
+
+                ball = new Ball(g, g.getWidth() / 2 - 50, 40, 100, null);
+                objects[2] = ball;
+                break;
+        }
+
+        for (Splittable s : objects) {
+            splittables.add(s);
         }
 
 
