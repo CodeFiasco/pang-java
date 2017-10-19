@@ -37,7 +37,7 @@ public class Player implements Movable {
     }
 
     public boolean checkIsDead(Splittable ball) {
-        return pos.overlaps(ball.getPos());
+        return pos.overlaps(ball.getPos()) || ball.getPos().overlaps(pos);
     }
 
     public boolean checkBulletHit(Position ball) {
