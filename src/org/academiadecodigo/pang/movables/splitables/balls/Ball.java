@@ -1,8 +1,9 @@
-package org.academiadecodigo.pang.movables.splitables;
+package org.academiadecodigo.pang.movables.splitables.balls;
 
 import org.academiadecodigo.pang.Game;
 import org.academiadecodigo.pang.GameConstants;
 import org.academiadecodigo.pang.directions.Direction;
+import org.academiadecodigo.pang.movables.splitables.Splittable;
 import org.academiadecodigo.pang.position.Position;
 
 /**
@@ -16,6 +17,7 @@ public class Ball implements Splittable {
     private Direction verticalDirection;
     private int size;
     private int speed;
+    private BallBehaviour ballBehaviour;
 
 
     public Ball(Game g, int x, int y, int size, Direction dir) {
@@ -25,12 +27,16 @@ public class Ball implements Splittable {
         horizontalDirection = dir;
         verticalDirection = Direction.UP;
 
+        ballBehaviour = new SmallBallBehaviour(y, size);
+
         this.g = g;
     }
 
 
     @Override
     public void move() {
+
+        speed = ballBehaviour.calculateYSpeed(pos.getY());
 
         if (checkHorizontalBoundaries()) {
             horizontalDirection = horizontalDirection.getOpposite();
@@ -48,6 +54,7 @@ public class Ball implements Splittable {
             }
 
         }
+
 
 
         switch (verticalDirection) {
@@ -78,20 +85,7 @@ public class Ball implements Splittable {
     }
 
     private void moveUp() {
-
-        int pxHeight = g.getHeight() - GameConstants.BALL_MAX_HEIGHT;
-        int speedInterval = pxHeight / GameConstants.BALL_SPEED_CHANGE_LEVELS;
-        int speed = -1;
-
-        for (int i = GameConstants.BALL_SPEED_CHANGE_LEVELS, j = 1; i > 0; i--, j++) {
-
-            if (pos.getY() > g.getHeight() - (speedInterval * j) - GameConstants.PADDING) {
-                speed = speed * i;
-                break;
-            }
-        }
-
-        pos.translate(0, speed);
+        pos.translate(0, speed * -1);
     }
 
     private void moveRight() {
@@ -99,18 +93,7 @@ public class Ball implements Splittable {
     }
 
     private void moveDown() {
-        int pxHeight = g.getHeight() - GameConstants.BALL_MAX_HEIGHT;
-        int speedInterval = pxHeight / GameConstants.BALL_SPEED_CHANGE_LEVELS;
-        int speed = 1;
-
-        for (int i = GameConstants.BALL_SPEED_CHANGE_LEVELS, j = 1; i > 0; i--, j++) {
-
-            if (pos.getY() > g.getHeight() - (speedInterval * j) - GameConstants.PADDING) {
-                this.speed = speed * i;
-                break;
-            }
-        }
-        pos.translate(0, this.speed);
+        pos.translate(0, speed);
     }
 
     private void moveLeft() {
@@ -123,7 +106,7 @@ public class Ball implements Splittable {
     }
 
     private boolean checkVerticalBoundaries() {
-        return (verticalDirection == Direction.UP && pos.getY() <= GameConstants.PADDING + GameConstants.BALL_MAX_HEIGHT) ||
+        return (verticalDirection == Direction.UP && pos.getY() <= Game.getHeight() - (GameConstants.PLAYER_HEIGHT + GameConstants.BALL_MIN_SIZE + 50)) ||
                 (verticalDirection == Direction.DOWN && pos.getY() + size + speed >= g.getHeight() + GameConstants.PADDING);
     }
 
