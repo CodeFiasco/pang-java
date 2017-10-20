@@ -63,7 +63,7 @@ public class Player implements Movable {
         // mechanics = new RopeMechanics(bulletPosition);
     }
 
-    public boolean checkIsDead(Position pos) {
+    public boolean checkHit(Position pos) {
         return this.pos.overlaps(pos) || pos.overlaps(this.pos);
     }
 

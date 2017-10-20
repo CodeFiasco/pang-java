@@ -21,6 +21,8 @@ import java.util.ListIterator;
  */
 public class Game {
 
+    private final int PADDING = GameConstants.PADDING;
+
     private Player player;
     private boolean playerDead = false;
     private List<Splittable> splittables;
@@ -29,20 +31,9 @@ public class Game {
     private Picture[] backgrounds;
     private int level = 1;
 
-    private final int PADDING = GameConstants.PADDING;
-
     private static int width = GameConstants.DEFAULT_GAME_WIDTH;
     private static int height = GameConstants.DEFAULT_GAME_HEIGHT;
     private int delay = GameConstants.DELAY;
-    private int levelDelay = GameConstants.LEVEL_DELAY;
-
-    public Game() {
-    }
-
-    public Game(int width, int height) {
-        this.width = width;
-        this.height = height;
-    }
 
     public void init() throws InterruptedException {
 
@@ -55,27 +46,23 @@ public class Game {
         player = new Player(this);
         new KeyboardListener(player, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_SPACE);
 
-
         splittables = SplittableFactory.getSplittableList(this, level);
         powerUps = new LinkedList<>();
 
         generateMessage("Level " + level, Color.YELLOW, 500);
         gamePreparationMessages();
-
-
     }
 
     public void start() throws InterruptedException {
-        while (true) {
+
+        while (!playerDead && splittables.size() > 0) {
+
             moveObjects();
-
-            if (playerDead || splittables.size() == 0) {
-                newLevel();
-            }
-
             Thread.sleep(delay);
         }
 
+        newLevel();
+        start();
     }
 
     private void newLevel() throws InterruptedException {
@@ -138,21 +125,27 @@ public class Game {
 
         player.move();
 
+        movePackages();
+        moveSplittables();
+    }
+
+    public void movePackages() {
         ListIterator<Package> powerUpIterator = powerUps.listIterator();
 
         while (powerUpIterator.hasNext()) {
             Package pw = powerUpIterator.next();
             pw.move();
 
-            if (player.checkIsDead(pw.getPos())) {
+            if (player.checkHit(pw.getPos())) {
 
                 powerUpIterator.remove();
                 player.setBulletType(pw.getType());
                 pw.getPos().delete();
             }
         }
+    }
 
-
+    public void moveSplittables() {
         ListIterator<Splittable> iterator = splittables.listIterator();
 
         // Loop through splittable list
@@ -161,7 +154,7 @@ public class Game {
             splittable.move();
 
             // Check if bullet hit player
-            if (player.checkIsDead(splittable.getPos())) {
+            if (player.checkHit(splittable.getPos())) {
                 playerDead = true;
             }
 
@@ -202,10 +195,6 @@ public class Game {
         text.draw();
         Thread.sleep(sleepTime);
         text.delete();
-    }
-
-    private boolean checkCollisions() {
-        return false;
     }
 
     public static int getWidth() {
