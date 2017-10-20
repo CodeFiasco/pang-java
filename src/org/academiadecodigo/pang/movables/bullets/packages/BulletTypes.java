@@ -1,11 +1,13 @@
-package org.academiadecodigo.pang.movables.bullets;
+package org.academiadecodigo.pang.movables.bullets.packages;
 
 /**
  * Created by codecadet on 20/10/17.
  */
 public enum BulletTypes {
     ROPE,
-    HOOK;
+    HOOK,
+    GUN,
+    BULLETBALL;
 
     public static BulletTypes getRandom(){
         return HOOK;

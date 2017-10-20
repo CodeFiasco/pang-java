@@ -2,16 +2,15 @@ package org.academiadecodigo.pang;
 
 import org.academiadecodigo.pang.keyboardListener.KeyboardListener;
 import org.academiadecodigo.pang.movables.Player;
-import org.academiadecodigo.pang.movables.bullets.BulletTypes;
-import org.academiadecodigo.pang.movables.bullets.Hook;
-import org.academiadecodigo.pang.movables.bullets.Bullet;
+import org.academiadecodigo.pang.movables.bullets.packages.BulletTypes;
+import org.academiadecodigo.pang.movables.bullets.packages.Hook;
+import org.academiadecodigo.pang.movables.bullets.packages.Package;
 import org.academiadecodigo.pang.movables.splitables.Splittable;
 import org.academiadecodigo.pang.movables.splitables.SplittableFactory;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.graphics.Text;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
-import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -25,7 +24,7 @@ public class Game {
     private Player player;
     private boolean playerDead = false;
     private List<Splittable> splittables;
-    private List<Bullet> powerUps;
+    private List<Package> powerUps;
     private int level = 0;
 
     private Rectangle background;
@@ -78,7 +77,7 @@ public class Game {
 
     private void newLevel() throws InterruptedException {
 
-        for (Bullet b : powerUps) {
+        for (Package b : powerUps) {
             b.getPos().delete();
         }
 
@@ -125,10 +124,10 @@ public class Game {
 
         player.move();
 
-        ListIterator<Bullet> powerUpIterator = powerUps.listIterator();
+        ListIterator<Package> powerUpIterator = powerUps.listIterator();
 
         while (powerUpIterator.hasNext()) {
-            Bullet pw = powerUpIterator.next();
+            Package pw = powerUpIterator.next();
             pw.move();
 
             if (player.checkIsDead(pw.getPos())) {

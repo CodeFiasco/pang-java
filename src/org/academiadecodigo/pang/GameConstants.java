@@ -25,7 +25,7 @@ public abstract class GameConstants {
     public static final int PLAYER_HEIGHT = 96;
     public static final int PLAYER_SPEED = 10;
 
-    // BulletMechanic
+    // BulletMechanics
     public static final int BULLET_GROWTH_SPEED = 10;
     public static final int BULLET_WIDTH = 10;
 

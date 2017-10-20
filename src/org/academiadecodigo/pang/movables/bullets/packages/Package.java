@@ -1,19 +1,20 @@
-package org.academiadecodigo.pang.movables.bullets;
+package org.academiadecodigo.pang.movables.bullets.packages;
 
 import org.academiadecodigo.pang.Game;
 import org.academiadecodigo.pang.GameConstants;
 import org.academiadecodigo.pang.movables.Movable;
+import org.academiadecodigo.pang.movables.bullets.packages.BulletTypes;
 import org.academiadecodigo.pang.position.Position;
 
 /**
  * Created by codecadet on 20/10/17.
  */
-public abstract class Bullet implements Movable{
+public abstract class Package implements Movable{
 
     private BulletTypes type;
     private Position position;
 
-    public Bullet(int x, int y, BulletTypes type) {
+    public Package(int x, int y, BulletTypes type) {
 
         position = new Position(x, y, 50, 50, "anchor.png");
         this.type = type;
