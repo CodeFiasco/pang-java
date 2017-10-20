@@ -3,7 +3,6 @@ package org.academiadecodigo.pang;
 import org.academiadecodigo.pang.keyboardListener.KeyboardListener;
 import org.academiadecodigo.pang.movables.Player;
 import org.academiadecodigo.pang.movables.bullets.packages.BulletTypes;
-import org.academiadecodigo.pang.movables.bullets.packages.Hook;
 import org.academiadecodigo.pang.movables.bullets.packages.Package;
 import org.academiadecodigo.pang.movables.bullets.packages.PackageFactory;
 import org.academiadecodigo.pang.movables.splitables.Splittable;

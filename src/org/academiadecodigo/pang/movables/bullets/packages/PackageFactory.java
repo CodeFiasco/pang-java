@@ -11,15 +11,15 @@ public abstract class PackageFactory {
 
         switch (rand) {
             case GUN:
-                return new Gun(x, y);
+                return new GunPackage(x, y);
 
             case HOOK:
-                return new Hook(x, y);
+                return new HookPackage(x, y);
 
             case BULLET_BALL:
-                return new BulletBall(x, y);
+                return new BallPackage(x, y);
         }
 
-        return new Rope(x, y);
+        return new RopePackage(x, y);
     }
 }

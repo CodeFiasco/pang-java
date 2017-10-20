@@ -7,7 +7,7 @@ public enum BulletTypes {
     ROPE("grappling.png"),
     HOOK("anchor.png"),
     GUN("gun.png"),
-    BULLET_BALL("red-ball-50.png");
+    BALL("red-ball-50.png");
 
     private String imageSource;
 
