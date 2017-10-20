@@ -33,7 +33,7 @@ public class Ball implements Splittable {
 
         jumpUp = 30;
 
-        if (y > YCoordinates.converter((GameConstants.PLAYER_HEIGHT + GameConstants.BALL_MIN_SIZE + 55) * size.getHeightLevels())) {
+        if (y > GameConstants.PADDING + GameConstants.GAME_HEIGHT - ((GameConstants.PLAYER_HEIGHT + GameConstants.BALL_MIN_SIZE + 55) * size.getHeightLevels())) {
             jumpUp = 0;
         }
 
@@ -56,7 +56,7 @@ public class Ball implements Splittable {
 
             if (verticalDirection == Direction.UP) {
                 int currentPosY = pos.getY();
-                int maxY = g.getHeight() + GameConstants.PADDING - size.getSize();
+                int maxY = GameConstants.GAME_HEIGHT + GameConstants.PADDING - size.getSize();
 
                 pos.translate(0, maxY - currentPosY);
                 return;
@@ -125,14 +125,14 @@ public class Ball implements Splittable {
     }
 
     private boolean checkHorizontalBoundaries() {
-        return (horizontalDirection == Direction.RIGHT && pos.getX() + pos.getWidth() >= g.getWidth() + GameConstants.PADDING) ||
+        return (horizontalDirection == Direction.RIGHT && pos.getX() + pos.getWidth() >= GameConstants.GAME_WIDTH + GameConstants.PADDING) ||
                 (horizontalDirection == Direction.LEFT && pos.getX() <= GameConstants.PADDING);
     }
 
     private boolean checkVerticalBoundaries() {
 
-        return (verticalDirection == Direction.UP && pos.getY() <= YCoordinates.converter((GameConstants.PLAYER_HEIGHT + GameConstants.BALL_MIN_SIZE + 55) * size.getHeightLevels())) ||
-                (verticalDirection == Direction.DOWN && pos.getY() + size.getSize() + speed >= g.getHeight() + GameConstants.PADDING);
+        return (verticalDirection == Direction.UP && pos.getY() <= GameConstants.PADDING + GameConstants.GAME_HEIGHT - ((GameConstants.PLAYER_HEIGHT + GameConstants.BALL_MIN_SIZE + 55) * size.getHeightLevels())) ||
+                (verticalDirection == Direction.DOWN && pos.getY() + size.getSize() + speed >= GameConstants.GAME_HEIGHT + GameConstants.PADDING);
     }
 
     @Override

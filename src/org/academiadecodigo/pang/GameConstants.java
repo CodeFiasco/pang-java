@@ -8,8 +8,8 @@ import org.academiadecodigo.simplegraphics.pictures.Picture;
 public abstract class GameConstants {
 
     // Game
-    public static final int DEFAULT_GAME_WIDTH = 1280;
-    public static final int DEFAULT_GAME_HEIGHT = 800;
+    public static final int GAME_WIDTH = 1280;
+    public static final int GAME_HEIGHT = 800;
     public static final int PADDING = 10;
     public static final int DELAY = 10;
     public static final int CHANCE_FOR_POWER_UP = 10;

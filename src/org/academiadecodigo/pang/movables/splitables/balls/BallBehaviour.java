@@ -21,7 +21,7 @@ public class BallBehaviour {
 
         maxSpeed *= intervals;
 
-        maxY = YCoordinates.converter((GameConstants.PLAYER_HEIGHT + GameConstants.BALL_MIN_SIZE + 55) * intervals);
+        maxY = GameConstants.PADDING + GameConstants.GAME_HEIGHT - ((GameConstants.PLAYER_HEIGHT + GameConstants.BALL_MIN_SIZE + 55) * intervals);
 
         if (yStart > maxY) {
             firstFall = false;
@@ -34,12 +34,12 @@ public class BallBehaviour {
             return firstFall(y);
         }
 
-        int heightInterval = Game.getHeight() - maxY;
+        int heightInterval = GameConstants.GAME_HEIGHT - maxY;
         int speedInterval = heightInterval / maxSpeed;
 
         for (int i = 1, j = maxSpeed; i < maxSpeed + 1; i++, j--) {
 
-            if (y < Game.getHeight() - (speedInterval * j) - GameConstants.PADDING) {
+            if (y < GameConstants.GAME_HEIGHT - (speedInterval * j) - GameConstants.PADDING) {
                 return i;
             }
         }
@@ -49,16 +49,16 @@ public class BallBehaviour {
 
     private int firstFall(int y) {
 
-        if (y + size >= Game.getHeight() - GameConstants.PADDING) {
+        if (y + size >= GameConstants.GAME_HEIGHT - GameConstants.PADDING) {
             firstFall = false;
         }
 
-        int heightInterval = Game.getHeight() - yStart;
+        int heightInterval = GameConstants.GAME_HEIGHT - yStart;
         int speedInterval = heightInterval / maxSpeed;
 
         for (int i = maxSpeed, j = 1; i > 0; i--, j++) {
 
-            if (y > Game.getHeight() - (speedInterval * j) - GameConstants.PADDING) {
+            if (y > GameConstants.GAME_HEIGHT - (speedInterval * j) - GameConstants.PADDING) {
                 return i;
             }
         }

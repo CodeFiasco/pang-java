@@ -10,7 +10,7 @@ public abstract class YCoordinates {
 
     public static int converter(int y){
 
-        return GameConstants.PADDING + Game.getHeight() - y;
+        return GameConstants.PADDING + GameConstants.GAME_HEIGHT - y;
 
     }
 }

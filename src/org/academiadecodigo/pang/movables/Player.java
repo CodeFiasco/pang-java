@@ -27,7 +27,7 @@ public class Player implements Movable {
 
     public Player(Game g) {
         this.g = g;
-        pos = new Position((GameConstants.PADDING + (g.getWidth() / 2 - width / 2)), (GameConstants.PADDING + (g.getHeight() - height)), width, height, "player.png");
+        pos = new Position((GameConstants.PADDING + (GameConstants.GAME_WIDTH / 2 - width / 2)), (GameConstants.PADDING + (GameConstants.GAME_HEIGHT - height)), width, height, "player.png");
         bulletType = BulletTypes.ROPE;
     }
 
@@ -39,7 +39,7 @@ public class Player implements Movable {
         }
 
         int x = pos.getX() + width / 2 - GameConstants.BULLET_WIDTH / 2;
-        int y = g.getHeight() - GameConstants.BULLET_GROWTH_SPEED + GameConstants.PADDING;
+        int y = GameConstants.GAME_HEIGHT - GameConstants.BULLET_GROWTH_SPEED + GameConstants.PADDING;
 
         switch (bulletType) {
             case ROPE:
@@ -131,7 +131,7 @@ public class Player implements Movable {
     }
 
     private void moveRight() {
-        if (pos.getX() + width + speed < g.getWidth() + GameConstants.PADDING) {
+        if (pos.getX() + width + speed < GameConstants.GAME_WIDTH + GameConstants.PADDING) {
             pos.translate(speed, 0);
         }
     }

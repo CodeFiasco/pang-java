@@ -24,7 +24,7 @@ public abstract class Package implements Movable{
     @Override
     public void move() {
 
-        if (position.getY() + 55 > Game.getHeight() + GameConstants.PADDING) {
+        if (position.getY() + 55 > GameConstants.GAME_HEIGHT + GameConstants.PADDING) {
             return;
         }
 

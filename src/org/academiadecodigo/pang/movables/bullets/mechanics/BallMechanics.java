@@ -58,12 +58,12 @@ public class BallMechanics implements Mechanics {
 
     private boolean checkVerticalBoundaries() {
         return (verticalDirection == Direction.UP && pos.getY() - speed <= GameConstants.PADDING) ||
-                (verticalDirection == Direction.DOWN && pos.getY() + pos.getHeight() + speed >= GameConstants.PADDING + Game.getHeight());
+                (verticalDirection == Direction.DOWN && pos.getY() + pos.getHeight() + speed >= GameConstants.PADDING + GameConstants.GAME_HEIGHT);
     }
 
     private boolean checkHorizontalBoundaries() {
         return (horizontalDirection == Direction.LEFT && pos.getX() - speed <= GameConstants.PADDING) ||
-                (horizontalDirection == Direction.RIGHT && pos.getX() + pos.getWidth() + speed >= GameConstants.PADDING + Game.getWidth());
+                (horizontalDirection == Direction.RIGHT && pos.getX() + pos.getWidth() + speed >= GameConstants.PADDING + GameConstants.GAME_WIDTH);
     }
 
     @Override

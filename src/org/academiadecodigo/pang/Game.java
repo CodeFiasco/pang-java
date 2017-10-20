@@ -31,8 +31,8 @@ public class Game {
     private Picture[] backgrounds;
     private int level = 1;
 
-    private static int width = GameConstants.DEFAULT_GAME_WIDTH;
-    private static int height = GameConstants.DEFAULT_GAME_HEIGHT;
+    private int width = GameConstants.GAME_WIDTH;
+    private int height = GameConstants.GAME_HEIGHT;
     private int delay = GameConstants.DELAY;
 
     public void init() throws InterruptedException {
@@ -188,20 +188,12 @@ public class Game {
 
         int grownFactor = 4;
 
-        Text text = new Text(GameConstants.DEFAULT_GAME_WIDTH / 2, GameConstants.DEFAULT_GAME_HEIGHT / 2, message);
+        Text text = new Text(GameConstants.GAME_WIDTH / 2, GameConstants.GAME_HEIGHT / 2, message);
         text.setColor(color);
         text.translate(-(text.getWidth() / 2), -(text.getHeight() / 2));
         text.grow(text.getWidth() * grownFactor, text.getHeight() * grownFactor);
         text.draw();
         Thread.sleep(sleepTime);
         text.delete();
-    }
-
-    public static int getWidth() {
-        return width;
-    }
-
-    public static int getHeight() {
-        return height;
     }
 }
