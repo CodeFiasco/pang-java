@@ -18,12 +18,12 @@ public abstract class SplittableFactory {
         Ball ball;
 
         switch (level) {
-            case 0:
+            case 1:
                 ball = new Ball(g, 40, 50, BallSize.LARGE, Direction.RIGHT);
                 splittables.add(ball);
                 break;
 
-            case 1:
+            case 2:
                 ball = new Ball(g, 40, 50, BallSize.LARGE, Direction.RIGHT);
                 splittables.add(ball);
 
@@ -32,7 +32,7 @@ public abstract class SplittableFactory {
                 break;
 
             default:
-            case 2:
+            case 3:
                 ball = new Ball(g, 40, 50, BallSize.LARGE, Direction.RIGHT);
                 splittables.add(ball);
 
