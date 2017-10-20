@@ -28,7 +28,7 @@ public class Player implements Movable {
     public Player(Game g) {
         this.g = g;
         pos = new Position((g.getPADDING() + (g.getWidth() / 2 - width / 2)), (g.getPADDING() + (g.getHeight() - height)), width, height, "player.png");
-        bulletType = BulletTypes.BALL;
+        bulletType = BulletTypes.ROPE;
     }
 
 
@@ -47,10 +47,11 @@ public class Player implements Movable {
                 break;
 
             case HOOK:
+                mechanics = new RopeMechanics(x, y);
                 break;
 
             case GUN:
-                mechanics = new GunMechanics(x, y);
+                mechanics = new GunMechanics(x, y - height);
                 break;
 
             case BALL:

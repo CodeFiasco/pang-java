@@ -1,5 +1,6 @@
 package org.academiadecodigo.pang.movables.bullets.mechanics;
 
+import org.academiadecodigo.pang.GameConstants;
 import org.academiadecodigo.pang.position.Position;
 
 /**
@@ -7,39 +8,35 @@ import org.academiadecodigo.pang.position.Position;
  */
 public class GunMechanics implements Mechanics {
 
-   private int x;
-   private int y;
+    private Position pos;
 
     public GunMechanics(int x, int y){
 
-        this.x = x;
-        this.y = y;
+        pos = new Position(x, y, 25, 25, "arrow.png");
     }
 
     @Override
     public void move() {
-
-
-
+        pos.translate(0, -5);
     }
 
     @Override
     public Position getPos() {
-        return null;
+        return pos;
     }
 
     @Override
     public boolean checkHit(Position pos) {
-        return false;
+        return this.pos.overlaps(pos) || pos.overlaps(this.pos);
     }
 
     @Override
     public void delete() {
-
+        pos.delete();
     }
 
     @Override
     public boolean checkEndingPoint() {
-        return false;
+        return pos.getY() <= GameConstants.PADDING;
     }
 }
