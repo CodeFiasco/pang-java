@@ -1,5 +1,6 @@
-package org.academiadecodigo.pang.movables;
+package org.academiadecodigo.pang.movables.bullets;
 
+import org.academiadecodigo.pang.movables.Movable;
 import org.academiadecodigo.pang.position.Position;
 
 import java.util.LinkedList;
@@ -8,14 +9,14 @@ import java.util.List;
 /**
  * Created by codecadet on 13/10/2017.
  */
-public class Bullet implements Movable {
+public class BulletMechanic implements Movable {
 
     private int width = 10;
     private int height = 10;
 
     private LinkedList<Position> positions;
 
-    public Bullet(Position position) {
+    public BulletMechanic(Position position) {
         positions = new LinkedList<>();
         positions.add(position);
     }

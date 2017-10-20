@@ -2,6 +2,9 @@ package org.academiadecodigo.pang;
 
 import org.academiadecodigo.pang.keyboardListener.KeyboardListener;
 import org.academiadecodigo.pang.movables.Player;
+import org.academiadecodigo.pang.movables.bullets.BulletTypes;
+import org.academiadecodigo.pang.movables.bullets.Hook;
+import org.academiadecodigo.pang.movables.bullets.Bullet;
 import org.academiadecodigo.pang.movables.splitables.Splittable;
 import org.academiadecodigo.pang.movables.splitables.SplittableFactory;
 import org.academiadecodigo.simplegraphics.graphics.Color;
@@ -10,6 +13,7 @@ import org.academiadecodigo.simplegraphics.graphics.Text;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -21,6 +25,7 @@ public class Game {
     private Player player;
     private boolean playerDead = false;
     private List<Splittable> splittables;
+    private List<Bullet> powerUps;
     private int level = 0;
 
     private Rectangle background;
@@ -57,7 +62,7 @@ public class Game {
 
 
         splittables = SplittableFactory.getSplittableList(this, level);
-
+        powerUps = new LinkedList<>();
 
         while (true) {
             moveObjects();
@@ -72,6 +77,10 @@ public class Game {
     }
 
     private void newLevel() throws InterruptedException {
+
+        for (Bullet b : powerUps) {
+            b.getPos().delete();
+        }
 
         if (playerDead) {
 
@@ -99,6 +108,8 @@ public class Game {
         generateMessage("1", Color.GREEN, 1000);
         generateMessage("GOOOOOOO!!!", Color.GREEN, 1000);
 
+        player.setBulletType(BulletTypes.ROPE);
+        powerUps = new LinkedList<>();
         splittables = SplittableFactory.getSplittableList(this, level);
 
 
@@ -114,6 +125,21 @@ public class Game {
 
         player.move();
 
+        ListIterator<Bullet> powerUpIterator = powerUps.listIterator();
+
+        while (powerUpIterator.hasNext()) {
+            Bullet pw = powerUpIterator.next();
+            pw.move();
+
+            if (player.checkIsDead(pw.getPos())) {
+
+                powerUpIterator.remove();
+                player.setBulletType(pw.getType());
+                pw.getPos().delete();
+            }
+        }
+
+
         ListIterator<Splittable> iterator = splittables.listIterator();
 
         // Loop through splittable list
@@ -122,7 +148,7 @@ public class Game {
             splittable.move();
 
             // Check if bullet hit player
-            if (player.checkIsDead(splittable)) {
+            if (player.checkIsDead(splittable.getPos())) {
                 playerDead = true;
             }
 
@@ -137,6 +163,16 @@ public class Game {
 
                 for (Splittable n : newBalls) {
                     iterator.add(n);
+                }
+
+                if (newBalls.length == 0) {
+                    continue;
+                }
+
+                int rand = (int) (Math.random() * GameConstants.CHANCE_FOR_POWER_UP);
+
+                if (rand == 0) {
+                    powerUps.add(new Hook(splittable.getPos().getX() + 25, splittable.getPos().getY() + 50));
                 }
             }
         }
