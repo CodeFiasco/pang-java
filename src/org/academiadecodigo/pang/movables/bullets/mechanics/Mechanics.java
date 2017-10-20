@@ -7,7 +7,6 @@ import org.academiadecodigo.pang.position.Position;
  * Created by codecadet on 20/10/17.
  */
 public interface Mechanics extends Movable {
-
     boolean checkHit(Position pos);
     void delete();
     boolean checkEndingPoint();

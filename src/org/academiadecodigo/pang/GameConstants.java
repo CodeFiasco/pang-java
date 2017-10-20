@@ -1,7 +1,5 @@
 package org.academiadecodigo.pang;
 
-import org.academiadecodigo.simplegraphics.pictures.Picture;
-
 /**
  * Created by codecadet on 15/10/2017.
  */

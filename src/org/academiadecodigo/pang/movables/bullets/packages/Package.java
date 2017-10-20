@@ -1,9 +1,7 @@
 package org.academiadecodigo.pang.movables.bullets.packages;
 
-import org.academiadecodigo.pang.Game;
 import org.academiadecodigo.pang.GameConstants;
 import org.academiadecodigo.pang.movables.Movable;
-import org.academiadecodigo.pang.movables.bullets.packages.BulletTypes;
 import org.academiadecodigo.pang.position.Position;
 
 /**

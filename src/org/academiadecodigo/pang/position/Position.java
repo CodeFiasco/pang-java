@@ -1,6 +1,5 @@
 package org.academiadecodigo.pang.position;
 
-import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 /**

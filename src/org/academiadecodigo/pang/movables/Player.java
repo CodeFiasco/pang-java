@@ -1,6 +1,5 @@
 package org.academiadecodigo.pang.movables;
 
-import org.academiadecodigo.pang.Game;
 import org.academiadecodigo.pang.GameConstants;
 import org.academiadecodigo.pang.directions.Direction;
 import org.academiadecodigo.pang.movables.bullets.mechanics.*;

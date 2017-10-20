@@ -20,27 +20,27 @@ public abstract class SplittableFactory {
 
         switch (level) {
             case 1:
-                ball = new Ball(g, 40, GameConstants.GAME_HEIGHT / 2, BallSize.LARGE, Direction.RIGHT);
+                ball = new Ball(40, GameConstants.GAME_HEIGHT / 2, BallSize.LARGE, Direction.RIGHT);
                 splittables.add(ball);
                 break;
 
             case 2:
-                ball = new Ball(g, 40, GameConstants.GAME_HEIGHT / 2, BallSize.LARGE, Direction.RIGHT);
+                ball = new Ball(40, GameConstants.GAME_HEIGHT / 2, BallSize.LARGE, Direction.RIGHT);
                 splittables.add(ball);
 
-                ball = new Ball(g, GameConstants.GAME_WIDTH - 40 - BallSize.LARGE.getSize(), GameConstants.GAME_HEIGHT / 2, BallSize.LARGE, Direction.LEFT);
+                ball = new Ball(GameConstants.GAME_WIDTH - 40 - BallSize.LARGE.getSize(), GameConstants.GAME_HEIGHT / 2, BallSize.LARGE, Direction.LEFT);
                 splittables.add(ball);
                 break;
 
             default:
             case 3:
-                ball = new Ball(g, 40, GameConstants.GAME_HEIGHT / 2, BallSize.LARGE, Direction.RIGHT);
+                ball = new Ball(40, GameConstants.GAME_HEIGHT / 2, BallSize.LARGE, Direction.RIGHT);
                 splittables.add(ball);
 
-                ball = new Ball(g, GameConstants.GAME_WIDTH - 40 - BallSize.LARGE.getSize(), GameConstants.GAME_HEIGHT / 2, BallSize.LARGE, Direction.LEFT);
+                ball = new Ball(GameConstants.GAME_WIDTH - 40 - BallSize.LARGE.getSize(), GameConstants.GAME_HEIGHT / 2, BallSize.LARGE, Direction.LEFT);
                 splittables.add(ball);
 
-                ball = new Ball(g, GameConstants.GAME_WIDTH / 2 - BallSize.MEDIUM.getSize() / 2, GameConstants.GAME_HEIGHT / 2, BallSize.MEDIUM, null);
+                ball = new Ball(GameConstants.GAME_WIDTH / 2 - BallSize.MEDIUM.getSize() / 2, GameConstants.GAME_HEIGHT / 2, BallSize.MEDIUM, null);
                 splittables.add(ball);
                 break;
         }

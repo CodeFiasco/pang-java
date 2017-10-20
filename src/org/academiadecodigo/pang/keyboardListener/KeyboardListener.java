@@ -13,7 +13,6 @@ import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
 public class KeyboardListener implements KeyboardHandler {
 
     private Player player;
-    private Keyboard keyboard;
 
     private int rightKey;
     private int leftKey;
@@ -22,7 +21,7 @@ public class KeyboardListener implements KeyboardHandler {
     public KeyboardListener(Player player, int rightKey, int leftKey, int shootKey) {
         this.player = player;
 
-        keyboard = new Keyboard(this);
+        Keyboard keyboard = new Keyboard(this);
 
         KeyboardEvent rightArrow = new KeyboardEvent();
         rightArrow.setKey(rightKey);
