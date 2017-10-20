@@ -8,9 +8,9 @@ import org.academiadecodigo.pang.movables.bullets.packages.PackageFactory;
 import org.academiadecodigo.pang.movables.splitables.Splittable;
 import org.academiadecodigo.pang.movables.splitables.SplittableFactory;
 import org.academiadecodigo.simplegraphics.graphics.Color;
-import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.graphics.Text;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
+import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -26,9 +26,9 @@ public class Game {
     private List<Splittable> splittables;
 
     private List<Package> powerUps;
+    private Picture[] backgrounds;
     private int level = 1;
 
-    private Rectangle background;
     private final int PADDING = GameConstants.PADDING;
 
     private int width = GameConstants.DEFAULT_GAME_WIDTH;
@@ -37,26 +37,21 @@ public class Game {
     private int levelDelay = GameConstants.LEVEL_DELAY;
 
     public Game() {
-        //background = new Rectangle(PADDING, PADDING, width, height);
-        //background.fill();
-        //GameConstants.LEVEL_1_IMAGE.draw();
-        //backgroudImage = new Picture(PADDING,PADDING,"level1-background.jpg");
-        //backgroudImage.grow(300,300);
-        //backgroudImage.draw();
     }
 
     public Game(int width, int height) {
         this.width = width;
         this.height = height;
-
-        background = new Rectangle(PADDING, PADDING, this.width, this.height);
-        background.fill();
     }
 
     public void init() throws InterruptedException {
 
-        loadBackgrounds();
-        generateMessage("PREPARING GAME", Color.WHITE, 2000);
+        backgrounds = generateBackgrounds();
+
+        for (Picture background : backgrounds) {
+            background.draw();
+        }
+
         player = new Player(this);
         new KeyboardListener(player, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_SPACE);
 
@@ -64,9 +59,13 @@ public class Game {
         splittables = SplittableFactory.getSplittableList(this, level);
         powerUps = new LinkedList<>();
 
-        generateMessage("Level " + level, Color.YELLOW, 2000);
+        generateMessage("Level " + level, Color.YELLOW, 500);
         gamePreparationMessages();
 
+
+    }
+
+    public void start() throws InterruptedException {
         while (true) {
             moveObjects();
 
@@ -96,11 +95,11 @@ public class Game {
 
             generateMessage("You died!!", Color.RED, 3000);
             playerDead = false;
-            level = 0;
             player.getPos().draw();
 
         } else {    //new level
-            generateMessage("Level " + level + " Complete!!!", Color.YELLOW, 2000);
+            generateMessage("Level " + level + " Complete!!!", Color.YELLOW, 500);
+            removeBackground();
             level++;
         }
 
@@ -122,15 +121,17 @@ public class Game {
         generateMessage("GOOOOOOO!!!", Color.GREEN, 1000);
     }
 
+    private void removeBackground() {
+        backgrounds[backgrounds.length - level].delete();
+    }
 
-    private void loadBackgrounds() {
+    private Picture[] generateBackgrounds() {
 
-
-
-        GameConstants.LEVEL_3_IMAGE.draw();
-        GameConstants.LEVEL_2_IMAGE.draw();
-        GameConstants.LEVEL_1_IMAGE.draw();
-
+        return new Picture[]{
+                new Picture(PADDING, PADDING, "level3-background.jpg"),
+                new Picture(PADDING, PADDING, "level2-background.jpg"),
+                new Picture(PADDING, PADDING, "level1-background.jpg"),
+        };
     }
 
     private void moveObjects() {
@@ -192,7 +193,7 @@ public class Game {
 
     private void generateMessage(String message, Color color, int sleepTime) throws InterruptedException {
 
-        int grownFactor = 5;
+        int grownFactor = 4;
 
         Text text = new Text(GameConstants.DEFAULT_GAME_WIDTH / 2, GameConstants.DEFAULT_GAME_HEIGHT / 2, message);
         text.setColor(color);
