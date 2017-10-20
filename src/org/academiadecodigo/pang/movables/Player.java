@@ -27,7 +27,7 @@ public class Player implements Movable {
 
     public Player(Game g) {
         this.g = g;
-        pos = new Position((g.getPADDING() + (g.getWidth() / 2 - width / 2)), (g.getPADDING() + (g.getHeight() - height)), width, height, "player.png");
+        pos = new Position((GameConstants.PADDING + (g.getWidth() / 2 - width / 2)), (GameConstants.PADDING + (g.getHeight() - height)), width, height, "player.png");
         bulletType = BulletTypes.ROPE;
     }
 

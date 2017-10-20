@@ -204,8 +204,4 @@ public class Game {
     public static int getHeight() {
         return height;
     }
-
-    public int getPADDING() {
-        return PADDING;
-    }
 }

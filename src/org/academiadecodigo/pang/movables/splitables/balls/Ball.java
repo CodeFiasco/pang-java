@@ -56,7 +56,7 @@ public class Ball implements Splittable {
 
             if (verticalDirection == Direction.UP) {
                 int currentPosY = pos.getY();
-                int maxY = g.getHeight() + g.getPADDING() - size.getSize();
+                int maxY = g.getHeight() + GameConstants.PADDING - size.getSize();
 
                 pos.translate(0, maxY - currentPosY);
                 return;
@@ -125,8 +125,8 @@ public class Ball implements Splittable {
     }
 
     private boolean checkHorizontalBoundaries() {
-        return (horizontalDirection == Direction.RIGHT && pos.getX() + pos.getWidth() >= g.getWidth() + g.getPADDING()) ||
-                (horizontalDirection == Direction.LEFT && pos.getX() <= g.getPADDING());
+        return (horizontalDirection == Direction.RIGHT && pos.getX() + pos.getWidth() >= g.getWidth() + GameConstants.PADDING) ||
+                (horizontalDirection == Direction.LEFT && pos.getX() <= GameConstants.PADDING);
     }
 
     private boolean checkVerticalBoundaries() {
