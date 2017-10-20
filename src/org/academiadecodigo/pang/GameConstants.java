@@ -1,5 +1,7 @@
 package org.academiadecodigo.pang;
 
+import org.academiadecodigo.simplegraphics.pictures.Picture;
+
 /**
  * Created by codecadet on 15/10/2017.
  */
@@ -25,6 +27,11 @@ public abstract class GameConstants {
     // Bullet
     public static final int BULLET_GROWTH_SPEED = 10;
     public static final int BULLET_WIDTH = 10;
+
+    //Background Images
+
+    public static final Picture LEVEL_1_IMAGE = new Picture(PADDING,PADDING,"level1-background.jpg");
+
 
 
 }

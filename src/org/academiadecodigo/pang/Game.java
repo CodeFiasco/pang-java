@@ -8,6 +8,7 @@ import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.graphics.Text;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
+import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 import java.util.List;
 import java.util.ListIterator;
@@ -31,8 +32,12 @@ public class Game {
     private int levelDelay = GameConstants.LEVEL_DELAY;
 
     public Game() {
-        background = new Rectangle(PADDING, PADDING, width, height);
-        background.fill();
+        //background = new Rectangle(PADDING, PADDING, width, height);
+        //background.fill();
+        //GameConstants.LEVEL_1_IMAGE.draw();
+        //backgroudImage = new Picture(PADDING,PADDING,"level1-background.jpg");
+        //backgroudImage.grow(300,300);
+        //backgroudImage.draw();
     }
 
     public Game(int width, int height) {
@@ -45,8 +50,11 @@ public class Game {
 
     public void init() throws InterruptedException {
 
+        generateMessage("PREPARING GAME",Color.WHITE,2000);
+        loadBackgrounds();
         player = new Player(this);
         new KeyboardListener(player, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_SPACE);
+
 
         splittables = SplittableFactory.getSplittableList(this, level);
 
@@ -93,6 +101,12 @@ public class Game {
 
         splittables = SplittableFactory.getSplittableList(this, level);
 
+
+    }
+
+    private void loadBackgrounds(){
+
+        GameConstants.LEVEL_1_IMAGE.draw();
 
     }
 
