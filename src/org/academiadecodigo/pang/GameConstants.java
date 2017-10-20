@@ -13,7 +13,7 @@ public abstract class GameConstants {
     public static final int PADDING = 10;
     public static final int DELAY = 10;
     public static final int LEVEL_DELAY = 4000;
-    public static final int CHANCE_FOR_POWER_UP = 20;
+    public static final int CHANCE_FOR_POWER_UP = 10;
 
     // Balls
     public static final int BALL_MIN_SIZE = 25;
@@ -25,7 +25,7 @@ public abstract class GameConstants {
     public static final int PLAYER_HEIGHT = 96;
     public static final int PLAYER_SPEED = 10;
 
-    // BulletMechanics
+    // RopeMechanics
     public static final int BULLET_GROWTH_SPEED = 10;
     public static final int BULLET_WIDTH = 10;
 

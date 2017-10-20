@@ -1,6 +1,8 @@
 package org.academiadecodigo.pang.movables.bullets.mechanics;
 
+import org.academiadecodigo.pang.GameConstants;
 import org.academiadecodigo.pang.movables.Movable;
+import org.academiadecodigo.pang.movables.bullets.packages.BulletTypes;
 import org.academiadecodigo.pang.position.Position;
 
 import java.util.LinkedList;
@@ -8,16 +10,19 @@ import java.util.LinkedList;
 /**
  * Created by codecadet on 13/10/2017.
  */
-public class BulletMechanics implements Mechanics {
+public class RopeMechanics implements Mechanics {
 
-    private int width = 10;
-    private int height = 10;
+    private int width = GameConstants.BULLET_WIDTH;
+    private int height = GameConstants.BULLET_GROWTH_SPEED;
 
     private LinkedList<Position> positions;
 
-    public BulletMechanics(Position position) {
+    public RopeMechanics(int x, int y) {
+
+        Position pos = new Position(x, y, width, height, "rope.png");
+
         positions = new LinkedList<>();
-        positions.add(position);
+        positions.add(pos);
     }
 
 
