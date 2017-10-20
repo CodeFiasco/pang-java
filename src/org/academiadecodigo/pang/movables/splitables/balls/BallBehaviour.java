@@ -15,23 +15,13 @@ public class BallBehaviour {
     private int maxY;
     private int size;
 
-    public BallBehaviour(int yStart, int size) {
+    public BallBehaviour(int yStart, int size, int intervals) {
         this.yStart = yStart;
         this.size = size;
 
-        int jumps = 1;
+        maxSpeed *= intervals;
 
-        if (size == 50) {
-            jumps = 2;
-            maxSpeed = 12;
-        }
-        if (size == 100) {
-            jumps = 3;
-            maxSpeed = 16;
-        }
-
-
-        maxY = YCoordinates.converter((GameConstants.PLAYER_HEIGHT + GameConstants.BALL_MIN_SIZE + 55) * jumps);
+        maxY = YCoordinates.converter((GameConstants.PLAYER_HEIGHT + GameConstants.BALL_MIN_SIZE + 55) * intervals);
 
         if (yStart > maxY) {
             firstFall = false;

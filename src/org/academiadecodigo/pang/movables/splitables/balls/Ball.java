@@ -12,23 +12,33 @@ import org.academiadecodigo.pang.position.YCoordinates;
  */
 public class Ball implements Splittable {
 
-    private Position pos;
     private Game g;
+    private Position pos;
+
     private Direction horizontalDirection;
     private Direction verticalDirection;
-    private int size;
     private int speed;
+
+    private BallSize size;
     private BallBehaviour ballBehaviour;
+    private int jumpUp;
+    private int flatline;
 
-
-    public Ball(Game g, int x, int y, int size, Direction dir) {
+    public Ball(Game g, int x, int y, BallSize size, Direction dir) {
         this.size = size;
 
-        pos = new Position(x, y, size, size, "red-ball-" + size + ".png");
+        pos = new Position(x, y, size.getSize(), size.getSize(), "red-ball-" + size.getSize() + ".png");
         horizontalDirection = dir;
         verticalDirection = Direction.UP;
 
-        ballBehaviour = new BallBehaviour(y, size);
+        jumpUp = 30;
+
+        if (y > YCoordinates.converter((GameConstants.PLAYER_HEIGHT + GameConstants.BALL_MIN_SIZE + 55) * size.getHeightLevels())) {
+            jumpUp = 0;
+        }
+
+        ballBehaviour = new BallBehaviour(y - jumpUp, size.getSize(), size.getHeightLevels());
+        flatline = 0;
 
         this.g = g;
     }
@@ -36,8 +46,6 @@ public class Ball implements Splittable {
 
     @Override
     public void move() {
-
-        speed = ballBehaviour.calculateYSpeed(pos.getY());
 
         if (checkHorizontalBoundaries()) {
             horizontalDirection = horizontalDirection.getOpposite();
@@ -48,14 +56,30 @@ public class Ball implements Splittable {
 
             if (verticalDirection == Direction.UP) {
                 int currentPosY = pos.getY();
-                int maxY = g.getHeight() + g.getPADDING() - size;
+                int maxY = g.getHeight() + g.getPADDING() - size.getSize();
 
                 pos.translate(0, maxY - currentPosY);
                 return;
             }
 
+            flatline = 12;
+
         }
 
+        if (jumpUp > 0) {
+            speed = 1;
+            jumpUp--;
+            verticalDirection = Direction.UP;
+        }
+
+        else if (flatline > 0 && jumpUp == 0) {
+            speed = 0;
+            flatline--;
+        }
+
+        else {
+            speed = ballBehaviour.calculateYSpeed(pos.getY());
+        }
 
         switch (verticalDirection) {
 
@@ -107,30 +131,22 @@ public class Ball implements Splittable {
 
     private boolean checkVerticalBoundaries() {
 
-        int jumps = 1;
-
-        if (size == 50) {
-            jumps = 2;
-        }
-        if (size == 100) {
-            jumps = 3;
-        }
-
-        return (verticalDirection == Direction.UP && pos.getY() <= YCoordinates.converter((GameConstants.PLAYER_HEIGHT + GameConstants.BALL_MIN_SIZE + 55) * jumps)) ||
-                (verticalDirection == Direction.DOWN && pos.getY() + size + speed >= g.getHeight() + GameConstants.PADDING);
+        return (verticalDirection == Direction.UP && pos.getY() <= YCoordinates.converter((GameConstants.PLAYER_HEIGHT + GameConstants.BALL_MIN_SIZE + 55) * size.getHeightLevels())) ||
+                (verticalDirection == Direction.DOWN && pos.getY() + size.getSize() + speed >= g.getHeight() + GameConstants.PADDING);
     }
 
     @Override
     public Splittable[] split() {
 
+        BallSize nextSize = size.getSmallerSize();
 
-        if (size <= GameConstants.BALL_MIN_SIZE) {
+        if (nextSize == null) {
             pos.delete();
             return new Splittable[]{};
         }
 
-        Ball ball1 = new Ball(g, pos.getX(), pos.getY() + 25, size / 2, Direction.RIGHT);
-        Ball ball2 = new Ball(g, pos.getX(), pos.getY() + 25, size / 2, Direction.LEFT);
+        Ball ball1 = new Ball(g, pos.getX(), pos.getY() + 25, nextSize, Direction.RIGHT);
+        Ball ball2 = new Ball(g, pos.getX(), pos.getY() + 25, nextSize, Direction.LEFT);
 
         pos.delete();
 
