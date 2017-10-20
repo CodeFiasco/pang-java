@@ -28,6 +28,10 @@ public class Position {
         representation.delete();
     }
 
+    public void draw() {
+        representation.draw();
+    }
+
     public boolean overlaps(Position compare) {
 
         // X axis check

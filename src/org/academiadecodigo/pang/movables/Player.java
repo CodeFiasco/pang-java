@@ -54,6 +54,16 @@ public class Player implements Movable {
         return false;
     }
 
+    public void deleteBullet() {
+
+        if (bullet == null) {
+            return;
+        }
+
+        bullet.delete();
+        bullet = null;
+    }
+
     public void setDirection(Direction dir) {
         this.dir = dir;
     }

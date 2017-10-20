@@ -65,17 +65,19 @@ public class Game {
 
     private void newLevel() throws InterruptedException {
 
-        ListIterator<Splittable> iterator = splittables.listIterator();
-
         if (playerDead) {
-            while (iterator.hasNext()) {
-                Splittable splittable = iterator.next();
-                splittable.getPos().delete();
-                iterator.remove();
+
+            player.getPos().delete();
+            player.deleteBullet();
+
+            for (Splittable s : splittables) {
+                s.getPos().delete();
             }
+
             generateMessage("You died!!", Color.RED, 3000);
             playerDead = false;
             level = 0;
+            player.getPos().draw();
 
         } else {    //new level
             generateMessage("Level Complete!!!", Color.YELLOW, 2000);

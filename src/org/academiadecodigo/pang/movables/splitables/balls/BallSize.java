@@ -4,9 +4,10 @@ package org.academiadecodigo.pang.movables.splitables.balls;
  * Created by codecadet on 20/10/17.
  */
 public enum BallSize {
-    SMALL(25, 1),
-    MEDIUM(50, 2),
-    LARGE(100, 3);
+    SMALL(24, 1),
+    MEDIUM(48, 2),
+    MEDIUMLARGE(128, 3),
+    LARGE(256, 4);
 
     private int size;
     private int heightLevels;
@@ -20,10 +21,13 @@ public enum BallSize {
 
         switch (this) {
             case LARGE:
-                return MEDIUM;
+                return MEDIUMLARGE;
 
             case MEDIUM:
                 return SMALL;
+                
+            case MEDIUMLARGE:
+                return MEDIUM;
 
             default:
                 return null;

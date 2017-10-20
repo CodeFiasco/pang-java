@@ -52,4 +52,9 @@ public class Bullet implements Movable {
         Position pos = new Position(positions.getLast().getX(), positions.getLast().getY() - height, width, height, "rope.png");
         positions.add(pos);
     }
+
+    @Override
+    public Position getPos() {
+        return null;
+    }
 }
