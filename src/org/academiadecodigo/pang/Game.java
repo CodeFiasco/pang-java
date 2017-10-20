@@ -31,8 +31,6 @@ public class Game {
     private Picture[] backgrounds;
     private int level = 1;
 
-    private int delay = GameConstants.DELAY;
-
     public void init() throws InterruptedException {
 
         backgrounds = generateBackgrounds();
@@ -56,7 +54,7 @@ public class Game {
         while (!playerDead && splittables.size() > 0) {
 
             moveObjects();
-            Thread.sleep(delay);
+            Thread.sleep(GameConstants.DELAY);
         }
 
         newLevel();
