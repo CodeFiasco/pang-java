@@ -98,13 +98,13 @@ public class Player implements Movable {
     }
 
     private void moveRight() {
-        if (pos.getX() + width < g.getWidth() + GameConstants.PADDING) {
+        if (pos.getX() + width + speed < g.getWidth() + GameConstants.PADDING) {
             pos.translate(speed, 0);
         }
     }
 
     private void moveLeft() {
-        if (pos.getX() > GameConstants.PADDING) {
+        if (pos.getX() - speed > GameConstants.PADDING) {
             pos.translate(-speed, 0);
         }
     }
