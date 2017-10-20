@@ -1,4 +1,4 @@
-package org.academiadecodigo.pang.movables.bullets;
+package org.academiadecodigo.pang.movables.bullets.mechanics;
 
 import org.academiadecodigo.pang.movables.Movable;
 import org.academiadecodigo.pang.position.Position;
