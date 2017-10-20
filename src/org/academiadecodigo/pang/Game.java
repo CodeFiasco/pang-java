@@ -25,8 +25,9 @@ public class Game {
     private Player player;
     private boolean playerDead = false;
     private List<Splittable> splittables;
+
     private List<Package> powerUps;
-    private int level = 0;
+    private int level = 1;
 
     private Rectangle background;
     private final int PADDING = GameConstants.PADDING;
@@ -55,14 +56,17 @@ public class Game {
 
     public void init() throws InterruptedException {
 
-        generateMessage("PREPARING GAME",Color.WHITE,2000);
         loadBackgrounds();
+        generateMessage("PREPARING GAME", Color.WHITE, 2000);
         player = new Player(this);
         new KeyboardListener(player, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_SPACE);
 
 
         splittables = SplittableFactory.getSplittableList(this, level);
         powerUps = new LinkedList<>();
+
+        generateMessage("Level " + level, Color.YELLOW, 2000);
+        gamePreparationMessages();
 
         while (true) {
             moveObjects();
@@ -97,16 +101,12 @@ public class Game {
             player.getPos().draw();
 
         } else {    //new level
-            generateMessage("Level Complete!!!", Color.YELLOW, 2000);
+            generateMessage("Level " + level + " Complete!!!", Color.YELLOW, 2000);
             level++;
         }
 
         //Start game messages
-        generateMessage("Get Ready...", Color.GREEN, 2000);
-        generateMessage("3", Color.GREEN, 1000);
-        generateMessage("2", Color.GREEN, 1000);
-        generateMessage("1", Color.GREEN, 1000);
-        generateMessage("GOOOOOOO!!!", Color.GREEN, 1000);
+        gamePreparationMessages();
 
         player.setBulletType(BulletTypes.ROPE);
         powerUps = new LinkedList<>();
@@ -115,8 +115,21 @@ public class Game {
 
     }
 
-    private void loadBackgrounds(){
+    private void gamePreparationMessages() throws InterruptedException {
+        generateMessage("Get Ready...", Color.GREEN, 2000);
+        generateMessage("3", Color.GREEN, 1000);
+        generateMessage("2", Color.GREEN, 1000);
+        generateMessage("1", Color.GREEN, 1000);
+        generateMessage("GOOOOOOO!!!", Color.GREEN, 1000);
+    }
 
+
+    private void loadBackgrounds() {
+
+
+
+        GameConstants.LEVEL_3_IMAGE.draw();
+        GameConstants.LEVEL_2_IMAGE.draw();
         GameConstants.LEVEL_1_IMAGE.draw();
 
     }

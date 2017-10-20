@@ -32,6 +32,9 @@ public abstract class GameConstants {
     //Background Images
 
     public static final Picture LEVEL_1_IMAGE = new Picture(PADDING,PADDING,"level1-background.jpg");
+    public static final Picture LEVEL_2_IMAGE = new Picture(PADDING,PADDING,"level2-background.jpg");
+    public static final Picture LEVEL_3_IMAGE = new Picture(PADDING,PADDING,"level3-background.jpg");
+
 
 
 
