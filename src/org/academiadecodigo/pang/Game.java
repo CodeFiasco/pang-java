@@ -31,7 +31,7 @@ public class Game {
     private Rectangle background;
     private final int PADDING = GameConstants.PADDING;
 
-    private int width = GameConstants.DEFAULT_GAME_WIDTH;
+    private static int width = GameConstants.DEFAULT_GAME_WIDTH;
     private static int height = GameConstants.DEFAULT_GAME_HEIGHT;
     private int delay = GameConstants.DELAY;
     private int levelDelay = GameConstants.LEVEL_DELAY;
@@ -207,7 +207,7 @@ public class Game {
         return false;
     }
 
-    public int getWidth() {
+    public static int getWidth() {
         return width;
     }
 

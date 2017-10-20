@@ -3,6 +3,9 @@ package org.academiadecodigo.pang.movables;
 import org.academiadecodigo.pang.Game;
 import org.academiadecodigo.pang.GameConstants;
 import org.academiadecodigo.pang.directions.Direction;
+import org.academiadecodigo.pang.movables.bullets.mechanics.BallMechanics;
+import org.academiadecodigo.pang.movables.bullets.mechanics.GunMechanics;
+import org.academiadecodigo.pang.movables.bullets.mechanics.Mechanics;
 import org.academiadecodigo.pang.movables.bullets.mechanics.RopeMechanics;
 import org.academiadecodigo.pang.movables.bullets.packages.BulletTypes;
 import org.academiadecodigo.pang.position.Position;
@@ -14,7 +17,7 @@ public class Player implements Movable {
 
     private Game g;
     private Direction dir;
-    private RopeMechanics ropeMechanics;
+    private Mechanics mechanics;
     private BulletTypes bulletType;
     private Position pos;
     private int width = GameConstants.PLAYER_WIDTH;
@@ -25,17 +28,38 @@ public class Player implements Movable {
     public Player(Game g) {
         this.g = g;
         pos = new Position((g.getPADDING() + (g.getWidth() / 2 - width / 2)), (g.getPADDING() + (g.getHeight() - height)), width, height, "player.png");
+        bulletType = BulletTypes.BALL;
     }
 
 
     public void shoot() {
 
-        if (ropeMechanics != null) {
+        if (mechanics != null) {
             return;
         }
 
-        Position bulletPosition = new Position(pos.getX() + width / 2 - GameConstants.BULLET_WIDTH / 2, g.getHeight() - GameConstants.BULLET_GROWTH_SPEED + GameConstants.PADDING, GameConstants.BULLET_WIDTH, GameConstants.BULLET_GROWTH_SPEED, "rope.png");
-        ropeMechanics = new RopeMechanics(bulletPosition);
+        int x = pos.getX() + width / 2 - GameConstants.BULLET_WIDTH / 2;
+        int y = g.getHeight() - GameConstants.BULLET_GROWTH_SPEED + GameConstants.PADDING;
+
+        switch (bulletType) {
+            case ROPE:
+                mechanics = new RopeMechanics(x, y);
+                break;
+
+            case HOOK:
+                break;
+
+            case GUN:
+                mechanics = new GunMechanics(x, y);
+                break;
+
+            case BALL:
+                mechanics = new BallMechanics(x, y - height);
+                break;
+        }
+
+        //Position bulletPosition = new Position( , GameConstants.BULLET_WIDTH, GameConstants.BULLET_GROWTH_SPEED, "rope.png");
+        // mechanics = new RopeMechanics(bulletPosition);
     }
 
     public boolean checkIsDead(Position pos) {
@@ -44,12 +68,13 @@ public class Player implements Movable {
 
     public boolean checkBulletHit(Position ball) {
 
-        if (ropeMechanics == null) {
+        if (mechanics == null) {
             return false;
         }
 
-        if (ropeMechanics.checkHit(ball)) {
-            ropeMechanics = null;
+        if (mechanics.checkHit(ball)) {
+            mechanics.delete();
+            mechanics = null;
             return true;
         }
 
@@ -58,12 +83,12 @@ public class Player implements Movable {
 
     public void deleteBullet() {
 
-        if (ropeMechanics == null) {
+        if (mechanics == null) {
             return;
         }
 
-        ropeMechanics.delete();
-        ropeMechanics = null;
+        mechanics.delete();
+        mechanics = null;
     }
 
     public void setDirection(Direction dir) {
@@ -85,22 +110,22 @@ public class Player implements Movable {
             }
         }
 
-        if (ropeMechanics == null) {
+        if (mechanics == null) {
             return;
         }
 
-        if (ropeMechanics.checkEndingPoint()) {
+        if (mechanics.checkEndingPoint()) {
 
             if (bulletType == BulletTypes.HOOK) {
                 return;
             }
 
-            ropeMechanics.delete();
-            ropeMechanics = null;
+            mechanics.delete();
+            mechanics = null;
             return;
         }
 
-        ropeMechanics.move();
+        mechanics.move();
 
     }
 
