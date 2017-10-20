@@ -3,7 +3,8 @@ package org.academiadecodigo.pang.movables;
 import org.academiadecodigo.pang.Game;
 import org.academiadecodigo.pang.GameConstants;
 import org.academiadecodigo.pang.directions.Direction;
-import org.academiadecodigo.pang.movables.splitables.Splittable;
+import org.academiadecodigo.pang.movables.bullets.BulletMechanic;
+import org.academiadecodigo.pang.movables.bullets.BulletTypes;
 import org.academiadecodigo.pang.position.Position;
 
 /**
@@ -13,7 +14,8 @@ public class Player implements Movable {
 
     private Game g;
     private Direction dir;
-    private Bullet bullet;
+    private BulletMechanic bulletMechanic;
+    private BulletTypes bulletType;
     private Position pos;
     private int width = GameConstants.PLAYER_WIDTH;
     private int height = GameConstants.PLAYER_HEIGHT;
@@ -28,26 +30,26 @@ public class Player implements Movable {
 
     public void shoot() {
 
-        if (bullet != null) {
+        if (bulletMechanic != null) {
             return;
         }
 
         Position bulletPosition = new Position(pos.getX() + width / 2 - GameConstants.BULLET_WIDTH / 2, g.getHeight() - GameConstants.BULLET_GROWTH_SPEED + GameConstants.PADDING, GameConstants.BULLET_WIDTH, GameConstants.BULLET_GROWTH_SPEED, "rope.png");
-        bullet = new Bullet(bulletPosition);
+        bulletMechanic = new BulletMechanic(bulletPosition);
     }
 
-    public boolean checkIsDead(Splittable ball) {
-        return pos.overlaps(ball.getPos()) || ball.getPos().overlaps(pos);
+    public boolean checkIsDead(Position pos) {
+        return this.pos.overlaps(pos) || pos.overlaps(this.pos);
     }
 
     public boolean checkBulletHit(Position ball) {
 
-        if (bullet == null) {
+        if (bulletMechanic == null) {
             return false;
         }
 
-        if (bullet.checkBulletHit(ball)) {
-            bullet = null;
+        if (bulletMechanic.checkBulletHit(ball)) {
+            bulletMechanic = null;
             return true;
         }
 
@@ -56,12 +58,12 @@ public class Player implements Movable {
 
     public void deleteBullet() {
 
-        if (bullet == null) {
+        if (bulletMechanic == null) {
             return;
         }
 
-        bullet.delete();
-        bullet = null;
+        bulletMechanic.delete();
+        bulletMechanic = null;
     }
 
     public void setDirection(Direction dir) {
@@ -83,17 +85,22 @@ public class Player implements Movable {
             }
         }
 
-        if (bullet == null) {
+        if (bulletMechanic == null) {
             return;
         }
 
-        if (bullet.hitsTop()) {
-            bullet.delete();
-            bullet = null;
+        if (bulletMechanic.hitsTop()) {
+
+            if (bulletType == BulletTypes.HOOK) {
+                return;
+            }
+
+            bulletMechanic.delete();
+            bulletMechanic = null;
             return;
         }
 
-        bullet.move();
+        bulletMechanic.move();
 
     }
 
@@ -111,5 +118,9 @@ public class Player implements Movable {
 
     public Position getPos() {
         return pos;
+    }
+
+    public void setBulletType(BulletTypes type) {
+        this.bulletType = type;
     }
 }
