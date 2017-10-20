@@ -5,14 +5,12 @@ import org.academiadecodigo.pang.GameConstants;
 import org.academiadecodigo.pang.directions.Direction;
 import org.academiadecodigo.pang.movables.splitables.Splittable;
 import org.academiadecodigo.pang.position.Position;
-import org.academiadecodigo.pang.position.YCoordinates;
 
 /**
  * Created by codecadet on 13/10/2017.
  */
 public class Ball implements Splittable {
 
-    private Game g;
     private Position pos;
 
     private Direction horizontalDirection;
@@ -24,7 +22,7 @@ public class Ball implements Splittable {
     private int jumpUp;
     private int flatline;
 
-    public Ball(Game g, int x, int y, BallSize size, Direction dir) {
+    public Ball(int x, int y, BallSize size, Direction dir) {
         this.size = size;
 
         pos = new Position(x, y, size.getSize(), size.getSize(), "black-ball-" + size.getSize() + ".png");
@@ -39,8 +37,6 @@ public class Ball implements Splittable {
 
         ballBehaviour = new BallBehaviour(y - jumpUp, size.getSize(), size.getHeightLevels());
         flatline = 0;
-
-        this.g = g;
     }
 
 
@@ -145,8 +141,8 @@ public class Ball implements Splittable {
             return new Splittable[]{};
         }
 
-        Ball ball1 = new Ball(g, pos.getX(), pos.getY() + 25, nextSize, Direction.RIGHT);
-        Ball ball2 = new Ball(g, pos.getX(), pos.getY() + 25, nextSize, Direction.LEFT);
+        Ball ball1 = new Ball(pos.getX(), pos.getY() + 25, nextSize, Direction.RIGHT);
+        Ball ball2 = new Ball(pos.getX(), pos.getY() + 25, nextSize, Direction.LEFT);
 
         pos.delete();
 

@@ -6,7 +6,7 @@ package org.academiadecodigo.pang.movables.splitables.balls;
 public enum BallSize {
     SMALL(24, 1),
     MEDIUM(48, 2),
-    MEDIUMLARGE(128, 3),
+    MEDIUM_LARGE(128, 3),
     LARGE(256, 4);
 
     private int size;
@@ -21,12 +21,12 @@ public enum BallSize {
 
         switch (this) {
             case LARGE:
-                return MEDIUMLARGE;
+                return MEDIUM_LARGE;
 
             case MEDIUM:
                 return SMALL;
                 
-            case MEDIUMLARGE:
+            case MEDIUM_LARGE:
                 return MEDIUM;
 
             default:

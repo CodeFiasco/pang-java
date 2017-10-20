@@ -1,8 +1,6 @@
 package org.academiadecodigo.pang.movables.splitables.balls;
 
-import org.academiadecodigo.pang.Game;
 import org.academiadecodigo.pang.GameConstants;
-import org.academiadecodigo.pang.position.YCoordinates;
 
 /**
  * Created by codecadet on 19/10/17.
