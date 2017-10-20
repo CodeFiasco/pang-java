@@ -3,7 +3,7 @@ package org.academiadecodigo.pang.movables;
 import org.academiadecodigo.pang.Game;
 import org.academiadecodigo.pang.GameConstants;
 import org.academiadecodigo.pang.directions.Direction;
-import org.academiadecodigo.pang.movables.bullets.mechanics.BulletMechanics;
+import org.academiadecodigo.pang.movables.bullets.mechanics.RopeMechanics;
 import org.academiadecodigo.pang.movables.bullets.packages.BulletTypes;
 import org.academiadecodigo.pang.position.Position;
 
@@ -14,7 +14,7 @@ public class Player implements Movable {
 
     private Game g;
     private Direction dir;
-    private BulletMechanics bulletMechanics;
+    private RopeMechanics ropeMechanics;
     private BulletTypes bulletType;
     private Position pos;
     private int width = GameConstants.PLAYER_WIDTH;
@@ -30,12 +30,12 @@ public class Player implements Movable {
 
     public void shoot() {
 
-        if (bulletMechanics != null) {
+        if (ropeMechanics != null) {
             return;
         }
 
         Position bulletPosition = new Position(pos.getX() + width / 2 - GameConstants.BULLET_WIDTH / 2, g.getHeight() - GameConstants.BULLET_GROWTH_SPEED + GameConstants.PADDING, GameConstants.BULLET_WIDTH, GameConstants.BULLET_GROWTH_SPEED, "rope.png");
-        bulletMechanics = new BulletMechanics(bulletPosition);
+        ropeMechanics = new RopeMechanics(bulletPosition);
     }
 
     public boolean checkIsDead(Position pos) {
@@ -44,12 +44,12 @@ public class Player implements Movable {
 
     public boolean checkBulletHit(Position ball) {
 
-        if (bulletMechanics == null) {
+        if (ropeMechanics == null) {
             return false;
         }
 
-        if (bulletMechanics.checkHit(ball)) {
-            bulletMechanics = null;
+        if (ropeMechanics.checkHit(ball)) {
+            ropeMechanics = null;
             return true;
         }
 
@@ -58,12 +58,12 @@ public class Player implements Movable {
 
     public void deleteBullet() {
 
-        if (bulletMechanics == null) {
+        if (ropeMechanics == null) {
             return;
         }
 
-        bulletMechanics.delete();
-        bulletMechanics = null;
+        ropeMechanics.delete();
+        ropeMechanics = null;
     }
 
     public void setDirection(Direction dir) {
@@ -85,22 +85,22 @@ public class Player implements Movable {
             }
         }
 
-        if (bulletMechanics == null) {
+        if (ropeMechanics == null) {
             return;
         }
 
-        if (bulletMechanics.checkEndingPoint()) {
+        if (ropeMechanics.checkEndingPoint()) {
 
             if (bulletType == BulletTypes.HOOK) {
                 return;
             }
 
-            bulletMechanics.delete();
-            bulletMechanics = null;
+            ropeMechanics.delete();
+            ropeMechanics = null;
             return;
         }
 
-        bulletMechanics.move();
+        ropeMechanics.move();
 
     }
 

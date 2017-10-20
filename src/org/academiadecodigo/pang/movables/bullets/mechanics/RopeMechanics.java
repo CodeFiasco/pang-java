@@ -8,14 +8,14 @@ import java.util.LinkedList;
 /**
  * Created by codecadet on 13/10/2017.
  */
-public class BulletMechanics implements Mechanics {
+public class RopeMechanics implements Mechanics {
 
     private int width = 10;
     private int height = 10;
 
     private LinkedList<Position> positions;
 
-    public BulletMechanics(Position position) {
+    public RopeMechanics(Position position) {
         positions = new LinkedList<>();
         positions.add(position);
     }
