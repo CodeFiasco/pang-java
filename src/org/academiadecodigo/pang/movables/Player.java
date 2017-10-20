@@ -15,7 +15,6 @@ import org.academiadecodigo.pang.position.Position;
  */
 public class Player implements Movable {
 
-    private Game g;
     private Direction dir;
     private Mechanics mechanics;
     private BulletTypes bulletType;
@@ -25,8 +24,7 @@ public class Player implements Movable {
     private int speed = GameConstants.PLAYER_SPEED;
 
 
-    public Player(Game g) {
-        this.g = g;
+    public Player() {
         pos = new Position((GameConstants.PADDING + (GameConstants.GAME_WIDTH / 2 - width / 2)), (GameConstants.PADDING + (GameConstants.GAME_HEIGHT - height)), width, height, "player.png");
         bulletType = BulletTypes.ROPE;
     }

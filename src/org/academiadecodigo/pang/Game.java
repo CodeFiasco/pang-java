@@ -31,8 +31,6 @@ public class Game {
     private Picture[] backgrounds;
     private int level = 1;
 
-    private int width = GameConstants.GAME_WIDTH;
-    private int height = GameConstants.GAME_HEIGHT;
     private int delay = GameConstants.DELAY;
 
     public void init() throws InterruptedException {
@@ -43,7 +41,7 @@ public class Game {
             background.draw();
         }
 
-        player = new Player(this);
+        player = new Player();
         new KeyboardListener(player, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_SPACE);
 
         splittables = SplittableFactory.getSplittableList(this, level);
