@@ -1,8 +1,6 @@
 package org.academiadecodigo.pang.movables.bullets.mechanics;
 
 import org.academiadecodigo.pang.GameConstants;
-import org.academiadecodigo.pang.movables.Movable;
-import org.academiadecodigo.pang.movables.bullets.packages.BulletTypes;
 import org.academiadecodigo.pang.position.Position;
 
 import java.util.LinkedList;

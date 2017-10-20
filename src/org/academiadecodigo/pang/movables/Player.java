@@ -3,10 +3,7 @@ package org.academiadecodigo.pang.movables;
 import org.academiadecodigo.pang.Game;
 import org.academiadecodigo.pang.GameConstants;
 import org.academiadecodigo.pang.directions.Direction;
-import org.academiadecodigo.pang.movables.bullets.mechanics.BallMechanics;
-import org.academiadecodigo.pang.movables.bullets.mechanics.GunMechanics;
-import org.academiadecodigo.pang.movables.bullets.mechanics.Mechanics;
-import org.academiadecodigo.pang.movables.bullets.mechanics.RopeMechanics;
+import org.academiadecodigo.pang.movables.bullets.mechanics.*;
 import org.academiadecodigo.pang.movables.bullets.packages.BulletTypes;
 import org.academiadecodigo.pang.position.Position;
 
@@ -21,7 +18,6 @@ public class Player implements Movable {
     private Position pos;
     private int width = GameConstants.PLAYER_WIDTH;
     private int height = GameConstants.PLAYER_HEIGHT;
-    private int speed = GameConstants.PLAYER_SPEED;
 
 
     public Player() {
@@ -45,7 +41,7 @@ public class Player implements Movable {
                 break;
 
             case HOOK:
-                mechanics = new RopeMechanics(x, y);
+                mechanics = new HookMechanics(x, y);
                 break;
 
             case GUN:
@@ -56,9 +52,6 @@ public class Player implements Movable {
                 mechanics = new BallMechanics(x, y - height);
                 break;
         }
-
-        //Position bulletPosition = new Position( , GameConstants.BULLET_WIDTH, GameConstants.BULLET_GROWTH_SPEED, "rope.png");
-        // mechanics = new RopeMechanics(bulletPosition);
     }
 
     public boolean checkHit(Position pos) {
@@ -115,10 +108,6 @@ public class Player implements Movable {
 
         if (mechanics.checkEndingPoint()) {
 
-            if (bulletType == BulletTypes.HOOK) {
-                return;
-            }
-
             mechanics.delete();
             mechanics = null;
             return;
@@ -129,14 +118,14 @@ public class Player implements Movable {
     }
 
     private void moveRight() {
-        if (pos.getX() + width + speed < GameConstants.GAME_WIDTH + GameConstants.PADDING) {
-            pos.translate(speed, 0);
+        if (pos.getX() + width + GameConstants.PLAYER_SPEED < GameConstants.GAME_WIDTH + GameConstants.PADDING) {
+            pos.translate(GameConstants.PLAYER_SPEED, 0);
         }
     }
 
     private void moveLeft() {
-        if (pos.getX() - speed > GameConstants.PADDING) {
-            pos.translate(-speed, 0);
+        if (pos.getX() - GameConstants.PLAYER_SPEED > GameConstants.PADDING) {
+            pos.translate(-GameConstants.PLAYER_SPEED, 0);
         }
     }
 
