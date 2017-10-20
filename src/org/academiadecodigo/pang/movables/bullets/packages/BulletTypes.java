@@ -10,6 +10,6 @@ public enum BulletTypes {
     BULLETBALL;
 
     public static BulletTypes getRandom(){
-        return HOOK;
+        return BulletTypes.values()[(int) (Math.random() * BulletTypes.values().length)];
     }
 }
