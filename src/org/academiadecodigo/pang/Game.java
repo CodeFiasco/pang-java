@@ -5,6 +5,7 @@ import org.academiadecodigo.pang.movables.Player;
 import org.academiadecodigo.pang.movables.bullets.packages.BulletTypes;
 import org.academiadecodigo.pang.movables.bullets.packages.Hook;
 import org.academiadecodigo.pang.movables.bullets.packages.Package;
+import org.academiadecodigo.pang.movables.bullets.packages.PackageFactory;
 import org.academiadecodigo.pang.movables.splitables.Splittable;
 import org.academiadecodigo.pang.movables.splitables.SplittableFactory;
 import org.academiadecodigo.simplegraphics.graphics.Color;
@@ -171,7 +172,7 @@ public class Game {
                 int rand = (int) (Math.random() * GameConstants.CHANCE_FOR_POWER_UP);
 
                 if (rand == 0) {
-                    powerUps.add(new Hook(splittable.getPos().getX() + 25, splittable.getPos().getY() + 50));
+                    powerUps.add(PackageFactory.getPackage(splittable.getPos().getX() + 25, splittable.getPos().getY() + 50));
                 }
             }
         }

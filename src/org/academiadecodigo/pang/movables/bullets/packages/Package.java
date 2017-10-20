@@ -16,7 +16,7 @@ public abstract class Package implements Movable{
 
     public Package(int x, int y, BulletTypes type) {
 
-        position = new Position(x, y, 50, 50, "anchor.png");
+        position = new Position(x, y, 50, 50, type.getImageSource());
         this.type = type;
 
     }
