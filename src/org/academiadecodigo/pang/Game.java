@@ -115,9 +115,9 @@ public class Game {
     private Picture[] generateBackgrounds() {
 
         return new Picture[]{
-                new Picture(PADDING, PADDING, "level3-background.jpg"),
-                new Picture(PADDING, PADDING, "level2-background.jpg"),
-                new Picture(PADDING, PADDING, "level1-background.jpg"),
+                new Picture(PADDING, PADDING, GameConstants.LEVEL_3_IMAGE),
+                new Picture(PADDING, PADDING, GameConstants.LEVEL_2_IMAGE),
+                new Picture(PADDING, PADDING, GameConstants.LEVEL_1_IMAGE)
         };
     }
 
