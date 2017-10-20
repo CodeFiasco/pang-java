@@ -48,7 +48,7 @@ public class Player implements Movable {
             return false;
         }
 
-        if (bulletMechanics.checkBulletHit(ball)) {
+        if (bulletMechanics.checkHit(ball)) {
             bulletMechanics = null;
             return true;
         }
@@ -89,7 +89,7 @@ public class Player implements Movable {
             return;
         }
 
-        if (bulletMechanics.hitsTop()) {
+        if (bulletMechanics.checkEndingPoint()) {
 
             if (bulletType == BulletTypes.HOOK) {
                 return;

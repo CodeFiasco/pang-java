@@ -5,6 +5,6 @@ package org.academiadecodigo.pang.movables.bullets.packages;
  */
 public class BallPackage extends Package {
     public BallPackage(int x, int y) {
-        super(x, y, BulletTypes.BULLET_BALL);
+        super(x, y, BulletTypes.BALL);
     }
 }

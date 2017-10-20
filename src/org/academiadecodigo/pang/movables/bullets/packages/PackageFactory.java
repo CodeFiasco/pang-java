@@ -16,7 +16,7 @@ public abstract class PackageFactory {
             case HOOK:
                 return new HookPackage(x, y);
 
-            case BULLET_BALL:
+            case BALL:
                 return new BallPackage(x, y);
         }
 

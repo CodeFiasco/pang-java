@@ -4,12 +4,11 @@ import org.academiadecodigo.pang.movables.Movable;
 import org.academiadecodigo.pang.position.Position;
 
 import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Created by codecadet on 13/10/2017.
  */
-public class BulletMechanics implements Movable {
+public class BulletMechanics implements Mechanics {
 
     private int width = 10;
     private int height = 10;
@@ -22,7 +21,7 @@ public class BulletMechanics implements Movable {
     }
 
 
-    public boolean checkBulletHit(Position splittable) {
+    public boolean checkHit(Position splittable) {
 
         for (Position pos : positions) {
             if (pos.overlaps(splittable) || splittable.overlaps(pos)) {
@@ -34,7 +33,7 @@ public class BulletMechanics implements Movable {
         return false;
     }
 
-    public boolean hitsTop() {
+    public boolean checkEndingPoint() {
         return positions.getLast().getY() <= 10;
     }
 
@@ -44,9 +43,10 @@ public class BulletMechanics implements Movable {
             pos.delete();
         }
     }
+    
     @Override
     public void move() {
-        if (hitsTop()) {
+        if (checkEndingPoint()) {
             return;
         }
 
