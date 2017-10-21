@@ -16,6 +16,7 @@ public class Player implements Movable {
     private Mechanics mechanics;
     private BulletTypes bulletType;
     private Position pos;
+    private int lives = 3;
     private int width = GameConstants.PLAYER_WIDTH;
     private int height = GameConstants.PLAYER_HEIGHT;
 
@@ -120,4 +121,13 @@ public class Player implements Movable {
     public void setBulletType(BulletTypes type) {
         this.bulletType = type;
     }
+
+    public int getLifes() {
+        return lives;
+    }
+
+    public void setLifes(int lives) {
+        this.lives = lives;
+    }
 }
+

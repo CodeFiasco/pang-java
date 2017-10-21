@@ -34,8 +34,11 @@ public class Game {
     private List<Package> powerUps;
     private Picture[] backgrounds;
     private int level = 1;
+
     private LinkedList<Rectangle> timerBlocks;
     private int timeCounter = 0;
+
+    private LinkedList<Rectangle> lives;
 
 
     public void init() throws InterruptedException {
@@ -52,6 +55,7 @@ public class Game {
 
         splittables = SplittableFactory.getSplittableList(this, level);
         powerUps = new LinkedList<>();
+        lives();
 
         generateMessage("Level " + level, Color.YELLOW, 500);
         gamePreparationMessages();
@@ -65,6 +69,7 @@ public class Game {
             Thread.sleep(GameConstants.DELAY);
         }
 
+
         newLevel();
         start();
     }
@@ -77,7 +82,6 @@ public class Game {
 
         if (playerDead || timerBlocks.size() == 0) {
 
-            System.out.println("EEEE");
 
             player.getPos().delete();
             player.deleteBullet();
@@ -175,6 +179,7 @@ public class Game {
 
             // Check if bullet hit player
             if (player.checkHit(splittable.getPos())) {
+
                 playerDead = true;
             }
 
@@ -248,9 +253,25 @@ public class Game {
 
     public void timerReset() {
 
-      for (Rectangle r : timerBlocks){
-          r.delete();
-      }
+        for (Rectangle r : timerBlocks) {
+            r.delete();
+        }
+    }
+
+    public void lives() {
+
+        lives = new LinkedList<>();
+
+
+        for (int i = 0; i < player.getLifes(); i++) {
+
+            Rectangle rectangle = new Rectangle(20 + i * 20, 20, 10, 10);
+            lives.add(rectangle);
+            lives.getLast().setColor(Color.RED);
+            lives.getLast().fill();
+        }
+
+
     }
 }
 
