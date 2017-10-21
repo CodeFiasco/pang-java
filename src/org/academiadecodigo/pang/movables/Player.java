@@ -2,7 +2,8 @@ package org.academiadecodigo.pang.movables;
 
 import org.academiadecodigo.pang.GameConstants;
 import org.academiadecodigo.pang.directions.Direction;
-import org.academiadecodigo.pang.movables.bullets.mechanics.*;
+import org.academiadecodigo.pang.movables.bullets.mechanics.Mechanics;
+import org.academiadecodigo.pang.movables.bullets.mechanics.MechanicsFactory;
 import org.academiadecodigo.pang.movables.bullets.packages.BulletTypes;
 import org.academiadecodigo.pang.position.Position;
 
@@ -34,23 +35,7 @@ public class Player implements Movable {
         int x = pos.getX() + width / 2 - GameConstants.BULLET_WIDTH / 2;
         int y = GameConstants.GAME_HEIGHT - GameConstants.BULLET_GROWTH_SPEED + GameConstants.PADDING;
 
-        switch (bulletType) {
-            case ROPE:
-                mechanics = new RopeMechanics(x, y);
-                break;
-
-            case HOOK:
-                mechanics = new HookMechanics(x, y);
-                break;
-
-            case GUN:
-                mechanics = new GunMechanics(x, y - height);
-                break;
-
-            case BALL:
-                mechanics = new BallMechanics(x, y - height);
-                break;
-        }
+        mechanics = MechanicsFactory.getMechanics(x, y, bulletType);
     }
 
     public boolean checkHit(Position pos) {
