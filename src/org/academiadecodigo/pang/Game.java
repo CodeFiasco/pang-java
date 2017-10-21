@@ -7,7 +7,9 @@ import org.academiadecodigo.pang.movables.bullets.packages.Package;
 import org.academiadecodigo.pang.movables.bullets.packages.PackageFactory;
 import org.academiadecodigo.pang.movables.splitables.Splittable;
 import org.academiadecodigo.pang.movables.splitables.SplittableFactory;
+import org.academiadecodigo.pang.position.Position;
 import org.academiadecodigo.simplegraphics.graphics.Color;
+import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.graphics.Text;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
@@ -30,6 +32,9 @@ public class Game {
     private List<Package> powerUps;
     private Picture[] backgrounds;
     private int level = 1;
+    private LinkedList<Rectangle> timerBlocks;
+    private int timeCounter = 0;
+
 
     public void init() throws InterruptedException {
 
@@ -38,6 +43,7 @@ public class Game {
         for (Picture background : backgrounds) {
             background.draw();
         }
+        timer();
 
         player = new Player();
         new KeyboardListener(player, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_SPACE);
@@ -51,7 +57,7 @@ public class Game {
 
     public void start() throws InterruptedException {
 
-        while (!playerDead && splittables.size() > 0) {
+        while (!playerDead && splittables.size() > 0 && timerBlocks.size() != 0) {
 
             moveObjects();
             Thread.sleep(GameConstants.DELAY);
@@ -67,7 +73,7 @@ public class Game {
             b.getPos().delete();
         }
 
-        if (playerDead) {
+        if (playerDead || timerBlocks.size() == 0) {
 
             player.getPos().delete();
             player.deleteBullet();
@@ -76,9 +82,17 @@ public class Game {
                 s.getPos().delete();
             }
 
-            generateMessage("You died!!", Color.RED, 3000);
-            playerDead = false;
-            player.getPos().draw();
+            if (playerDead) {
+                generateMessage("You died!!", Color.RED, 3000);
+                playerDead = false;
+                player.getPos().draw();
+            }
+
+            if (timerBlocks.size() == 0) {
+                generateMessage("Your time is up!!!", Color.RED, 3000);
+                playerDead = false;
+                player.getPos().draw();
+            }
 
         } else {    //new level
             generateMessage("Level " + level + " Complete!!!", Color.YELLOW, 500);
@@ -89,6 +103,7 @@ public class Game {
         //Start game messages
         gamePreparationMessages();
 
+        timerReset();
         player.setBulletType(BulletTypes.ROPE);
         powerUps = new LinkedList<>();
         splittables = SplittableFactory.getSplittableList(this, level);
@@ -98,10 +113,10 @@ public class Game {
 
     private void gamePreparationMessages() throws InterruptedException {
         generateMessage("Get Ready...", Color.GREEN, 2000);
-        generateMessage("3", Color.GREEN, 1000);
+       /* generateMessage("3", Color.GREEN, 1000);
         generateMessage("2", Color.GREEN, 1000);
         generateMessage("1", Color.GREEN, 1000);
-        generateMessage("GOOOOOOO!!!", Color.GREEN, 1000);
+        */generateMessage("GOOOOOOO!!!", Color.GREEN, 1000);
     }
 
     private void removeBackground() {
@@ -123,6 +138,9 @@ public class Game {
 
         movePackages();
         moveSplittables();
+        timerDelete();
+
+
     }
 
     public void movePackages() {
@@ -191,5 +209,45 @@ public class Game {
         text.draw();
         Thread.sleep(sleepTime);
         text.delete();
+    }
+
+    private void timer() {
+
+        timerBlocks = new LinkedList<>();
+        timeCounter = 0;
+
+        for (int i = 0; i < GameConstants.LEVEL_TIME; i++) {
+
+            Rectangle timerBlock = new Rectangle((GameConstants.GAME_WIDTH - GameConstants.PADDING - 180) + i * 2, GameConstants.PADDING + 20, 2, 10);
+
+            timerBlocks.add(timerBlock);
+            timerBlocks.getLast().setColor(Color.GREEN);
+            timerBlocks.getLast().fill();
+        }
+    }
+
+    private void timerDelete() {
+
+        if (timerBlocks.size() == 0) {
+            return;
+        }
+        timeCounter++;
+
+        if (timeCounter == 100) {
+            timerBlocks.getFirst().delete();
+            timerBlocks.remove();
+            timeCounter = 0;
+        }
+    }
+
+    public void timerReset() {
+
+        for (int i = 0; i < timerBlocks.size(); i++) {
+            timerBlocks.getFirst().delete();
+            timerBlocks.remove();
+        }
+
+        timer();
+
     }
 }
