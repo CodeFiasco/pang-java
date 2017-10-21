@@ -11,7 +11,7 @@ public abstract class GameConstants {
     public static final int PADDING = 10;
     public static final int DELAY = 10;
     public static final int CHANCE_FOR_POWER_UP = 10;
-    public static final int LEVEL_TIME = 10;
+    public static final int LEVEL_TIME = 90;
 
     // Balls
     public static final int BALL_MIN_SIZE = 25;

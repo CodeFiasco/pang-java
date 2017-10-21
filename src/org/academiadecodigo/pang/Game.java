@@ -245,14 +245,14 @@ public class Game {
 
     public void timerReset() {
 
-        if (timerBlocks.size() != 0) {
+        /*if (timerBlocks.size() != 0) {
 
             Iterator<Rectangle> it = timerBlocks.iterator();
 
             while (it.hasNext()) {
-                it.remove();
-            }
-        }
-
+                it.remove();*/
     }
 }
+
+
+
