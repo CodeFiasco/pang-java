@@ -14,6 +14,7 @@ import org.academiadecodigo.simplegraphics.graphics.Text;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
@@ -57,7 +58,7 @@ public class Game {
 
     public void start() throws InterruptedException {
 
-        while (!playerDead && splittables.size() > 0 && timerBlocks.size() != 0) {
+        while (!playerDead && splittables.size() > 0) {
 
             moveObjects();
             Thread.sleep(GameConstants.DELAY);
@@ -104,6 +105,7 @@ public class Game {
         gamePreparationMessages();
 
         timerReset();
+        timer();
         player.setBulletType(BulletTypes.ROPE);
         powerUps = new LinkedList<>();
         splittables = SplittableFactory.getSplittableList(this, level);
@@ -116,7 +118,8 @@ public class Game {
        /* generateMessage("3", Color.GREEN, 1000);
         generateMessage("2", Color.GREEN, 1000);
         generateMessage("1", Color.GREEN, 1000);
-        */generateMessage("GOOOOOOO!!!", Color.GREEN, 1000);
+        */
+        generateMessage("GOOOOOOO!!!", Color.GREEN, 1000);
     }
 
     private void removeBackground() {
@@ -242,12 +245,14 @@ public class Game {
 
     public void timerReset() {
 
-        for (int i = 0; i < timerBlocks.size(); i++) {
-            timerBlocks.getFirst().delete();
-            timerBlocks.remove();
-        }
+        if (timerBlocks.size() != 0) {
 
-        timer();
+            Iterator<Rectangle> it = timerBlocks.iterator();
+
+            while (it.hasNext()) {
+                it.next().delete();
+            }
+        }
 
     }
 }
