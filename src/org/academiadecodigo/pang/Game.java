@@ -1,5 +1,6 @@
 package org.academiadecodigo.pang;
 
+import com.sun.org.apache.regexp.internal.RE;
 import org.academiadecodigo.pang.keyboardListener.KeyboardListener;
 import org.academiadecodigo.pang.movables.Player;
 import org.academiadecodigo.pang.movables.bullets.packages.BulletTypes;
@@ -58,7 +59,7 @@ public class Game {
 
     public void start() throws InterruptedException {
 
-        while (!playerDead && splittables.size() > 0) {
+        while (!playerDead && splittables.size() > 0 && timerBlocks.size() != 0) {
 
             moveObjects();
             Thread.sleep(GameConstants.DELAY);
@@ -75,6 +76,8 @@ public class Game {
         }
 
         if (playerDead || timerBlocks.size() == 0) {
+
+            System.out.println("EEEE");
 
             player.getPos().delete();
             player.deleteBullet();
@@ -245,14 +248,11 @@ public class Game {
 
     public void timerReset() {
 
-        if (timerBlocks.size() != 0) {
-
-            Iterator<Rectangle> it = timerBlocks.iterator();
-
-            while (it.hasNext()) {
-                it.next().delete();
-            }
-        }
-
+      for (Rectangle r : timerBlocks){
+          r.delete();
+      }
     }
 }
+
+
+
