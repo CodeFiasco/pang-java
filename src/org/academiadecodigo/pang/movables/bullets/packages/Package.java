@@ -7,7 +7,7 @@ import org.academiadecodigo.pang.position.Position;
 /**
  * Created by codecadet on 20/10/17.
  */
-public abstract class Package implements Movable{
+public class Package implements Movable{
 
     private BulletTypes type;
     private Position position;
