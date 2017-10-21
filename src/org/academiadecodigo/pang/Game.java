@@ -33,6 +33,8 @@ public class Game {
     private Picture[] backgrounds;
     private int level = 1;
     private LinkedList<Rectangle> timerBlocks;
+    private int timeCounter = 0;
+
 
     public void init() throws InterruptedException {
 
@@ -127,6 +129,9 @@ public class Game {
 
         movePackages();
         moveSplittables();
+        timerDelete();
+
+
     }
 
     public void movePackages() {
@@ -209,5 +214,17 @@ public class Game {
             timerBlocks.getLast().setColor(Color.GREEN);
             timerBlocks.getLast().fill();
         }
+    }
+
+    private void timerDelete() {
+
+        timeCounter++;
+
+        if (timeCounter == 100) {
+            timerBlocks.getFirst().delete();
+            timerBlocks.remove();
+            timeCounter = 0;
+        }
+
     }
 }
