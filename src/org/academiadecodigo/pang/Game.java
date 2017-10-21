@@ -7,7 +7,9 @@ import org.academiadecodigo.pang.movables.bullets.packages.Package;
 import org.academiadecodigo.pang.movables.bullets.packages.PackageFactory;
 import org.academiadecodigo.pang.movables.splitables.Splittable;
 import org.academiadecodigo.pang.movables.splitables.SplittableFactory;
+import org.academiadecodigo.pang.position.Position;
 import org.academiadecodigo.simplegraphics.graphics.Color;
+import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.graphics.Text;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
@@ -30,6 +32,7 @@ public class Game {
     private List<Package> powerUps;
     private Picture[] backgrounds;
     private int level = 1;
+    private LinkedList<Rectangle> timerBlocks;
 
     public void init() throws InterruptedException {
 
@@ -38,6 +41,7 @@ public class Game {
         for (Picture background : backgrounds) {
             background.draw();
         }
+        timer();
 
         player = new Player();
         new KeyboardListener(player, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_SPACE);
@@ -191,5 +195,19 @@ public class Game {
         text.draw();
         Thread.sleep(sleepTime);
         text.delete();
+    }
+
+    private void timer() {
+
+        timerBlocks = new LinkedList<>();
+
+        for (int i = 0; i < GameConstants.LEVEL_TIME; i++) {
+
+            Rectangle timerBlock = new Rectangle((GameConstants.GAME_WIDTH - GameConstants.PADDING - 110) + i, GameConstants.PADDING + 20, 10, 10);
+
+            timerBlocks.add(timerBlock);
+            timerBlocks.getLast().setColor(Color.GREEN);
+            timerBlocks.getLast().fill();
+        }
     }
 }
