@@ -57,7 +57,7 @@ public class Game {
 
     public void start() throws InterruptedException {
 
-        while (!playerDead && splittables.size() > 0) {
+        while (!playerDead && splittables.size() > 0 && timerBlocks.size() != 0) {
 
             moveObjects();
             Thread.sleep(GameConstants.DELAY);
@@ -73,7 +73,7 @@ public class Game {
             b.getPos().delete();
         }
 
-        if (playerDead) {
+        if (playerDead || timerBlocks.size() == 0) {
 
             player.getPos().delete();
             player.deleteBullet();
@@ -82,9 +82,17 @@ public class Game {
                 s.getPos().delete();
             }
 
-            generateMessage("You died!!", Color.RED, 3000);
-            playerDead = false;
-            player.getPos().draw();
+            if (playerDead) {
+                generateMessage("You died!!", Color.RED, 3000);
+                playerDead = false;
+                player.getPos().draw();
+            }
+
+            if (timerBlocks.size() == 0) {
+                generateMessage("Your time is up!!!", Color.RED, 3000);
+                playerDead = false;
+                player.getPos().draw();
+            }
 
         } else {    //new level
             generateMessage("Level " + level + " Complete!!!", Color.YELLOW, 500);
@@ -95,6 +103,7 @@ public class Game {
         //Start game messages
         gamePreparationMessages();
 
+        timerReset();
         player.setBulletType(BulletTypes.ROPE);
         powerUps = new LinkedList<>();
         splittables = SplittableFactory.getSplittableList(this, level);
@@ -104,10 +113,10 @@ public class Game {
 
     private void gamePreparationMessages() throws InterruptedException {
         generateMessage("Get Ready...", Color.GREEN, 2000);
-        generateMessage("3", Color.GREEN, 1000);
+       /* generateMessage("3", Color.GREEN, 1000);
         generateMessage("2", Color.GREEN, 1000);
         generateMessage("1", Color.GREEN, 1000);
-        generateMessage("GOOOOOOO!!!", Color.GREEN, 1000);
+        */generateMessage("GOOOOOOO!!!", Color.GREEN, 1000);
     }
 
     private void removeBackground() {
@@ -205,10 +214,11 @@ public class Game {
     private void timer() {
 
         timerBlocks = new LinkedList<>();
+        timeCounter = 0;
 
         for (int i = 0; i < GameConstants.LEVEL_TIME; i++) {
 
-            Rectangle timerBlock = new Rectangle((GameConstants.GAME_WIDTH - GameConstants.PADDING - 110) + i, GameConstants.PADDING + 20, 10, 10);
+            Rectangle timerBlock = new Rectangle((GameConstants.GAME_WIDTH - GameConstants.PADDING - 180) + i * 2, GameConstants.PADDING + 20, 2, 10);
 
             timerBlocks.add(timerBlock);
             timerBlocks.getLast().setColor(Color.GREEN);
@@ -218,6 +228,9 @@ public class Game {
 
     private void timerDelete() {
 
+        if (timerBlocks.size() == 0) {
+            return;
+        }
         timeCounter++;
 
         if (timeCounter == 100) {
@@ -225,6 +238,16 @@ public class Game {
             timerBlocks.remove();
             timeCounter = 0;
         }
+    }
+
+    public void timerReset() {
+
+        for (int i = 0; i < timerBlocks.size(); i++) {
+            timerBlocks.getFirst().delete();
+            timerBlocks.remove();
+        }
+
+        timer();
 
     }
 }
