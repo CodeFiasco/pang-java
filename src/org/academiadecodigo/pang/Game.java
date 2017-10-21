@@ -55,6 +55,7 @@ public class Game {
 
         splittables = SplittableFactory.getSplittableList(this, level);
         powerUps = new LinkedList<>();
+
         lives();
 
         generateMessage("Level " + level, Color.YELLOW, 500);
@@ -62,6 +63,8 @@ public class Game {
     }
 
     public void start() throws InterruptedException {
+
+
 
         while (!playerDead && splittables.size() > 0 && timerBlocks.size() != 0) {
 
@@ -94,6 +97,13 @@ public class Game {
                 generateMessage("You died!!", Color.RED, 3000);
                 playerDead = false;
                 player.getPos().draw();
+
+                if (lives.size() == 0){
+
+                    System.out.println(splittables.size());
+                    lives();
+                    start();
+                }
             }
 
             if (timerBlocks.size() == 0) {
@@ -149,8 +159,6 @@ public class Game {
         movePackages();
         moveSplittables();
         timerDelete();
-
-
     }
 
     public void movePackages() {
@@ -180,7 +188,10 @@ public class Game {
             // Check if bullet hit player
             if (player.checkHit(splittable.getPos())) {
 
+                livesRemoval();
                 playerDead = true;
+
+
             }
 
             // Check if bullet hits splittable
@@ -270,7 +281,15 @@ public class Game {
             lives.getLast().setColor(Color.RED);
             lives.getLast().fill();
         }
+    }
 
+    public void livesRemoval() {
+
+        if (lives.size() == 0) {
+            return;
+        }
+        lives.getLast().delete();
+        lives.removeLast();
 
     }
 }
