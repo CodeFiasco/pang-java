@@ -58,7 +58,7 @@ public class Game {
 
     public void start() throws InterruptedException {
 
-        while (!playerDead && splittables.size() > 0) {
+        while (!playerDead && splittables.size() > 0 && timerBlocks.size() != 0) {
 
             moveObjects();
             Thread.sleep(GameConstants.DELAY);
@@ -250,7 +250,7 @@ public class Game {
             Iterator<Rectangle> it = timerBlocks.iterator();
 
             while (it.hasNext()) {
-                it.next().delete();
+                it.remove();
             }
         }
 
