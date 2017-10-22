@@ -65,7 +65,6 @@ public class Game {
     public void start() throws InterruptedException {
 
 
-
         while (!playerDead && splittables.size() > 0 && timerBlocks.size() != 0) {
 
             moveObjects();
@@ -98,8 +97,9 @@ public class Game {
                 playerDead = false;
                 player.getPos().draw();
 
-                if (lives.size() == 0){
+                if (lives.size() == 0) {
 
+                    splittables.removeAll(splittables);
                     System.out.println(splittables.size());
                     lives();
                     start();
@@ -110,6 +110,7 @@ public class Game {
                 generateMessage("Your time is up!!!", Color.RED, 3000);
                 playerDead = false;
                 player.getPos().draw();
+                livesRemoval();
             }
 
         } else {    //new level
@@ -140,7 +141,10 @@ public class Game {
     }
 
     private void removeBackground() {
-        backgrounds[backgrounds.length - level].delete();
+        if (backgrounds.length - level >= 0) {
+
+            backgrounds[backgrounds.length - level].delete();
+        }
     }
 
     private Picture[] generateBackgrounds() {
@@ -250,14 +254,17 @@ public class Game {
 
     private void timerDelete() {
 
+        ListIterator<Rectangle> it = timerBlocks.listIterator();
+
         if (timerBlocks.size() == 0) {
             return;
         }
         timeCounter++;
 
         if (timeCounter == 100) {
-            timerBlocks.getFirst().delete();
-            timerBlocks.remove();
+            Rectangle next = it.next();
+            next.delete();
+            it.remove();
             timeCounter = 0;
         }
     }
@@ -274,7 +281,7 @@ public class Game {
         lives = new LinkedList<>();
 
 
-        for (int i = 0; i < player.getLifes(); i++) {
+        for (int i = 0; i < GameConstants.PLAYERS_LIVES; i++) {
 
             Rectangle rectangle = new Rectangle(20 + i * 20, 20, 10, 10);
             lives.add(rectangle);
