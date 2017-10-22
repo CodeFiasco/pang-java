@@ -34,7 +34,7 @@ public class Game {
     private LinkedList<Rectangle> timerBlocks;
     private int timeCounter = 0;
 
-    private LinkedList<Rectangle> lives;
+    private LinkedList<Picture> lives;
 
 
     /*public void removeInitialScreen() throws InterruptedException {
@@ -46,7 +46,7 @@ public class Game {
 
     public void init() throws InterruptedException {
 
-        initialScreen();
+        //initialScreen();
 
         backgrounds = generateBackgrounds();
 
@@ -61,7 +61,6 @@ public class Game {
         splittables = SplittableFactory.getSplittableList(this, level);
         powerUps = new LinkedList<>();
 
-
         lives();
 
         start();
@@ -69,7 +68,7 @@ public class Game {
 
     public void start() throws InterruptedException {
 
-        generateMessage("Level " + level, Color.YELLOW, 1000);
+        generateMessage("Level " + level, Color.YELLOW, 2000);
         gamePreparationMessages();
 
         while (!playerDead && splittables.size() > 0 /*&& timerBlocks.size() != 0*/) {
@@ -164,7 +163,18 @@ public class Game {
                 s.getPos().delete();
             }
 
-            if (playerDead) {
+            generateMessage("BANG!!", Color.RED, 3000);
+            playerDead = false;
+            player.getPos().draw();
+
+            if (lives.size() == 0) {
+
+                splittables.removeAll(splittables);
+                lives();
+                start();
+                //initialScreen();
+            }
+            /*if (playerDead) {
                 generateMessage("You died!!", Color.RED, 3000);
                 playerDead = false;
                 player.getPos().draw();
@@ -176,7 +186,7 @@ public class Game {
                     start();
                     //initialScreen();
                 }
-            }
+        }*/
 
             /*if (timerBlocks.size() == 0) {
                 generateMessage("Your time is up!!!", Color.RED, 3000);
@@ -185,7 +195,9 @@ public class Game {
                 livesRemoval();
             }*/
 
-        } else {    //new level
+        } else
+
+        {    //new level
             generateMessage("Level " + level + " Complete!!!", Color.YELLOW, 500);
             removeBackground();
             level++;
@@ -193,8 +205,9 @@ public class Game {
         if (level > 3) {
             finishScreen();
         }
+
         //Start game messages
-        gamePreparationMessages();
+        //gamePreparationMessages();
 
         //timerReset();
         //timer();
@@ -290,10 +303,10 @@ public class Game {
 
         for (int i = 0; i < GameConstants.PLAYERS_LIVES; i++) {
 
-            Rectangle rectangle = new Rectangle(20 + i * 20, 20, 10, 10);
-            lives.add(rectangle);
-            lives.getLast().setColor(Color.RED);
-            lives.getLast().fill();
+
+            Picture hearts = new Picture(20 + i * 50, 20, "heart.png");
+            lives.add(hearts);
+            lives.getLast().draw();
         }
     }
 
@@ -308,6 +321,7 @@ public class Game {
     }
 
     public void initialScreen() throws InterruptedException {
+
 
         Rectangle rectangle = new Rectangle(GameConstants.PADDING, GameConstants.PADDING, GameConstants.GAME_WIDTH, GameConstants.GAME_HEIGHT);
         Picture initPicture1 = new Picture(GameConstants.PADDING, GameConstants.PADDING, "start-img1.png");
@@ -327,12 +341,16 @@ public class Game {
         initPicture3.draw();
         Thread.sleep(2000);
         initPicture5.draw();
-        Thread.sleep(1000);
+        Thread.sleep(4000);
         initPicture4.translate(GameConstants.GAME_WIDTH / 2 - (initPicture4.getWidth() / 2), 610);
-        initPicture4.draw();
-        Thread.sleep(1000);
 
-        new KeyboardInitialListener(this, KeyboardEvent.KEY_S);
+        /*while (true) {
+
+            initPicture4.draw();
+            Thread.sleep(500);
+            initPicture4.delete();
+            Thread.sleep(500);
+        }*/
     }
 
     public void finishScreen() throws InterruptedException {

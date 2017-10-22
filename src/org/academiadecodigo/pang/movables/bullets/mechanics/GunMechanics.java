@@ -12,12 +12,12 @@ public class GunMechanics implements Mechanics {
 
     public GunMechanics(int x, int y){
 
-        pos = new Position(x, y, 50, 25, "1000.gif");
+        pos = new Position(x, y, 50, 9, "chain.png");
     }
 
     @Override
     public void move() {
-        pos.translate(0, -5);
+        pos.translate(0, -10);
     }
 
     @Override
