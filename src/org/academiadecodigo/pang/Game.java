@@ -5,6 +5,7 @@ import org.academiadecodigo.pang.keyboardListener.KeyboardInitialListener;
 import org.academiadecodigo.pang.keyboardListener.KeyboardListener;
 import org.academiadecodigo.pang.movables.Player;
 import org.academiadecodigo.pang.movables.bullets.packages.BulletTypes;
+import org.academiadecodigo.pang.movables.bullets.packages.ExtraLife;
 import org.academiadecodigo.pang.movables.bullets.packages.Package;
 import org.academiadecodigo.pang.movables.bullets.packages.PackageFactory;
 import org.academiadecodigo.pang.movables.splitables.Splittable;
@@ -36,6 +37,7 @@ public class Game {
     private List<Splittable> splittables;
 
     private List<Package> powerUps;
+    private List<ExtraLife> extraLifes;
     private Picture[] backgrounds;
     private int level = 1;
 
@@ -80,6 +82,7 @@ public class Game {
 
         splittables = SplittableFactory.getSplittableList(this, level);
         powerUps = new LinkedList<>();
+        extraLifes = new LinkedList<>();
 
         lives();
 
@@ -96,7 +99,6 @@ public class Game {
             moveObjects();
             Thread.sleep(GameConstants.DELAY);
         }
-        System.out.println("FFHJJ");
         newLevel();
         start();
     }
@@ -124,10 +126,8 @@ public class Game {
                 if (lives.size() == 0) {
 
                     splittables.removeAll(splittables);
-                    System.out.println(splittables.size());
                     lives();
-                    start();
-                    //initialScreen();
+                    initialScreen();
                 }
             }
 
@@ -189,6 +189,7 @@ public class Game {
 
         movePackages();
         moveSplittables();
+
         //timerDelete();
     }
 
@@ -204,6 +205,20 @@ public class Game {
                 powerUpIterator.remove();
                 player.setBulletType(pw.getType());
                 pw.getPos().delete();
+            }
+        }
+
+        ListIterator<ExtraLife> extraLifeIterator = extraLifes.listIterator();
+
+        while (extraLifeIterator.hasNext()){
+
+            ExtraLife extraLife = extraLifeIterator.next();
+            extraLife.move();
+
+            if (player.checkHit(extraLife.getPos())){
+                extraLife.getPos().delete();
+                extraLifeIterator.remove();
+                addExtraLife();
             }
         }
     }
@@ -243,9 +258,14 @@ public class Game {
                 }
 
                 int rand = (int) (Math.random() * GameConstants.CHANCE_FOR_POWER_UP);
+                int rand2 = 1;
 
                 if (rand == 0) {
                     powerUps.add(PackageFactory.getPackage(splittable.getPos().getX() + 25, splittable.getPos().getY() + 50));
+                }
+                if (rand2 == 1){
+
+                    extraLifes.add(new ExtraLife(splittable.getPos().getX() + 25, splittable.getPos().getY() + 50));
                 }
             }
         }
@@ -315,6 +335,17 @@ public class Game {
             lives.getLast().setColor(Color.RED);
             lives.getLast().fill();
         }
+    }
+
+    public void addExtraLife(){
+
+        if (lives.size() >= 5) {
+            return;
+        }
+
+        lives.add(new Rectangle(20 + lives.size() * 20, 20, 10, 10));
+        lives.getLast().setColor(Color.RED);
+        lives.getLast().fill();
     }
 
     public void livesRemoval() {
