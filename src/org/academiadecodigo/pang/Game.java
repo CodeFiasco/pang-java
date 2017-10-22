@@ -1,6 +1,7 @@
 package org.academiadecodigo.pang;
 
 import com.sun.org.apache.regexp.internal.RE;
+import org.academiadecodigo.pang.keyboardListener.KeyboardInitialListener;
 import org.academiadecodigo.pang.keyboardListener.KeyboardListener;
 import org.academiadecodigo.pang.movables.Player;
 import org.academiadecodigo.pang.movables.bullets.packages.BulletTypes;
@@ -27,6 +28,9 @@ public class Game {
 
     private final int PADDING = GameConstants.PADDING;
 
+    private Picture initialScreen;
+    //private Text newText;
+
     private Player player;
     private boolean playerDead = false;
     private List<Splittable> splittables;
@@ -40,6 +44,27 @@ public class Game {
 
     private LinkedList<Rectangle> lives;
 
+    public void initialScreen() throws InterruptedException {
+
+        initialScreen = new Picture(PADDING, PADDING, GameConstants.LEVEL_3_IMAGE);
+
+        initialScreen.draw();
+
+        generateMessage("Welcome!", Color.RED, 3000);
+        /*newText = new Text(200, 100, "Press s to Start...");
+        newText.setColor(Color.GREEN);
+        newText.draw();
+
+        new KeyboardInitialListener(this, KeyboardEvent.KEY_S);*/
+        init();
+    }
+
+    /*public void removeInitialScreen() throws InterruptedException {
+        initialScreen.delete();
+        newText.delete();
+        init();
+
+    }*/
 
     public void init() throws InterruptedException {
 
@@ -48,7 +73,7 @@ public class Game {
         for (Picture background : backgrounds) {
             background.draw();
         }
-        timer();
+        //timer();
 
         player = new Player();
         new KeyboardListener(player, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_SPACE);
@@ -60,18 +85,18 @@ public class Game {
 
         generateMessage("Level " + level, Color.YELLOW, 500);
         gamePreparationMessages();
+        start();
     }
 
     public void start() throws InterruptedException {
 
 
-        while (!playerDead && splittables.size() > 0 && timerBlocks.size() != 0) {
+        while (!playerDead && splittables.size() > 0 /*&& timerBlocks.size() != 0*/) {
 
             moveObjects();
             Thread.sleep(GameConstants.DELAY);
         }
-
-
+        System.out.println("FFHJJ");
         newLevel();
         start();
     }
@@ -82,8 +107,7 @@ public class Game {
             b.getPos().delete();
         }
 
-        if (playerDead || timerBlocks.size() == 0) {
-
+        if (playerDead /*|| timerBlocks.size() == 0*/) {
 
             player.getPos().delete();
             player.deleteBullet();
@@ -103,27 +127,30 @@ public class Game {
                     System.out.println(splittables.size());
                     lives();
                     start();
+                    //initialScreen();
                 }
             }
 
-            if (timerBlocks.size() == 0) {
+            /*if (timerBlocks.size() == 0) {
                 generateMessage("Your time is up!!!", Color.RED, 3000);
                 playerDead = false;
                 player.getPos().draw();
                 livesRemoval();
-            }
+            }*/
 
         } else {    //new level
             generateMessage("Level " + level + " Complete!!!", Color.YELLOW, 500);
             removeBackground();
             level++;
         }
-
+        if (level > 3) {
+            finishScreen();
+        }
         //Start game messages
         gamePreparationMessages();
 
-        timerReset();
-        timer();
+        //timerReset();
+        //timer();
         player.setBulletType(BulletTypes.ROPE);
         powerUps = new LinkedList<>();
         splittables = SplittableFactory.getSplittableList(this, level);
@@ -162,7 +189,7 @@ public class Game {
 
         movePackages();
         moveSplittables();
-        timerDelete();
+        //timerDelete();
     }
 
     public void movePackages() {
@@ -299,6 +326,20 @@ public class Game {
         lives.removeLast();
 
     }
+
+    public void finishScreen() throws InterruptedException {
+
+        Picture picture = new Picture(1280, 800, GameConstants.LEVEL_1_IMAGE);
+
+        generateMessage("CONGRATULATIONS!!", Color.RED, 5000);
+        generateMessage("THE END!!", Color.RED, 3000);
+        level = 1;
+
+        initialScreen();
+
+    }
+
+
 }
 
 
