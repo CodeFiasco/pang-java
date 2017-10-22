@@ -22,7 +22,7 @@ public class Player implements Movable {
 
     public Player() {
         pos = new Position((GameConstants.PADDING + (GameConstants.GAME_WIDTH / 2 - width / 2)), (GameConstants.PADDING + (GameConstants.GAME_HEIGHT - height)), width, height, "player.png");
-        bulletType = BulletTypes.ROPE;
+        bulletType = BulletTypes.GUN;
     }
 
 
@@ -120,4 +120,7 @@ public class Player implements Movable {
     public void setBulletType(BulletTypes type) {
         this.bulletType = type;
     }
+
+
 }
+

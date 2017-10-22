@@ -20,6 +20,7 @@ public abstract class GameConstants {
     public static final int PLAYER_WIDTH = 60;
     public static final int PLAYER_HEIGHT = 100;
     public static final int PLAYER_SPEED = 10;
+    public static final int PLAYERS_LIVES = 3;
 
     // RopeMechanics
     public static final int BULLET_GROWTH_SPEED = 10;
