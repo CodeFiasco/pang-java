@@ -28,8 +28,8 @@ public abstract class GameConstants {
     public static final int BULLET_WIDTH = 10;
 
     //Background Images
-    public static final String LEVEL_1_IMAGE = "AlternativeBackGround.jpg";
-    public static final String LEVEL_2_IMAGE = "AlternativeBackGround.jpg";
-    public static final String LEVEL_3_IMAGE = "AlternativeBackGround.jpg";
+    public static final String LEVEL_1_IMAGE = "level1-background.jpg";
+    public static final String LEVEL_2_IMAGE = "level2-background.jpg";
+    public static final String LEVEL_3_IMAGE = "level3-background.jpg";
 
 }

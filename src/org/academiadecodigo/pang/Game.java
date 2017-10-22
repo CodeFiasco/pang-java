@@ -80,7 +80,7 @@ public class Game {
         for (Picture background : backgrounds) {
             background.draw();
         }
-        timer();
+        //timer();
 
         player = new Player();
         new KeyboardListener(player, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_SPACE);
@@ -100,7 +100,7 @@ public class Game {
     public void start() throws InterruptedException {
 
 
-        while (!playerDead && splittables.size() > 0 && timer != 0) {
+        while (!playerDead && splittables.size() > 0 /*&& timer != 0*/) {
 
             moveObjects();
             Thread.sleep(GameConstants.DELAY);
@@ -115,7 +115,7 @@ public class Game {
             b.getPos().delete();
         }
 
-        if (playerDead || timer == 0) {
+        if (playerDead /*|| timer == 0*/) {
 
             player.getPos().delete();
             player.deleteBullet();
@@ -155,9 +155,9 @@ public class Game {
         //Start game messages
         gamePreparationMessages();
 
-        timer = GameConstants.LEVEL_TIME;
+        //timer = GameConstants.LEVEL_TIME;
 
-        timer();
+        //timer();
         player.setBulletType(BulletTypes.ROPE);
         powerUps = new LinkedList<>();
         splittables = SplittableFactory.getSplittableList(this, level);
@@ -199,7 +199,7 @@ public class Game {
 
         displayScore(getScore());
 
-        timerSet();
+        //timerSet();
 
     }
 
