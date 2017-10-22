@@ -1,6 +1,5 @@
 package org.academiadecodigo.pang;
 
-import com.sun.org.apache.regexp.internal.RE;
 import org.academiadecodigo.pang.keyboardListener.KeyboardInitialListener;
 import org.academiadecodigo.pang.keyboardListener.KeyboardListener;
 import org.academiadecodigo.pang.movables.Player;
@@ -9,15 +8,12 @@ import org.academiadecodigo.pang.movables.bullets.packages.Package;
 import org.academiadecodigo.pang.movables.bullets.packages.PackageFactory;
 import org.academiadecodigo.pang.movables.splitables.Splittable;
 import org.academiadecodigo.pang.movables.splitables.SplittableFactory;
-import org.academiadecodigo.pang.position.Position;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.graphics.Text;
-import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
@@ -26,11 +22,6 @@ import java.util.ListIterator;
  * Created by codecadet on 13/10/2017.
  */
 public class Game {
-
-    private final int PADDING = GameConstants.PADDING;
-
-    private Picture initialScreen;
-    //private Text newText;
 
     private Player player;
     private boolean playerDead = false;
@@ -45,20 +36,6 @@ public class Game {
 
     private LinkedList<Rectangle> lives;
 
-    public void initialScreen() throws InterruptedException {
-
-        initialScreen = new Picture(PADDING, PADDING, GameConstants.LEVEL_3_IMAGE);
-
-        initialScreen.draw();
-
-        generateMessage("Welcome!", Color.RED, 3000);
-        /*newText = new Text(200, 100, "Press s to Start...");
-        newText.setColor(Color.GREEN);
-        newText.draw();
-
-        new KeyboardInitialListener(this, KeyboardEvent.KEY_S);*/
-        init();
-    }
 
     /*public void removeInitialScreen() throws InterruptedException {
         initialScreen.delete();
@@ -69,7 +46,7 @@ public class Game {
 
     public void init() throws InterruptedException {
 
-        initialPresentation();
+        initialScreen();
 
         backgrounds = generateBackgrounds();
 
@@ -87,103 +64,21 @@ public class Game {
 
         lives();
 
-        generateMessage("Level " + level, Color.YELLOW, 500);
-        gamePreparationMessages();
         start();
     }
 
     public void start() throws InterruptedException {
 
+        generateMessage("Level " + level, Color.YELLOW, 1000);
+        gamePreparationMessages();
 
-       while (!playerDead && splittables.size() > 0 /*&& timerBlocks.size() != 0*/) {
+        while (!playerDead && splittables.size() > 0 /*&& timerBlocks.size() != 0*/) {
 
             moveObjects();
             Thread.sleep(GameConstants.DELAY);
         }
-        System.out.println("FFHJJ");
         newLevel();
         start();
-    }
-
-    private void newLevel() throws InterruptedException {
-
-        for (Package b : powerUps) {
-            b.getPos().delete();
-        }
-
-        if (playerDead /*|| timerBlocks.size() == 0*/) {
-
-            player.getPos().delete();
-            player.deleteBullet();
-
-            for (Splittable s : splittables) {
-                s.getPos().delete();
-            }
-
-            if (playerDead) {
-                generateMessage("You died!!", Color.RED, 3000);
-                playerDead = false;
-                player.getPos().draw();
-
-                if (lives.size() == 0) {
-
-                    splittables.removeAll(splittables);
-                    System.out.println(splittables.size());
-                    lives();
-                    start();
-                    //initialScreen();
-                }
-            }
-
-            /*if (timerBlocks.size() == 0) {
-                generateMessage("Your time is up!!!", Color.RED, 3000);
-                playerDead = false;
-                player.getPos().draw();
-                livesRemoval();
-            }*/
-
-        } else {    //new level
-            generateMessage("Level " + level + " Complete!!!", Color.YELLOW, 500);
-            removeBackground();
-            level++;
-        }
-        if (level > 3) {
-            finishScreen();
-        }
-        //Start game messages
-        gamePreparationMessages();
-
-        //timerReset();
-        //timer();
-        player.setBulletType(BulletTypes.ROPE);
-        powerUps = new LinkedList<>();
-        splittables = SplittableFactory.getSplittableList(this, level);
-
-
-    }
-
-    private void gamePreparationMessages() throws InterruptedException {
-        generateMessage("Get Ready...", Color.GREEN, 2000);
-        generateMessage("3", Color.GREEN, 1000);
-        generateMessage("2", Color.GREEN, 1000);
-        generateMessage("1", Color.GREEN, 1000);
-        generateMessage("GOOOOOOO!!!", Color.GREEN, 1000);
-    }
-
-    private void removeBackground() {
-        if (backgrounds.length - level >= 0) {
-
-            backgrounds[backgrounds.length - level].delete();
-        }
-    }
-
-    private Picture[] generateBackgrounds() {
-
-        return new Picture[]{
-                new Picture(PADDING, PADDING, GameConstants.LEVEL_3_IMAGE),
-                new Picture(PADDING, PADDING, GameConstants.LEVEL_2_IMAGE),
-                new Picture(PADDING, PADDING, GameConstants.LEVEL_1_IMAGE)
-        };
     }
 
     private void moveObjects() {
@@ -254,6 +149,62 @@ public class Game {
         }
     }
 
+    private void newLevel() throws InterruptedException {
+
+        for (Package b : powerUps) {
+            b.getPos().delete();
+        }
+
+        if (playerDead /*|| timerBlocks.size() == 0*/) {
+
+            player.getPos().delete();
+            player.deleteBullet();
+
+            for (Splittable s : splittables) {
+                s.getPos().delete();
+            }
+
+            if (playerDead) {
+                generateMessage("You died!!", Color.RED, 3000);
+                playerDead = false;
+                player.getPos().draw();
+
+                if (lives.size() == 0) {
+
+                    splittables.removeAll(splittables);
+                    lives();
+                    start();
+                    //initialScreen();
+                }
+            }
+
+            /*if (timerBlocks.size() == 0) {
+                generateMessage("Your time is up!!!", Color.RED, 3000);
+                playerDead = false;
+                player.getPos().draw();
+                livesRemoval();
+            }*/
+
+        } else {    //new level
+            generateMessage("Level " + level + " Complete!!!", Color.YELLOW, 500);
+            removeBackground();
+            level++;
+        }
+        if (level > 3) {
+            finishScreen();
+        }
+        //Start game messages
+        gamePreparationMessages();
+
+        //timerReset();
+        //timer();
+        player.setBulletType(BulletTypes.ROPE);
+        powerUps = new LinkedList<>();
+        splittables = SplittableFactory.getSplittableList(this, level);
+
+
+    }
+
     private void generateMessage(String message, Color color, int sleepTime) throws InterruptedException {
 
         int grownFactor = 4;
@@ -266,6 +217,31 @@ public class Game {
         Thread.sleep(sleepTime);
         text.delete();
     }
+
+    private void gamePreparationMessages() throws InterruptedException {
+        generateMessage("Get Ready...", Color.GREEN, 2000);
+        generateMessage("3", Color.GREEN, 1000);
+        generateMessage("2", Color.GREEN, 1000);
+        generateMessage("1", Color.GREEN, 1000);
+        generateMessage("GOOOOOOO!!!", Color.GREEN, 1000);
+    }
+
+    private Picture[] generateBackgrounds() {
+
+        return new Picture[]{
+                new Picture(GameConstants.PADDING, GameConstants.PADDING, GameConstants.LEVEL_3_IMAGE),
+                new Picture(GameConstants.PADDING, GameConstants.PADDING, GameConstants.LEVEL_2_IMAGE),
+                new Picture(GameConstants.PADDING, GameConstants.PADDING, GameConstants.LEVEL_1_IMAGE)
+        };
+    }
+
+    private void removeBackground() {
+        if (backgrounds.length - level >= 0) {
+
+            backgrounds[backgrounds.length - level].delete();
+        }
+    }
+
 
     private void timer() {
 
@@ -331,7 +307,7 @@ public class Game {
 
     }
 
-    private void initialPresentation() throws InterruptedException {
+    public void initialScreen() throws InterruptedException {
 
         Rectangle rectangle = new Rectangle(GameConstants.PADDING, GameConstants.PADDING, GameConstants.GAME_WIDTH, GameConstants.GAME_HEIGHT);
         Picture initPicture1 = new Picture(GameConstants.PADDING, GameConstants.PADDING, "start-img1.png");
@@ -351,11 +327,12 @@ public class Game {
         initPicture3.draw();
         Thread.sleep(2000);
         initPicture5.draw();
-        Thread.sleep(4000);
+        Thread.sleep(1000);
         initPicture4.translate(GameConstants.GAME_WIDTH / 2 - (initPicture4.getWidth() / 2), 610);
         initPicture4.draw();
-        Thread.sleep(5000);
+        Thread.sleep(1000);
 
+        new KeyboardInitialListener(this, KeyboardEvent.KEY_S);
     }
 
     public void finishScreen() throws InterruptedException {
@@ -369,6 +346,4 @@ public class Game {
         initialScreen();
 
     }
-
-
 }
