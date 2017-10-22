@@ -84,8 +84,10 @@ public class Game {
         splittables = SplittableFactory.getSplittableList(this, level);
         powerUps = new LinkedList<>();
 
-
+<<<<<<< HEAD
+=======
         lives();
+>>>>>>> master
 
         generateMessage("Level " + level, Color.YELLOW, 500);
         gamePreparationMessages();
@@ -95,7 +97,11 @@ public class Game {
     public void start() throws InterruptedException {
 
 
-       while (!playerDead && splittables.size() > 0 /*&& timerBlocks.size() != 0*/) {
+<<<<<<< HEAD
+        while (!playerDead && splittables.size() > 0 && timerBlocks.size() != 0) {
+=======
+        while (!playerDead && splittables.size() > 0 /*&& timerBlocks.size() != 0*/) {
+>>>>>>> master
 
             moveObjects();
             Thread.sleep(GameConstants.DELAY);
@@ -304,31 +310,7 @@ public class Game {
         for (Rectangle r : timerBlocks) {
             r.delete();
         }
-    }
-
-
-    public void lives() {
-
-        lives = new LinkedList<>();
-
-
-        for (int i = 0; i < GameConstants.PLAYERS_LIVES; i++) {
-
-            Rectangle rectangle = new Rectangle(20 + i * 20, 20, 10, 10);
-            lives.add(rectangle);
-            lives.getLast().setColor(Color.RED);
-            lives.getLast().fill();
-        }
-    }
-
-    public void livesRemoval() {
-
-        if (lives.size() == 0) {
-            return;
-        }
-        lives.getLast().delete();
-        lives.removeLast();
-
+<<<<<<< HEAD
     }
 
     private void initialPresentation() throws InterruptedException {
@@ -358,6 +340,33 @@ public class Game {
 
     }
 
+=======
+    }
+
+    public void lives() {
+
+        lives = new LinkedList<>();
+
+
+        for (int i = 0; i < GameConstants.PLAYERS_LIVES; i++) {
+
+            Rectangle rectangle = new Rectangle(20 + i * 20, 20, 10, 10);
+            lives.add(rectangle);
+            lives.getLast().setColor(Color.RED);
+            lives.getLast().fill();
+        }
+    }
+
+    public void livesRemoval() {
+
+        if (lives.size() == 0) {
+            return;
+        }
+        lives.getLast().delete();
+        lives.removeLast();
+
+    }
+
     public void finishScreen() throws InterruptedException {
 
         Picture picture = new Picture(1280, 800, GameConstants.LEVEL_1_IMAGE);
@@ -371,4 +380,8 @@ public class Game {
     }
 
 
+>>>>>>> master
 }
+
+
+
