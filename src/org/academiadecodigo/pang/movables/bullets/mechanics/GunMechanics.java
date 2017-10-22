@@ -12,7 +12,7 @@ public class GunMechanics implements Mechanics {
 
     public GunMechanics(int x, int y){
 
-        pos = new Position(x, y, 25, 25, "arrow2.png");
+        pos = new Position(x, y, 50, 25, "1000.gif");
     }
 
     @Override
