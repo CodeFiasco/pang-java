@@ -1,6 +1,5 @@
 package org.academiadecodigo.pang;
 
-import com.sun.org.apache.regexp.internal.RE;
 import org.academiadecodigo.pang.keyboardListener.KeyboardInitialListener;
 import org.academiadecodigo.pang.keyboardListener.KeyboardListener;
 import org.academiadecodigo.pang.movables.Player;
