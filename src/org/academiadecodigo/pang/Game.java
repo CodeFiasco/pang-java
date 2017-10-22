@@ -41,13 +41,13 @@ public class Game {
     private Picture[] backgrounds;
     private int level = 1;
 
-    private LinkedList<Rectangle> timerBlocks;
-    private int timeCounter = 0;
-
     private LinkedList<Rectangle> lives;
-
     private int score = 0;
     private Text scoreDisplay;
+
+    private int timeCounter = 0;
+    private int timer = GameConstants.LEVEL_TIME;
+    private Text timerDisplay;
 
     public void initialScreen() throws InterruptedException {
 
@@ -80,7 +80,7 @@ public class Game {
         for (Picture background : backgrounds) {
             background.draw();
         }
-        //timer();
+        timer();
 
         player = new Player();
         new KeyboardListener(player, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_SPACE);
@@ -100,7 +100,7 @@ public class Game {
     public void start() throws InterruptedException {
 
 
-        while (!playerDead && splittables.size() > 0 /*&& timerBlocks.size() != 0*/) {
+        while (!playerDead && splittables.size() > 0 && timer != 0) {
 
             moveObjects();
             Thread.sleep(GameConstants.DELAY);
@@ -115,7 +115,7 @@ public class Game {
             b.getPos().delete();
         }
 
-        if (playerDead /*|| timerBlocks.size() == 0*/) {
+        if (playerDead || timer == 0) {
 
             player.getPos().delete();
             player.deleteBullet();
@@ -137,12 +137,12 @@ public class Game {
                 }
             }
 
-            /*if (timerBlocks.size() == 0) {
+            if (timer == 0) {
                 generateMessage("Your time is up!!!", Color.RED, 3000);
                 playerDead = false;
                 player.getPos().draw();
                 livesRemoval();
-            }*/
+            }
 
         } else {    //new level
             generateMessage("Level " + level + " Complete!!!", Color.YELLOW, 500);
@@ -155,8 +155,9 @@ public class Game {
         //Start game messages
         gamePreparationMessages();
 
-        //timerReset();
-        //timer();
+        timer = GameConstants.LEVEL_TIME;
+
+        timer();
         player.setBulletType(BulletTypes.ROPE);
         powerUps = new LinkedList<>();
         splittables = SplittableFactory.getSplittableList(this, level);
@@ -198,7 +199,8 @@ public class Game {
 
         displayScore(getScore());
 
-        //timerDelete();
+        timerSet();
+
     }
 
     public void movePackages() {
@@ -296,41 +298,22 @@ public class Game {
 
     private void timer() {
 
-        timerBlocks = new LinkedList<>();
-        timeCounter = 0;
-
-        for (int i = 0; i < GameConstants.LEVEL_TIME; i++) {
-
-            Rectangle timerBlock = new Rectangle((GameConstants.GAME_WIDTH - GameConstants.PADDING - 180) + i * 2, GameConstants.PADDING + 20, 2, 10);
-
-            timerBlocks.add(timerBlock);
-            timerBlocks.getLast().setColor(Color.GREEN);
-            timerBlocks.getLast().fill();
-        }
+       timerDisplay = new Text(GameConstants.GAME_WIDTH + GameConstants.PADDING - 50, 20, "Time: " + timer);
+       timerDisplay.setColor(Color.GREEN);
+       timerDisplay.draw();
     }
 
-    private void timerDelete() {
 
-        ListIterator<Rectangle> it = timerBlocks.listIterator();
+    public void timerSet() {
 
-        if (timerBlocks.size() == 0) {
-            return;
-        }
         timeCounter++;
 
-        if (timeCounter == 100) {
-            //Rectangle next = it.next();
-            it.next().delete();
-            it.remove();
+        if (timeCounter == 100){
+
+            timer--;
             timeCounter = 0;
         }
-    }
 
-    public void timerReset() {
-
-        for (Rectangle r : timerBlocks) {
-            r.delete();
-        }
     }
 
     public void lives() {
