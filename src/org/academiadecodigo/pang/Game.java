@@ -46,7 +46,7 @@ public class Game {
 
     public void init() throws InterruptedException {
 
-        //initialScreen();
+        initialScreen();
 
         backgrounds = generateBackgrounds();
 
@@ -170,9 +170,10 @@ public class Game {
             if (lives.size() == 0) {
 
                 generateMessage("GAME OVER", Color.RED, 2000);
+                level = 1;
                 splittables.removeAll(splittables);
                 lives();
-                waitingScreen();
+
                 init();
                 //initialScreen();
             }
