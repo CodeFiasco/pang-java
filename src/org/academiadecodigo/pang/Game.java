@@ -46,7 +46,12 @@ public class Game {
 
     private LinkedList<Rectangle> lives;
 
+    private int score = 0;
+    private Text scoreDisplay;
+
     public void initialScreen() throws InterruptedException {
+
+        score = 0;
 
         initialScreen = new Picture(PADDING, PADDING, GameConstants.LEVEL_3_IMAGE);
 
@@ -88,6 +93,7 @@ public class Game {
 
         generateMessage("Level " + level, Color.YELLOW, 500);
         gamePreparationMessages();
+        createScore(score);
         start();
     }
 
@@ -190,6 +196,8 @@ public class Game {
         movePackages();
         moveSplittables();
 
+        displayScore(getScore());
+
         //timerDelete();
     }
 
@@ -210,12 +218,12 @@ public class Game {
 
         ListIterator<ExtraLife> extraLifeIterator = extraLifes.listIterator();
 
-        while (extraLifeIterator.hasNext()){
+        while (extraLifeIterator.hasNext()) {
 
             ExtraLife extraLife = extraLifeIterator.next();
             extraLife.move();
 
-            if (player.checkHit(extraLife.getPos())){
+            if (player.checkHit(extraLife.getPos())) {
                 extraLife.getPos().delete();
                 extraLifeIterator.remove();
                 addExtraLife();
@@ -243,6 +251,7 @@ public class Game {
             // Check if bullet hits splittable
             if (player.checkBulletHit(splittable.getPos())) {
 
+                setScore(100);
                 // Remove splittable from list
                 iterator.remove();
 
@@ -258,12 +267,13 @@ public class Game {
                 }
 
                 int rand = (int) (Math.random() * GameConstants.CHANCE_FOR_POWER_UP);
-                int rand2 = 1;
+                int rand2 = (int) (Math.random() * GameConstants.CHANCE_FOR_EXTRA_LIFE);
 
                 if (rand == 0) {
                     powerUps.add(PackageFactory.getPackage(splittable.getPos().getX() + 25, splittable.getPos().getY() + 50));
                 }
-                if (rand2 == 1){
+
+                if (rand2 == 1) {
 
                     extraLifes.add(new ExtraLife(splittable.getPos().getX() + 25, splittable.getPos().getY() + 50));
                 }
@@ -337,7 +347,7 @@ public class Game {
         }
     }
 
-    public void addExtraLife(){
+    public void addExtraLife() {
 
         if (lives.size() >= 5) {
             return;
@@ -362,7 +372,8 @@ public class Game {
 
         Picture picture = new Picture(1280, 800, GameConstants.LEVEL_1_IMAGE);
 
-        generateMessage("CONGRATULATIONS!!", Color.RED, 5000);
+        generateMessage("CONGRATULATIONS!!", Color.RED, 3000);
+        generateMessage("Score: " + getScore(), Color.WHITE, 2000);
         generateMessage("THE END!!", Color.RED, 3000);
         level = 1;
 
@@ -370,6 +381,27 @@ public class Game {
 
     }
 
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score += score;
+    }
+
+    public void createScore(int score) {
+
+        scoreDisplay = new Text((GameConstants.GAME_WIDTH + GameConstants.PADDING) / 2, 50, "Score: " + score);
+        scoreDisplay.setColor(Color.WHITE);
+        scoreDisplay.draw();
+
+    }
+
+    public void displayScore(int score) {
+
+        scoreDisplay.setText("Score: " + score);
+
+    }
 
 }
 

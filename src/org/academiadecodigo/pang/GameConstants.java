@@ -11,6 +11,7 @@ public abstract class GameConstants {
     public static final int PADDING = 10;
     public static final int DELAY = 10;
     public static final int CHANCE_FOR_POWER_UP = 10;
+    public static final int CHANCE_FOR_EXTRA_LIFE = 100;
     public static final int LEVEL_TIME = 90;
 
     // Balls
@@ -30,8 +31,5 @@ public abstract class GameConstants {
     public static final String LEVEL_1_IMAGE = "level1-background.jpg";
     public static final String LEVEL_2_IMAGE = "level2-background.jpg";
     public static final String LEVEL_3_IMAGE = "level3-background.jpg";
-
-
-
 
 }
