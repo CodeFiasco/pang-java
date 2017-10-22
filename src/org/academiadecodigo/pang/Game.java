@@ -12,6 +12,7 @@ import org.academiadecodigo.pang.position.Position;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.graphics.Text;
+import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
@@ -40,6 +41,8 @@ public class Game {
 
     public void init() throws InterruptedException {
 
+        initialPresentation();
+
         backgrounds = generateBackgrounds();
 
         for (Picture background : backgrounds) {
@@ -53,11 +56,13 @@ public class Game {
         splittables = SplittableFactory.getSplittableList(this, level);
         powerUps = new LinkedList<>();
 
+
         generateMessage("Level " + level, Color.YELLOW, 500);
         gamePreparationMessages();
     }
 
     public void start() throws InterruptedException {
+
 
         while (!playerDead && splittables.size() > 0 && timerBlocks.size() != 0) {
 
@@ -118,10 +123,9 @@ public class Game {
 
     private void gamePreparationMessages() throws InterruptedException {
         generateMessage("Get Ready...", Color.GREEN, 2000);
-       /* generateMessage("3", Color.GREEN, 1000);
+        generateMessage("3", Color.GREEN, 1000);
         generateMessage("2", Color.GREEN, 1000);
         generateMessage("1", Color.GREEN, 1000);
-        */
         generateMessage("GOOOOOOO!!!", Color.GREEN, 1000);
     }
 
@@ -248,10 +252,38 @@ public class Game {
 
     public void timerReset() {
 
-      for (Rectangle r : timerBlocks){
-          r.delete();
-      }
+        for (Rectangle r : timerBlocks) {
+            r.delete();
+        }
     }
+
+    private void initialPresentation() throws InterruptedException {
+
+        Rectangle rectangle = new Rectangle(GameConstants.PADDING, GameConstants.PADDING, GameConstants.GAME_WIDTH, GameConstants.GAME_HEIGHT);
+        Picture initPicture1 = new Picture(GameConstants.PADDING, GameConstants.PADDING, "start-img1.png");
+        Picture initPicture2 = new Picture(GameConstants.PADDING, GameConstants.PADDING, "start-img2.png");
+        Picture initPicture3 = new Picture(GameConstants.PADDING, GameConstants.PADDING, "start-img3.png");
+        Picture initPicture4 = new Picture(GameConstants.PADDING, GameConstants.PADDING, "startMessage.png");
+        Picture initPicture5 = new Picture(GameConstants.PADDING, GameConstants.PADDING, "initial-img.png");
+
+        rectangle.setColor(Color.BLACK);
+        rectangle.fill();
+        initPicture1.draw();
+        Thread.sleep(2000);
+        initPicture2.translate(GameConstants.GAME_WIDTH / 2 - (initPicture2.getWidth() / 2), 350);
+        initPicture2.draw();
+        Thread.sleep(2000);
+        initPicture3.translate(GameConstants.GAME_WIDTH / 2 - (initPicture3.getWidth() / 2), 600);
+        initPicture3.draw();
+        Thread.sleep(2000);
+        initPicture5.draw();
+        Thread.sleep(4000);
+        initPicture4.translate(GameConstants.GAME_WIDTH / 2 - (initPicture4.getWidth() / 2), 610);
+        initPicture4.draw();
+        Thread.sleep(5000);
+
+    }
+
 }
 
 
