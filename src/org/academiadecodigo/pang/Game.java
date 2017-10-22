@@ -169,24 +169,13 @@ public class Game {
 
             if (lives.size() == 0) {
 
+                generateMessage("GAME OVER", Color.RED, 2000);
                 splittables.removeAll(splittables);
                 lives();
-                start();
+                waitingScreen();
+                init();
                 //initialScreen();
             }
-            /*if (playerDead) {
-                generateMessage("You died!!", Color.RED, 3000);
-                playerDead = false;
-                player.getPos().draw();
-
-                if (lives.size() == 0) {
-
-                    splittables.removeAll(splittables);
-                    lives();
-                    start();
-                    //initialScreen();
-                }
-        }*/
 
             /*if (timerBlocks.size() == 0) {
                 generateMessage("Your time is up!!!", Color.RED, 3000);
@@ -195,15 +184,14 @@ public class Game {
                 livesRemoval();
             }*/
 
-        } else
-
-        {    //new level
-            generateMessage("Level " + level + " Complete!!!", Color.YELLOW, 500);
+        } else {
+            generateMessage("Level " + level + " Complete!!!", Color.YELLOW, 1000);
             removeBackground();
             level++;
         }
         if (level > 3) {
             finishScreen();
+            waitingScreen();
         }
 
         //Start game messages
@@ -214,8 +202,6 @@ public class Game {
         player.setBulletType(BulletTypes.ROPE);
         powerUps = new LinkedList<>();
         splittables = SplittableFactory.getSplittableList(this, level);
-
-
     }
 
     private void generateMessage(String message, Color color, int sleepTime) throws InterruptedException {
@@ -322,13 +308,10 @@ public class Game {
 
     public void initialScreen() throws InterruptedException {
 
-
         Rectangle rectangle = new Rectangle(GameConstants.PADDING, GameConstants.PADDING, GameConstants.GAME_WIDTH, GameConstants.GAME_HEIGHT);
         Picture initPicture1 = new Picture(GameConstants.PADDING, GameConstants.PADDING, "start-img1.png");
         Picture initPicture2 = new Picture(GameConstants.PADDING, GameConstants.PADDING, "start-img2.png");
         Picture initPicture3 = new Picture(GameConstants.PADDING, GameConstants.PADDING, "start-img3.png");
-        Picture initPicture4 = new Picture(GameConstants.PADDING, GameConstants.PADDING, "startMessage.png");
-        Picture initPicture5 = new Picture(GameConstants.PADDING, GameConstants.PADDING, "initial-img.png");
 
         rectangle.setColor(Color.BLACK);
         rectangle.fill();
@@ -340,9 +323,18 @@ public class Game {
         initPicture3.translate(GameConstants.GAME_WIDTH / 2 - (initPicture3.getWidth() / 2), 600);
         initPicture3.draw();
         Thread.sleep(2000);
+
+        waitingScreen();
+
+    }
+
+    private void waitingScreen() throws InterruptedException {
+        Picture initPicture4 = new Picture(GameConstants.PADDING, GameConstants.PADDING, "startMessage.png");
+        Picture initPicture5 = new Picture(GameConstants.PADDING, GameConstants.PADDING, "initial-img.png");
+
+        initPicture4.translate(GameConstants.GAME_WIDTH / 2 - (initPicture4.getWidth() / 2), 610);
         initPicture5.draw();
         Thread.sleep(4000);
-        initPicture4.translate(GameConstants.GAME_WIDTH / 2 - (initPicture4.getWidth() / 2), 610);
 
         /*while (true) {
 
@@ -355,13 +347,22 @@ public class Game {
 
     public void finishScreen() throws InterruptedException {
 
-        Picture picture = new Picture(1280, 800, GameConstants.LEVEL_1_IMAGE);
+        Rectangle rectangle = new Rectangle(GameConstants.PADDING, GameConstants.PADDING, 1280, 800);
+        Picture picture1 = new Picture(GameConstants.PADDING, GameConstants.PADDING, "start-img1.png");
+        Picture picture2 = new Picture(GameConstants.PADDING, GameConstants.PADDING, "start-img2.png");
+
+        rectangle.setColor(Color.BLACK);
+        rectangle.fill();
+
+        picture2.translate(GameConstants.GAME_WIDTH / 2 - (picture2.getWidth() / 2), 600);
+        picture1.draw();
+        picture2.draw();
+
 
         generateMessage("CONGRATULATIONS!!", Color.RED, 5000);
-        generateMessage("THE END!!", Color.RED, 3000);
+        generateMessage("THE END!!", Color.RED, 1000);
         level = 1;
 
         initialScreen();
-
     }
 }
