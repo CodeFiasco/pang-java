@@ -262,8 +262,8 @@ public class Game {
         timeCounter++;
 
         if (timeCounter == 100) {
-            Rectangle next = it.next();
-            next.delete();
+            //Rectangle next = it.next();
+            it.next().delete();
             it.remove();
             timeCounter = 0;
         }
