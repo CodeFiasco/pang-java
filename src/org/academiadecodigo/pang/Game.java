@@ -260,7 +260,7 @@ public class Game {
         if (livesRepresentation.size() > 4) {
             return;
         }
-        livesRepresentation.add(new Picture(20 + livesRepresentation.size() * 50, 20, "heart.png"));
+        livesRepresentation.add(new Picture(20 + livesRepresentation.size() * 50, 20, "resources/heart.png"));
     }
 
     public void livesRepresentation() {
@@ -271,7 +271,7 @@ public class Game {
         for (int i = 0; i < GameConstants.PLAYERS_LIVES; i++) {
 
 
-            Picture hearts = new Picture(20 + i * 50, 20, "heart.png");
+            Picture hearts = new Picture(20 + i * 50, 20, "resources/heart.png");
             livesRepresentation.add(hearts);
             livesRepresentation.getLast().draw();
         }
@@ -290,9 +290,9 @@ public class Game {
     public void initialScreen() throws InterruptedException {
 
         Rectangle rectangle = new Rectangle(GameConstants.PADDING, GameConstants.PADDING, GameConstants.GAME_WIDTH, GameConstants.GAME_HEIGHT);
-        Picture initPicture1 = new Picture(GameConstants.PADDING, GameConstants.PADDING, "start-img1.png");
-        Picture initPicture2 = new Picture(GameConstants.PADDING, GameConstants.PADDING, "start-img2.png");
-        Picture initPicture3 = new Picture(GameConstants.PADDING, GameConstants.PADDING, "start-img3.png");
+        Picture initPicture1 = new Picture(GameConstants.PADDING, GameConstants.PADDING, "resources/start-img1.png");
+        Picture initPicture2 = new Picture(GameConstants.PADDING, GameConstants.PADDING, "resources/start-img2.png");
+        Picture initPicture3 = new Picture(GameConstants.PADDING, GameConstants.PADDING, "resources/start-img3.png");
 
         rectangle.setColor(Color.BLACK);
         rectangle.fill();
@@ -310,8 +310,8 @@ public class Game {
     }
 
     private void waitingScreen() throws InterruptedException {
-        Picture initPicture4 = new Picture(GameConstants.PADDING, GameConstants.PADDING, "startMessage.png");
-        Picture initPicture5 = new Picture(GameConstants.PADDING, GameConstants.PADDING, "initial-img.png");
+        Picture initPicture4 = new Picture(GameConstants.PADDING, GameConstants.PADDING, "resources/startMessage.png");
+        Picture initPicture5 = new Picture(GameConstants.PADDING, GameConstants.PADDING, "resources/initial-img.png");
 
         initPicture4.translate(GameConstants.GAME_WIDTH / 2 - (initPicture4.getWidth() / 2), 610);
         initPicture5.draw();
@@ -329,8 +329,8 @@ public class Game {
     public void finishScreen() throws InterruptedException {
 
         Rectangle rectangle = new Rectangle(GameConstants.PADDING, GameConstants.PADDING, 1280, 800);
-        Picture picture1 = new Picture(GameConstants.PADDING, GameConstants.PADDING, "start-img1.png");
-        Picture picture2 = new Picture(GameConstants.PADDING, GameConstants.PADDING, "start-img2.png");
+        Picture picture1 = new Picture(GameConstants.PADDING, GameConstants.PADDING, "resources/start-img1.png");
+        Picture picture2 = new Picture(GameConstants.PADDING, GameConstants.PADDING, "resources/start-img2.png");
 
         rectangle.setColor(Color.BLACK);
         rectangle.fill();

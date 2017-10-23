@@ -4,10 +4,10 @@ package org.academiadecodigo.pang.movables.bullets.packages;
  * Created by codecadet on 20/10/17.
  */
 public enum BulletTypes {
-    ROPE("grappling.png"),
-    HOOK("anchor.png"),
-    GUN("gun.png"),
-    BALL("sun-50.png");
+    ROPE("resources/grappling.png"),
+    HOOK("resources/anchor.png"),
+    GUN("resources/gun.png"),
+    BALL("resources/sun-50.png");
 
     private String imageSource;
 

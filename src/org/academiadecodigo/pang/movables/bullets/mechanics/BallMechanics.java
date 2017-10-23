@@ -16,7 +16,7 @@ public class BallMechanics implements Mechanics {
     private int speed = 15;
 
     public BallMechanics(int x, int y) {
-        pos = new Position(x, y, 25, 25, "sun.png");
+        pos = new Position(x, y, 25, 25, "resources/sun.png");
 
         verticalDirection = Direction.UP;
         horizontalDirection = Direction.RIGHT;

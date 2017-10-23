@@ -24,7 +24,7 @@ public class Ball implements Splittable {
     public Ball(int x, int y, BallSize size, Direction dir) {
         this.size = size;
 
-        pos = new Position(x, y, size.getSize(), size.getSize(), "ball-" + size.getSize() + ".png");
+        pos = new Position(x, y, size.getSize(), size.getSize(), "resources/ball-" + size.getSize() + ".png");
         horizontalDirection = dir;
         verticalDirection = Direction.UP;
 

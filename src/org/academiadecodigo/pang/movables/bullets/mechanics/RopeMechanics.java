@@ -17,7 +17,7 @@ public class RopeMechanics implements Mechanics {
 
     public RopeMechanics(int x, int y) {
 
-        Position pos = new Position(x, y, width, height, "rope.png");
+        Position pos = new Position(x, y, width, height, "resources/rope.png");
 
         positions = new LinkedList<>();
         positions.add(pos);
@@ -53,7 +53,7 @@ public class RopeMechanics implements Mechanics {
             return;
         }
 
-        Position pos = new Position(positions.getLast().getX(), positions.getLast().getY() - height, width, height, "rope.png");
+        Position pos = new Position(positions.getLast().getX(), positions.getLast().getY() - height, width, height, "resources/rope.png");
         positions.add(pos);
     }
 

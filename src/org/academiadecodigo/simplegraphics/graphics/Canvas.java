@@ -11,6 +11,7 @@ import java.awt.image.RescaleOp;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Container of shapes
@@ -20,7 +21,7 @@ public class Canvas {
     private static final int MARGIN = 10;
     private static final int LOCATION_OFFSET = 120;
     private static Canvas canvas = new Canvas();
-    private ArrayList<Shape> shapes = new ArrayList<Shape>();
+    private java.util.List<Shape> shapes = Collections.synchronizedList(new ArrayList<Shape>());
     private BufferedImage background;
     private JFrame frame;
     private CanvasComponent component;
@@ -77,13 +78,16 @@ public class Canvas {
 
     /**
      * Method that returns all the shapes that displayed in the canvas
+     *
      * @return ArrayList with all the shapes
      */
-    public ArrayList<Shape> getShapes() {
+    public java.util.List<Shape> getShapes() {
         return shapes;
     }
+
     /**
      * Method that returns all the shapes in given area
+     *
      * @param x1 - beginning of x
      * @param y1 - beginning of y
      * @param x2 - end of x
@@ -94,7 +98,7 @@ public class Canvas {
 
         ArrayList<Shape> shapesInArea = new ArrayList<>();
 
-        for (Shape shape: shapes) {
+        for (Shape shape : shapes) {
             if (shape.getX() >= x1 && shape.getX() <= x2 &&
                     shape.getY() >= y1 && shape.getY() <= y2) {
                 shapesInArea.add(shape);
@@ -165,6 +169,7 @@ public class Canvas {
 
     /**
      * Adds a mouse listener to the canvas
+     *
      * @param handler reference to the MouseListener object
      */
     public void addMouseListener(MouseListener handler) {
@@ -173,6 +178,7 @@ public class Canvas {
 
     /**
      * Adds a mouse motion listener to the canvas
+     *
      * @param handler reference to the MouseMotionListener object
      */
     public void addMouseMotionListener(MouseMotionListener handler) {
@@ -201,6 +207,7 @@ public class Canvas {
                 maxx = Math.max(maxx, background.getWidth());
                 maxy = Math.max(maxx, background.getHeight());
             }
+
             for (Shape s : shapes) {
                 maxx = (int) Math.max(maxx, s.getX() + s.getWidth());
                 maxy = (int) Math.max(maxy, s.getY() + s.getHeight());

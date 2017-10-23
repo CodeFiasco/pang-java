@@ -13,7 +13,7 @@ public class ExtraLife implements Movable {
 
     public ExtraLife(int x, int y) {
 
-        position = new Position(x, y, 50, 50, "heart.png");
+        position = new Position(x, y, 50, 50, "resources/heart.png");
 
     }
 
