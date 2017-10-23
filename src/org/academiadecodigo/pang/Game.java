@@ -1,6 +1,5 @@
 package org.academiadecodigo.pang;
 
-import org.academiadecodigo.pang.keyboardListener.KeyboardInitialListener;
 import org.academiadecodigo.pang.keyboardListener.KeyboardListener;
 import org.academiadecodigo.pang.movables.Player;
 import org.academiadecodigo.pang.movables.bullets.packages.BulletTypes;
@@ -174,6 +173,7 @@ public class Game {
                 splittables.removeAll(splittables);
                 lives();
 
+                player.getPos().delete();
                 init();
                 //initialScreen();
             }

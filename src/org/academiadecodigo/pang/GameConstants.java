@@ -18,8 +18,8 @@ public abstract class GameConstants {
     public static final int BALL_MIN_SIZE = 25;
 
     // Player
-    public static final int PLAYER_WIDTH = 50;
-    public static final int PLAYER_HEIGHT = 90;
+    public static final int PLAYER_WIDTH = 60;
+    public static final int PLAYER_HEIGHT = 100;
     public static final int PLAYER_SPEED = 10;
     public static final int PLAYERS_LIVES = 3;
 
