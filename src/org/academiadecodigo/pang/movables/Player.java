@@ -117,10 +117,13 @@ public class Player implements Movable {
         return pos;
     }
 
+    public void resetPos() {
+
+        pos = new Position((GameConstants.PADDING + (GameConstants.GAME_WIDTH / 2 - width / 2)), (GameConstants.PADDING + (GameConstants.GAME_HEIGHT - height)), width, height, "player.png");
+    }
+
     public void setBulletType(BulletTypes type) {
         this.bulletType = type;
     }
-
-
 }
 

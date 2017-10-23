@@ -75,6 +75,7 @@ public class Game {
         newLevel();
         start();
     }
+
     private void moveObjects() {
 
         player.move();
@@ -82,6 +83,7 @@ public class Game {
         movePackages();
         moveSplittables();
     }
+
     public void movePackages() {
         ListIterator<Package> powerUpIterator = powerUps.listIterator();
 
@@ -194,6 +196,7 @@ public class Game {
                 init();
             }
             playerDead = false;
+            player.resetPos();
             player.getPos().draw();
 
         } else {
@@ -247,9 +250,10 @@ public class Game {
             backgrounds[backgrounds.length - level].delete();
         }
     }
-    public void extraLifeAdd(){
 
-        if (livesRepresentation.size() > 4){
+    public void extraLifeAdd() {
+
+        if (livesRepresentation.size() > 4) {
             return;
         }
         livesRepresentation.add(new Picture(20 + livesRepresentation.size() * 50, 20, "heart.png"));
@@ -339,14 +343,15 @@ public class Game {
 
         initialScreen();
     }
-    public void scoreDisplay(){
+
+    public void scoreDisplay() {
 
         scoreDisplay = new Text(GameConstants.PADDING + GameConstants.GAME_WIDTH / 2, 30, "Score : " + score);
         scoreDisplay.setColor(Color.WHITE);
         scoreDisplay.draw();
     }
 
-    public void updateScoreDisplay(int points){
+    public void updateScoreDisplay(int points) {
 
         score += points;
         scoreDisplay.setText("Score : " + score);
