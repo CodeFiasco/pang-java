@@ -31,19 +31,11 @@ public class Game {
     private Picture[] backgrounds;
     private int level = 1;
 
-    private LinkedList<Rectangle> timerBlocks;
-    private int timeCounter = 0;
-
     private LinkedList<ExtraLife> lives;
     private LinkedList<Picture> livesRepresentation;
 
-
-    /*public void removeInitialScreen() throws InterruptedException {
-        initialScreen.delete();
-        newText.delete();
-        init();
-
-    }*/
+    private int score;
+    private Text scoreDisplay;
 
     public void init() throws InterruptedException {
 
@@ -54,7 +46,6 @@ public class Game {
         for (Picture background : backgrounds) {
             background.draw();
         }
-        //timer();
 
         player = new Player();
         new KeyboardListener(player, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_SPACE);
@@ -65,6 +56,9 @@ public class Game {
 
         livesRepresentation();
 
+        score = 0;
+        scoreDisplay();
+
         start();
     }
 
@@ -73,7 +67,7 @@ public class Game {
         generateMessage("Level " + level, Color.YELLOW, 2000);
         gamePreparationMessages();
 
-        while (!playerDead && splittables.size() > 0 /*&& timerBlocks.size() != 0*/) {
+        while (!playerDead && splittables.size() > 0) {
 
             moveObjects();
             Thread.sleep(GameConstants.DELAY);
@@ -81,16 +75,13 @@ public class Game {
         newLevel();
         start();
     }
-
     private void moveObjects() {
 
         player.move();
 
         movePackages();
         moveSplittables();
-        //timerDelete();
     }
-
     public void movePackages() {
         ListIterator<Package> powerUpIterator = powerUps.listIterator();
 
@@ -103,6 +94,7 @@ public class Game {
                 powerUpIterator.remove();
                 player.setBulletType(pw.getType());
                 pw.getPos().delete();
+                updateScoreDisplay(200);
             }
         }
 
@@ -114,9 +106,10 @@ public class Game {
 
             if (player.checkHit(extraLife.getPos())) {
 
+                updateScoreDisplay(200);
                 extraLifeListIterator.remove();
                 extraLife.getPos().delete();
-                livesRepresentation.add(new Picture(20 + (livesRepresentation.size() + 1) * 50, 20, "heart.png"));
+                extraLifeAdd();
                 livesRepresentation.getLast().draw();
             }
         }
@@ -144,6 +137,8 @@ public class Game {
 
             // Check if bullet hits splittable
             if (player.checkBulletHit(splittable.getPos())) {
+
+                updateScoreDisplay(100);
 
                 // Remove splittable from list
                 iterator.remove();
@@ -180,7 +175,7 @@ public class Game {
             b.getPos().delete();
         }
 
-        if (playerDead /*|| timerBlocks.size() == 0*/) {
+        if (playerDead) {
 
             player.getPos().delete();
             player.deleteBullet();
@@ -211,9 +206,6 @@ public class Game {
             waitingScreen();
         }
 
-        //Start game messages
-        //gamePreparationMessages();
-
         player.setBulletType(BulletTypes.ROPE);
         powerUps = new LinkedList<>();
         splittables = SplittableFactory.getSplittableList(this, level);
@@ -233,11 +225,11 @@ public class Game {
     }
 
     private void gamePreparationMessages() throws InterruptedException {
-       /* generateMessage("Get Ready...", Color.GREEN, 2000);
+        generateMessage("Get Ready...", Color.GREEN, 2000);
         generateMessage("3", Color.GREEN, 1000);
         generateMessage("2", Color.GREEN, 1000);
         generateMessage("1", Color.GREEN, 1000);
-        generateMessage("GOOOOOOO!!!", Color.GREEN, 1000);*/
+        generateMessage("GOOOOOOO!!!", Color.GREEN, 1000);
     }
 
     private Picture[] generateBackgrounds() {
@@ -254,6 +246,13 @@ public class Game {
 
             backgrounds[backgrounds.length - level].delete();
         }
+    }
+    public void extraLifeAdd(){
+
+        if (livesRepresentation.size() > 4){
+            return;
+        }
+        livesRepresentation.add(new Picture(20 + livesRepresentation.size() * 50, 20, "heart.png"));
     }
 
     public void livesRepresentation() {
@@ -333,10 +332,23 @@ public class Game {
         picture2.draw();
 
 
-        generateMessage("CONGRATULATIONS!!", Color.RED, 5000);
+        generateMessage("CONGRATULATIONS!!", Color.RED, 3000);
+        generateMessage("Score :" + score, Color.WHITE, 3000);
         generateMessage("THE END!!", Color.RED, 1000);
         level = 1;
 
         initialScreen();
+    }
+    public void scoreDisplay(){
+
+        scoreDisplay = new Text(GameConstants.PADDING + GameConstants.GAME_WIDTH / 2, 30, "Score : " + score);
+        scoreDisplay.setColor(Color.WHITE);
+        scoreDisplay.draw();
+    }
+
+    public void updateScoreDisplay(int points){
+
+        score += points;
+        scoreDisplay.setText("Score : " + score);
     }
 }
