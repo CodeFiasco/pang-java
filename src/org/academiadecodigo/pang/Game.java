@@ -190,6 +190,7 @@ public class Game {
 
             if (playerDead && livesRepresentation.size() == 0) {
 
+                generateMessage("Score :" + score, Color.WHITE, 3000);
                 generateMessage("GAME OVER", Color.RED, 2000);
                 level = 1;
                 playerDead = false;
