@@ -1,9 +1,9 @@
 package org.academiadecodigo.pang;
 
-import org.academiadecodigo.pang.keyboardListener.KeyboardInitialListener;
 import org.academiadecodigo.pang.keyboardListener.KeyboardListener;
 import org.academiadecodigo.pang.movables.Player;
 import org.academiadecodigo.pang.movables.bullets.packages.BulletTypes;
+import org.academiadecodigo.pang.movables.bullets.packages.ExtraLife;
 import org.academiadecodigo.pang.movables.bullets.packages.Package;
 import org.academiadecodigo.pang.movables.bullets.packages.PackageFactory;
 import org.academiadecodigo.pang.movables.splitables.Splittable;
@@ -34,7 +34,8 @@ public class Game {
     private LinkedList<Rectangle> timerBlocks;
     private int timeCounter = 0;
 
-    private LinkedList<Picture> lives;
+    private LinkedList<ExtraLife> lives;
+    private LinkedList<Picture> livesRepresentation;
 
 
     /*public void removeInitialScreen() throws InterruptedException {
@@ -60,8 +61,9 @@ public class Game {
 
         splittables = SplittableFactory.getSplittableList(this, level);
         powerUps = new LinkedList<>();
+        lives = new LinkedList<>();
 
-        lives();
+        livesRepresentation();
 
         start();
     }
@@ -103,10 +105,28 @@ public class Game {
                 pw.getPos().delete();
             }
         }
+
+        ListIterator<ExtraLife> extraLifeListIterator = lives.listIterator();
+
+        while (extraLifeListIterator.hasNext()) {
+            ExtraLife extraLife = extraLifeListIterator.next();
+            extraLife.move();
+
+            if (player.checkHit(extraLife.getPos())) {
+
+                extraLifeListIterator.remove();
+                extraLife.getPos().delete();
+                livesRepresentation.add(new Picture(20 + (livesRepresentation.size() + 1) * 50, 20, "heart.png"));
+                livesRepresentation.getLast().draw();
+            }
+        }
+
+
     }
 
     public void moveSplittables() {
         ListIterator<Splittable> iterator = splittables.listIterator();
+
 
         // Loop through splittable list
         while (iterator.hasNext()) {
@@ -116,8 +136,8 @@ public class Game {
             // Check if bullet hit player
             if (player.checkHit(splittable.getPos())) {
 
-                livesRemoval();
                 playerDead = true;
+                livesRepresentationRemoval();
 
 
             }
@@ -140,6 +160,12 @@ public class Game {
                 }
 
                 int rand = (int) (Math.random() * GameConstants.CHANCE_FOR_POWER_UP);
+
+                int rand2 = (int) (Math.random() * GameConstants.CHANCE_FOR_EXTRA_LIFE);
+
+                if (rand2 == 0) {
+                    lives.add(new ExtraLife(splittable.getPos().getX(), splittable.getPos().getY()));
+                }
 
                 if (rand == 0) {
                     powerUps.add(PackageFactory.getPackage(splittable.getPos().getX() + 25, splittable.getPos().getY() + 50));
@@ -164,26 +190,16 @@ public class Game {
             }
 
             generateMessage("BANG!!", Color.RED, 3000);
-            playerDead = false;
-            player.getPos().draw();
 
-            if (lives.size() == 0) {
+            if (playerDead && livesRepresentation.size() == 0) {
 
                 generateMessage("GAME OVER", Color.RED, 2000);
                 level = 1;
-                splittables.removeAll(splittables);
-                lives();
-
-                init();
-                //initialScreen();
-            }
-
-            /*if (timerBlocks.size() == 0) {
-                generateMessage("Your time is up!!!", Color.RED, 3000);
                 playerDead = false;
-                player.getPos().draw();
-                livesRemoval();
-            }*/
+                init();
+            }
+            playerDead = false;
+            player.getPos().draw();
 
         } else {
             generateMessage("Level " + level + " Complete!!!", Color.YELLOW, 1000);
@@ -198,8 +214,6 @@ public class Game {
         //Start game messages
         //gamePreparationMessages();
 
-        //timerReset();
-        //timer();
         player.setBulletType(BulletTypes.ROPE);
         powerUps = new LinkedList<>();
         splittables = SplittableFactory.getSplittableList(this, level);
@@ -219,11 +233,11 @@ public class Game {
     }
 
     private void gamePreparationMessages() throws InterruptedException {
-        generateMessage("Get Ready...", Color.GREEN, 2000);
+       /* generateMessage("Get Ready...", Color.GREEN, 2000);
         generateMessage("3", Color.GREEN, 1000);
         generateMessage("2", Color.GREEN, 1000);
         generateMessage("1", Color.GREEN, 1000);
-        generateMessage("GOOOOOOO!!!", Color.GREEN, 1000);
+        generateMessage("GOOOOOOO!!!", Color.GREEN, 1000);*/
     }
 
     private Picture[] generateBackgrounds() {
@@ -242,68 +256,27 @@ public class Game {
         }
     }
 
+    public void livesRepresentation() {
 
-    private void timer() {
-
-        timerBlocks = new LinkedList<>();
-        timeCounter = 0;
-
-        for (int i = 0; i < GameConstants.LEVEL_TIME; i++) {
-
-            Rectangle timerBlock = new Rectangle((GameConstants.GAME_WIDTH - GameConstants.PADDING - 180) + i * 2, GameConstants.PADDING + 20, 2, 10);
-
-            timerBlocks.add(timerBlock);
-            timerBlocks.getLast().setColor(Color.GREEN);
-            timerBlocks.getLast().fill();
-        }
-    }
-
-    private void timerDelete() {
-
-        ListIterator<Rectangle> it = timerBlocks.listIterator();
-
-        if (timerBlocks.size() == 0) {
-            return;
-        }
-        timeCounter++;
-
-        if (timeCounter == 100) {
-            //Rectangle next = it.next();
-            it.next().delete();
-            it.remove();
-            timeCounter = 0;
-        }
-    }
-
-    public void timerReset() {
-
-        for (Rectangle r : timerBlocks) {
-            r.delete();
-        }
-    }
-
-
-    public void lives() {
-
-        lives = new LinkedList<>();
+        livesRepresentation = new LinkedList<>();
 
 
         for (int i = 0; i < GameConstants.PLAYERS_LIVES; i++) {
 
 
             Picture hearts = new Picture(20 + i * 50, 20, "heart.png");
-            lives.add(hearts);
-            lives.getLast().draw();
+            livesRepresentation.add(hearts);
+            livesRepresentation.getLast().draw();
         }
     }
 
-    public void livesRemoval() {
+    public void livesRepresentationRemoval() {
 
-        if (lives.size() == 0) {
+        if (livesRepresentation.size() == 0) {
             return;
         }
-        lives.getLast().delete();
-        lives.removeLast();
+        livesRepresentation.getLast().delete();
+        livesRepresentation.removeLast();
 
     }
 
