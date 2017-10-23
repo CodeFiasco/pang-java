@@ -193,6 +193,9 @@ public class Game {
                 generateMessage("GAME OVER", Color.RED, 2000);
                 level = 1;
                 playerDead = false;
+                splittables.removeAll(splittables);
+
+                player.getPos().delete();
                 init();
             }
             playerDead = false;
